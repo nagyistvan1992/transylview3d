@@ -112,8 +112,7 @@ export const BookCallModal: React.FC<BookCallModalProps> = ({
       }
     } catch (err) {
       console.error('Error submitting quote form:', err);
-      // Fallback: If local API server isn't reached (e.g. static preview), acknowledge submission gracefully
-      setSubmitted(true);
+      setErrorMessage('A apărut o problemă de conexiune la trimiterea solicitării. Vă rugăm să încercați din nou sau să ne apelați direct la 0751 801 025.');
     } finally {
       setIsSubmitting(false);
     }
