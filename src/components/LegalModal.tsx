@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Shield, FileText, Cookie, Scale, ExternalLink } from 'lucide-react';
 
@@ -11,15 +11,32 @@ interface LegalModalProps {
 }
 
 export const LegalModal: React.FC<LegalModalProps> = ({ activeDoc, onClose, onSelectDoc }) => {
+  useEffect(() => {
+    if (activeDoc) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [activeDoc]);
+
   if (!activeDoc) return null;
 
   return (
-    <div className="fixed inset-0 z-[99999] flex items-center justify-center p-3 sm:p-6 overflow-y-auto bg-stone-950/85 backdrop-blur-md">
+    <div
+      onClick={(e) => {
+        if (e.target === e.currentTarget) onClose();
+      }}
+      className="fixed inset-0 z-[99999] flex items-center justify-center p-3 sm:p-6 overflow-y-auto bg-stone-950/85 backdrop-blur-md cursor-pointer select-none"
+    >
       <motion.div
         initial={{ opacity: 0, scale: 0.95, y: 20 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.95, y: 20 }}
-        className="relative w-full max-w-4xl bg-stone-900 text-stone-100 rounded-3xl p-6 sm:p-8 shadow-2xl border border-stone-700/80 overflow-hidden my-6 max-h-[90vh] flex flex-col"
+        onClick={(e) => e.stopPropagation()}
+        className="relative w-full max-w-4xl bg-stone-900 text-stone-100 rounded-3xl p-6 sm:p-8 shadow-2xl border border-stone-700/80 overflow-hidden my-6 max-h-[90vh] flex flex-col cursor-default"
       >
         {/* Header */}
         <div className="flex items-center justify-between border-b border-stone-800 pb-4 flex-shrink-0">

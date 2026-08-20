@@ -10,32 +10,84 @@ interface BookCallModalProps {
   onOpenLegal?: (doc: 'terms' | 'privacy' | 'cookies') => void;
 }
 
+const FORM_DRAFT_KEY = 'transylview_quote_form_draft_v1';
+
 export const BookCallModal: React.FC<BookCallModalProps> = ({
   isOpen,
   onClose,
   defaultPackage,
   onOpenLegal,
 }) => {
-  const [fullName, setFullName] = useState('');
-  const [phone, setPhone] = useState('');
-  const [email, setEmail] = useState('');
-  const [city, setCity] = useState('Satu Mare');
-  const [propertyType, setPropertyType] = useState('Apartament');
-  const [approxSurface, setApproxSurface] = useState('60-120 m²');
-  const [selectedPkg, setSelectedPkg] = useState('Pachet Premium');
-  const [preferredDate, setPreferredDate] = useState('');
-  const [gdprConsent, setGdprConsent] = useState(false);
+  // Load saved draft from localStorage if available
+  const [formData, setFormData] = useState(() => {
+    try {
+      const saved = localStorage.getItem(FORM_DRAFT_KEY);
+      if (saved) {
+        return JSON.parse(saved);
+      }
+    } catch (e) {
+      console.error('Failed to parse draft form data', e);
+    }
+    return {
+      fullName: '',
+      phone: '',
+      email: '',
+      city: 'Satu Mare',
+      propertyType: 'Apartament',
+      approxSurface: '60-120 m²',
+      selectedPkg: 'Pachet Premium',
+      preferredDate: '',
+      gdprConsent: false,
+    };
+  });
+
   const [submitted, setSubmitted] = useState(false);
 
+  // Sync defaultPackage if selected from pricing section
   useEffect(() => {
     if (defaultPackage) {
-      setSelectedPkg(defaultPackage);
+      setFormData((prev: any) => ({ ...prev, selectedPkg: defaultPackage }));
     }
   }, [defaultPackage]);
 
+  // Lock background body scroll when modal is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && isOpen) {
+        onClose();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = 'unset';
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isOpen, onClose]);
+
+  // Save changes to localStorage on any input change so data is NEVER lost
+  const updateField = (field: string, value: any) => {
+    setFormData((prev: any) => {
+      const updated = { ...prev, [field]: value };
+      try {
+        localStorage.setItem(FORM_DRAFT_KEY, JSON.stringify(updated));
+      } catch (e) {
+        console.error('Failed to save draft', e);
+      }
+      return updated;
+    });
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!gdprConsent) return;
+    if (!formData.gdprConsent) return;
     setSubmitted(true);
   };
 
@@ -47,13 +99,22 @@ export const BookCallModal: React.FC<BookCallModalProps> = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 overflow-y-auto bg-stone-950/80 backdrop-blur-md">
+    <div
+      onClick={(e) => {
+        // If clicking directly on the backdrop outside the modal card, close and preserve all data
+        if (e.target === e.currentTarget) {
+          onClose();
+        }
+      }}
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 overflow-y-auto bg-stone-950/85 backdrop-blur-md cursor-pointer select-none"
+    >
       <motion.div
         initial={{ opacity: 0, scale: 0.95, y: 20 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.95, y: 20 }}
-        transition={{ duration: 0.3 }}
-        className="relative w-full max-w-lg bg-stone-900 text-stone-100 rounded-3xl p-6 sm:p-8 shadow-luxury-floating border border-stone-700/60 overflow-hidden my-8"
+        transition={{ duration: 0.25 }}
+        onClick={(e) => e.stopPropagation()}
+        className="relative w-full max-w-lg bg-stone-900 text-stone-100 rounded-3xl p-6 sm:p-8 shadow-luxury-floating border border-stone-700/70 overflow-hidden my-8 cursor-default"
       >
         <button
           onClick={onClose}
@@ -85,8 +146,8 @@ export const BookCallModal: React.FC<BookCallModalProps> = ({
                     Pachet Selectat
                   </label>
                   <select
-                    value={selectedPkg}
-                    onChange={(e) => setSelectedPkg(e.target.value)}
+                    value={formData.selectedPkg}
+                    onChange={(e) => updateField('selectedPkg', e.target.value)}
                     className="w-full bg-stone-950 border border-stone-800 focus:border-bronze rounded-xl px-3 py-2.5 text-xs sm:text-sm text-white focus:outline-none transition-colors"
                   >
                     {pricingPackages.map((p) => (
@@ -103,8 +164,8 @@ export const BookCallModal: React.FC<BookCallModalProps> = ({
                     Tip Proprietate
                   </label>
                   <select
-                    value={propertyType}
-                    onChange={(e) => setPropertyType(e.target.value)}
+                    value={formData.propertyType}
+                    onChange={(e) => updateField('propertyType', e.target.value)}
                     className="w-full bg-stone-950 border border-stone-800 focus:border-bronze rounded-xl px-3 py-2.5 text-xs sm:text-sm text-white focus:outline-none transition-colors"
                   >
                     <option value="Apartament">Apartament / Penthouse</option>
@@ -124,8 +185,8 @@ export const BookCallModal: React.FC<BookCallModalProps> = ({
                   <div className="relative">
                     <MapPin className="w-4 h-4 text-stone-500 absolute left-3 top-1/2 -translate-y-1/2" />
                     <select
-                      value={city}
-                      onChange={(e) => setCity(e.target.value)}
+                      value={formData.city}
+                      onChange={(e) => updateField('city', e.target.value)}
                       className="w-full bg-stone-950 border border-stone-800 focus:border-bronze rounded-xl pl-9 pr-3 py-2.5 text-xs sm:text-sm text-white focus:outline-none transition-colors"
                     >
                       <option value="Satu Mare">Satu Mare</option>
@@ -145,8 +206,8 @@ export const BookCallModal: React.FC<BookCallModalProps> = ({
                   <div className="relative">
                     <Building className="w-4 h-4 text-stone-500 absolute left-3 top-1/2 -translate-y-1/2" />
                     <select
-                      value={approxSurface}
-                      onChange={(e) => setApproxSurface(e.target.value)}
+                      value={formData.approxSurface}
+                      onChange={(e) => updateField('approxSurface', e.target.value)}
                       className="w-full bg-stone-950 border border-stone-800 focus:border-bronze rounded-xl pl-9 pr-3 py-2.5 text-xs sm:text-sm text-white focus:outline-none transition-colors"
                     >
                       <option value="Sub 60 mp">Sub 60 m² (Garsonieră / 2 camere)</option>
@@ -167,8 +228,8 @@ export const BookCallModal: React.FC<BookCallModalProps> = ({
                   <input
                     type="text"
                     required
-                    value={fullName}
-                    onChange={(e) => setFullName(e.target.value)}
+                    value={formData.fullName}
+                    onChange={(e) => updateField('fullName', e.target.value)}
                     placeholder="Numele dumneavoastră"
                     className="w-full bg-stone-950 border border-stone-800 focus:border-bronze rounded-xl pl-9 pr-3 py-2.5 text-xs sm:text-sm text-white placeholder-stone-600 focus:outline-none transition-colors"
                   />
@@ -185,8 +246,8 @@ export const BookCallModal: React.FC<BookCallModalProps> = ({
                     <input
                       type="tel"
                       required
-                      value={phone}
-                      onChange={(e) => setPhone(e.target.value)}
+                      value={formData.phone}
+                      onChange={(e) => updateField('phone', e.target.value)}
                       placeholder="0751 801 025"
                       className="w-full bg-stone-950 border border-stone-800 focus:border-bronze rounded-xl pl-9 pr-3 py-2.5 text-xs sm:text-sm text-white placeholder-stone-600 focus:outline-none transition-colors"
                     />
@@ -202,8 +263,8 @@ export const BookCallModal: React.FC<BookCallModalProps> = ({
                     <input
                       type="email"
                       required
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
+                      value={formData.email}
+                      onChange={(e) => updateField('email', e.target.value)}
                       placeholder="transylview3d@gmail.com"
                       className="w-full bg-stone-950 border border-stone-800 focus:border-bronze rounded-xl pl-9 pr-3 py-2.5 text-xs sm:text-sm text-white placeholder-stone-600 focus:outline-none transition-colors"
                     />
@@ -219,21 +280,21 @@ export const BookCallModal: React.FC<BookCallModalProps> = ({
                   <Calendar className="w-4 h-4 text-stone-500 absolute left-3 top-1/2 -translate-y-1/2" />
                   <input
                     type="date"
-                    value={preferredDate}
-                    onChange={(e) => setPreferredDate(e.target.value)}
+                    value={formData.preferredDate}
+                    onChange={(e) => updateField('preferredDate', e.target.value)}
                     className="w-full bg-stone-950 border border-stone-800 focus:border-bronze rounded-xl pl-9 pr-3 py-2.5 text-xs sm:text-sm text-white focus:outline-none transition-colors"
                   />
                 </div>
               </div>
 
-              {/* Mandatory GDPR Consent Checkbox (Romanian & EU Law) */}
+              {/* Mandatory GDPR Consent Checkbox */}
               <div className="flex items-start gap-2.5 pt-1.5">
                 <input
                   type="checkbox"
                   id="gdpr-consent"
                   required
-                  checked={gdprConsent}
-                  onChange={(e) => setGdprConsent(e.target.checked)}
+                  checked={formData.gdprConsent}
+                  onChange={(e) => updateField('gdprConsent', e.target.checked)}
                   className="mt-0.5 w-4 h-4 rounded border-stone-700 bg-stone-950 text-bronze focus:ring-bronze accent-[#556B2F] cursor-pointer flex-shrink-0"
                 />
                 <label htmlFor="gdpr-consent" className="text-[11px] text-stone-400 leading-snug cursor-pointer select-none">
@@ -252,7 +313,7 @@ export const BookCallModal: React.FC<BookCallModalProps> = ({
               <div className="pt-3">
                 <button
                   type="submit"
-                  disabled={!gdprConsent}
+                  disabled={!formData.gdprConsent}
                   className="w-full py-3.5 rounded-xl bg-bronze hover:bg-bronze-dark disabled:opacity-50 disabled:cursor-not-allowed text-stone-950 font-bold text-xs tracking-[0.2em] uppercase transition-all duration-300 shadow-lg hover:shadow-bronze/20 hover:scale-101"
                 >
                   TRIMITE SOLICITAREA DE TUR 3D
@@ -272,7 +333,7 @@ export const BookCallModal: React.FC<BookCallModalProps> = ({
               Solicitare Înregistrată cu Succes!
             </h3>
             <p className="text-stone-300 text-sm max-w-sm mx-auto leading-relaxed">
-              Vă mulțumim, <span className="text-white font-bold">{fullName}</span>. Echipa TransylView 3D vă va contacta la <span className="text-bronze font-semibold">{phone}</span> pentru a confirma detaliile pentru <span className="text-white font-semibold">{selectedPkg}</span> în <span className="text-bronze font-semibold">{city}</span>.
+              Vă mulțumim, <span className="text-white font-bold">{formData.fullName}</span>. Echipa TransylView 3D vă va contacta la <span className="text-bronze font-semibold">{formData.phone}</span> pentru a confirma detaliile pentru <span className="text-white font-semibold">{formData.selectedPkg}</span> în <span className="text-bronze font-semibold">{formData.city}</span>.
             </p>
             <div className="pt-4">
               <button
