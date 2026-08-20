@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    scrollbar-width: none !important; /* Firefox */
+    -ms-overflow-style: none !important; /* IE/Edge */
+  }
+
+  *::-webkit-scrollbar {
+    display: none !important;
+    width: 0px !important;
+    height: 0px !important;
+    background: transparent !important;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    font-family: 'Cinzel', 'Cinzel Decorative', serif;
+  }
+
+  body {
+    @apply bg-canvas text-stone-900 antialiased overflow-x-hidden;
+  }
+}
