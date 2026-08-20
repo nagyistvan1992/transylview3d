@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { X, CheckCircle, Building, Calendar, Phone, Mail, User, MapPin, Loader2, AlertCircle } from 'lucide-react';
+import { X, CheckCircle, Building, Calendar, Phone, Mail, User, MapPin, Loader2, AlertCircle, Clock } from 'lucide-react';
 import { pricingPackages } from '../data/propertyData';
 
 interface BookCallModalProps {
@@ -10,7 +10,7 @@ interface BookCallModalProps {
   onOpenLegal?: (doc: 'terms' | 'privacy' | 'cookies') => void;
 }
 
-const FORM_DRAFT_KEY = 'transylview_quote_form_draft_v1';
+const FORM_DRAFT_KEY = 'transylview_quote_form_draft_v2';
 
 export const BookCallModal: React.FC<BookCallModalProps> = ({
   isOpen,
@@ -18,6 +18,8 @@ export const BookCallModal: React.FC<BookCallModalProps> = ({
   defaultPackage,
   onOpenLegal,
 }) => {
+  const dateInputRef = useRef<HTMLInputElement>(null);
+
   // Load saved draft from localStorage if available
   const [formData, setFormData] = useState(() => {
     try {
@@ -37,12 +39,14 @@ export const BookCallModal: React.FC<BookCallModalProps> = ({
       approxSurface: '60-120 m²',
       selectedPkg: 'Pachet Premium',
       preferredDate: '',
+      preferredTime: 'Dimineața (09:00 - 11:30)',
       gdprConsent: false,
     };
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [phoneError, setPhoneError] = useState<string | null>(null);
   const [submitted, setSubmitted] = useState(false);
 
   // Sync defaultPackage if selected from pricing section
@@ -85,14 +89,46 @@ export const BookCallModal: React.FC<BookCallModalProps> = ({
       }
       return updated;
     });
+
+    if (field === 'phone') {
+      const cleanPhone = value.replace(/[\s\-\.\(\)]/g, '');
+      if (cleanPhone.length > 0 && !/^07[0-9]{8}$/.test(cleanPhone)) {
+        if (cleanPhone.length < 10) {
+          setPhoneError(`Numărul are ${cleanPhone.length}/10 cifre. Introduceți 10 cifre (ex: 07xxxxxxxx).`);
+        } else if (cleanPhone.length > 10) {
+          setPhoneError(`Numărul are ${cleanPhone.length} cifre (maximul este 10).`);
+        } else if (!cleanPhone.startsWith('07')) {
+          setPhoneError('Numărul trebuie să înceapă cu 07.');
+        }
+      } else {
+        setPhoneError(null);
+      }
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.gdprConsent) return;
+    setErrorMessage(null);
+
+    // Validate 10-digit phone number strictly
+    const cleanPhone = formData.phone.replace(/[\s\-\.\(\)]/g, '');
+    if (!/^07[0-9]{8}$/.test(cleanPhone)) {
+      setPhoneError('Numărul de telefon trebuie să conțină exact 10 cifre și să înceapă cu 07 (ex: 07xxxxxxxx).');
+      setErrorMessage('Vă rugăm să corectați numărul de telefon (exact 10 cifre).');
+      return;
+    }
+
+    if (!formData.preferredTime) {
+      setErrorMessage('Vă rugăm să alegeți un interval orar aproximativ.');
+      return;
+    }
+
+    if (!formData.gdprConsent) {
+      setErrorMessage('Trebuie să bifați acordul GDPR pentru a putea trimite solicitarea.');
+      return;
+    }
 
     setIsSubmitting(true);
-    setErrorMessage(null);
 
     try {
       const response = await fetch('/api/send-quote', {
@@ -100,13 +136,20 @@ export const BookCallModal: React.FC<BookCallModalProps> = ({
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          ...formData,
+          phone: cleanPhone,
+        }),
       });
 
       const data = await response.json();
 
       if (response.ok && data.success) {
         setSubmitted(true);
+        // Clear draft on successful submission
+        try {
+          localStorage.removeItem(FORM_DRAFT_KEY);
+        } catch (e) {}
       } else {
         setErrorMessage(data.error || 'Nu am putut trimite mesajul. Vă rugăm să ne apelați la 0751 801 025.');
       }
@@ -121,8 +164,11 @@ export const BookCallModal: React.FC<BookCallModalProps> = ({
   const handleReset = () => {
     setSubmitted(false);
     setErrorMessage(null);
+    setPhoneError(null);
     onClose();
   };
+
+  const todayStr = new Date().toISOString().split('T')[0];
 
   if (!isOpen) return null;
 
@@ -218,7 +264,7 @@ export const BookCallModal: React.FC<BookCallModalProps> = ({
                     Oraș / Zonă Imobil
                   </label>
                   <div className="relative">
-                    <MapPin className="w-4 h-4 text-stone-500 absolute left-3 top-1/2 -translate-y-1/2" />
+                    <MapPin className="w-4 h-4 text-stone-500 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
                     <select
                       value={formData.city}
                       onChange={(e) => updateField('city', e.target.value)}
@@ -239,7 +285,7 @@ export const BookCallModal: React.FC<BookCallModalProps> = ({
                     Suprafață Aproximativă
                   </label>
                   <div className="relative">
-                    <Building className="w-4 h-4 text-stone-500 absolute left-3 top-1/2 -translate-y-1/2" />
+                    <Building className="w-4 h-4 text-stone-500 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
                     <select
                       value={formData.approxSurface}
                       onChange={(e) => updateField('approxSurface', e.target.value)}
@@ -256,69 +302,119 @@ export const BookCallModal: React.FC<BookCallModalProps> = ({
 
               <div>
                 <label className="block text-[11px] font-bold tracking-widest text-stone-300 uppercase mb-1.5">
-                  Nume & Prenume
+                  Nume & Prenume *
                 </label>
                 <div className="relative">
-                  <User className="w-4 h-4 text-stone-500 absolute left-3 top-1/2 -translate-y-1/2" />
+                  <User className="w-4 h-4 text-stone-500 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
                   <input
                     type="text"
                     required
                     value={formData.fullName}
                     onChange={(e) => updateField('fullName', e.target.value)}
-                    placeholder="Numele dumneavoastră"
-                    className="w-full bg-stone-950 border border-stone-800 focus:border-bronze rounded-xl pl-9 pr-3 py-2.5 text-xs sm:text-sm text-white placeholder-stone-600 focus:outline-none transition-colors"
+                    placeholder=""
+                    className="w-full bg-stone-950 border border-stone-800 focus:border-bronze rounded-xl pl-9 pr-3 py-2.5 text-xs sm:text-sm text-white focus:outline-none transition-colors"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-[11px] font-bold tracking-widest text-stone-300 uppercase mb-1.5">
-                    Telefon / WhatsApp
-                  </label>
+                  <div className="flex items-center justify-between mb-1.5">
+                    <label className="block text-[11px] font-bold tracking-widest text-stone-300 uppercase">
+                      Telefon (10 cifre) *
+                    </label>
+                    <span className="text-[10px] font-mono text-stone-400">
+                      {formData.phone.replace(/[\s\-\.\(\)]/g, '').length}/10
+                    </span>
+                  </div>
                   <div className="relative">
-                    <Phone className="w-4 h-4 text-stone-500 absolute left-3 top-1/2 -translate-y-1/2" />
+                    <Phone className="w-4 h-4 text-stone-500 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
                     <input
                       type="tel"
                       required
+                      maxLength={14}
                       value={formData.phone}
                       onChange={(e) => updateField('phone', e.target.value)}
-                      placeholder="0751 801 025"
-                      className="w-full bg-stone-950 border border-stone-800 focus:border-bronze rounded-xl pl-9 pr-3 py-2.5 text-xs sm:text-sm text-white placeholder-stone-600 focus:outline-none transition-colors"
+                      placeholder="07xxxxxxxx"
+                      className={`w-full bg-stone-950 border rounded-xl pl-9 pr-3 py-2.5 text-xs sm:text-sm text-white placeholder-stone-600 focus:outline-none transition-colors ${
+                        phoneError ? 'border-red-600 focus:border-red-500' : 'border-stone-800 focus:border-bronze'
+                      }`}
+                    />
+                  </div>
+                  {phoneError && (
+                    <p className="mt-1 text-[10px] text-red-400 leading-tight">{phoneError}</p>
+                  )}
+                </div>
+
+                <div>
+                  <label className="block text-[11px] font-bold tracking-widest text-stone-300 uppercase mb-1.5">
+                    Adresă Email *
+                  </label>
+                  <div className="relative">
+                    <Mail className="w-4 h-4 text-stone-500 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+                    <input
+                      type="email"
+                      required
+                      value={formData.email}
+                      onChange={(e) => updateField('email', e.target.value)}
+                      placeholder=""
+                      className="w-full bg-stone-950 border border-stone-800 focus:border-bronze rounded-xl pl-9 pr-3 py-2.5 text-xs sm:text-sm text-white focus:outline-none transition-colors"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Date and Mandatory Time Slot in 2 columns */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-[11px] font-bold tracking-widest text-stone-300 uppercase mb-1.5">
+                    Data Scanării *
+                  </label>
+                  <div
+                    className="relative cursor-pointer"
+                    onClick={() => {
+                      try {
+                        dateInputRef.current?.showPicker?.();
+                      } catch (e) {}
+                    }}
+                  >
+                    <Calendar className="w-4 h-4 text-stone-500 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+                    <input
+                      ref={dateInputRef}
+                      type="date"
+                      required
+                      min={todayStr}
+                      value={formData.preferredDate}
+                      onChange={(e) => updateField('preferredDate', e.target.value)}
+                      onClick={(e) => {
+                        try {
+                          (e.target as HTMLInputElement).showPicker?.();
+                        } catch (err) {}
+                      }}
+                      className="w-full bg-stone-950 border border-stone-800 focus:border-bronze rounded-xl pl-9 pr-3 py-2.5 text-xs sm:text-sm text-white focus:outline-none transition-colors cursor-pointer"
                     />
                   </div>
                 </div>
 
                 <div>
                   <label className="block text-[11px] font-bold tracking-widest text-stone-300 uppercase mb-1.5">
-                    Adresă Email
+                    Interval Orar Dorit *
                   </label>
                   <div className="relative">
-                    <Mail className="w-4 h-4 text-stone-500 absolute left-3 top-1/2 -translate-y-1/2" />
-                    <input
-                      type="email"
+                    <Clock className="w-4 h-4 text-stone-500 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+                    <select
                       required
-                      value={formData.email}
-                      onChange={(e) => updateField('email', e.target.value)}
-                      placeholder="transylview3d@gmail.com"
-                      className="w-full bg-stone-950 border border-stone-800 focus:border-bronze rounded-xl pl-9 pr-3 py-2.5 text-xs sm:text-sm text-white placeholder-stone-600 focus:outline-none transition-colors"
-                    />
+                      value={formData.preferredTime}
+                      onChange={(e) => updateField('preferredTime', e.target.value)}
+                      className="w-full bg-stone-950 border border-stone-800 focus:border-bronze rounded-xl pl-9 pr-3 py-2.5 text-xs sm:text-sm text-white focus:outline-none transition-colors cursor-pointer"
+                    >
+                      <option value="Dimineața (09:00 - 11:30)">Dimineața (09:00 - 11:30)</option>
+                      <option value="Prânz (11:30 - 14:30)">Prânz (11:30 - 14:30)</option>
+                      <option value="După-amiază (14:30 - 17:30)">După-amiază (14:30 - 17:30)</option>
+                      <option value="Seară / Golden Hour (17:30 - 19:30)">Seară / Golden Hour (17:30 - 19:30)</option>
+                      <option value="Oricând în timpul zilei">Oricând în timpul zilei</option>
+                    </select>
                   </div>
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-[11px] font-bold tracking-widest text-stone-300 uppercase mb-1.5">
-                  Data Preferată pentru Filmare / Scanare
-                </label>
-                <div className="relative">
-                  <Calendar className="w-4 h-4 text-stone-500 absolute left-3 top-1/2 -translate-y-1/2" />
-                  <input
-                    type="date"
-                    value={formData.preferredDate}
-                    onChange={(e) => updateField('preferredDate', e.target.value)}
-                    className="w-full bg-stone-950 border border-stone-800 focus:border-bronze rounded-xl pl-9 pr-3 py-2.5 text-xs sm:text-sm text-white focus:outline-none transition-colors"
-                  />
                 </div>
               </div>
 
@@ -348,7 +444,7 @@ export const BookCallModal: React.FC<BookCallModalProps> = ({
               <div className="pt-3">
                 <button
                   type="submit"
-                  disabled={!formData.gdprConsent || isSubmitting}
+                  disabled={!formData.gdprConsent || isSubmitting || !!phoneError}
                   className="w-full py-3.5 rounded-xl bg-bronze hover:bg-bronze-dark disabled:opacity-50 disabled:cursor-not-allowed text-stone-950 font-bold text-xs tracking-[0.2em] uppercase transition-all duration-300 shadow-lg hover:shadow-bronze/20 hover:scale-101 flex items-center justify-center gap-2"
                 >
                   {isSubmitting ? (
@@ -378,7 +474,7 @@ export const BookCallModal: React.FC<BookCallModalProps> = ({
               Vă mulțumim, <span className="text-white font-bold">{formData.fullName}</span>! Un email oficial de confirmare a fost trimis la adresa <span className="text-bronze font-semibold">{formData.email}</span>.
             </p>
             <div className="p-3.5 rounded-2xl bg-stone-950/60 border border-stone-800 text-xs text-stone-400 max-w-sm mx-auto">
-              Echipa TransylView 3D vă va contacta la numărul <strong className="text-stone-200">{formData.phone}</strong> în maximum <strong>2 ore</strong> pentru a confirma data și detaliile scanării 3D în <strong className="text-stone-200">{formData.city}</strong>.
+              Echipa TransylView 3D vă va contacta la numărul <strong className="text-stone-200">{formData.phone}</strong> în maximum <strong>2 ore</strong> pentru a confirma data de <strong className="text-stone-200">{formData.preferredDate} ({formData.preferredTime})</strong> în <strong className="text-stone-200">{formData.city}</strong>.
             </div>
             <div className="pt-3">
               <button

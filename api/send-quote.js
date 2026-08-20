@@ -28,6 +28,7 @@ export default async function handler(req, res) {
       approxSurface,
       selectedPkg,
       preferredDate,
+      preferredTime,
     } = req.body || {};
 
     if (!fullName || !phone || !email) {
@@ -47,7 +48,7 @@ export default async function handler(req, res) {
     });
 
     const timestamp = new Date().toLocaleString('ro-RO', { timeZone: 'Europe/Bucharest' });
-    const formattedDate = preferredDate || 'De stabilit de comun acord';
+    const formattedDate = preferredDate ? `${preferredDate} (${preferredTime || 'Interval de stabilit'})` : 'De stabilit de comun acord';
 
     // 1. Email to Business Owner (transylview3d@gmail.com)
     const ownerMailOptions = {
@@ -113,7 +114,7 @@ export default async function handler(req, res) {
                   <td class="value">${approxSurface}</td>
                 </tr>
                 <tr>
-                  <td class="label">Data Preferată:</td>
+                  <td class="label">Data & Interval Orar:</td>
                   <td class="value">${formattedDate}</td>
                 </tr>
                 <tr>
@@ -199,7 +200,7 @@ export default async function handler(req, res) {
                     <td style="padding: 6px 0; text-align: right; font-weight: 600; color: #1c1917;">${propertyType} (${approxSurface})</td>
                   </tr>
                   <tr>
-                    <td style="padding: 6px 0; color: #78716c;">Dată dorită:</td>
+                    <td style="padding: 6px 0; color: #78716c;">Dată & Interval orar:</td>
                     <td style="padding: 6px 0; text-align: right; font-weight: 600; color: #1c1917;">${formattedDate}</td>
                   </tr>
                 </table>

@@ -10,13 +10,11 @@ const PORT = process.env.PORT || 3001;
 app.use(cors());
 app.use(express.json());
 
-// Configure Google SMTP Transporter
+// Configure Google SMTP Transporter with Gmail service optimization
 const transporter = nodemailer.createTransport({
-  host: process.env.SMTP_HOST || 'smtp.gmail.com',
-  port: parseInt(process.env.SMTP_PORT || '465', 10),
-  secure: true, // SSL
+  service: 'gmail',
   auth: {
-    user: process.env.SMTP_USER || 'transylview3d@gmail.com',
+    user: (process.env.SMTP_USER || 'transylview3d@gmail.com').trim(),
     pass: (process.env.SMTP_PASS || 'uzfqetathiidwxai').replace(/\s+/g, ''),
   },
 });
@@ -38,6 +36,7 @@ app.post('/api/send-quote', async (req, res) => {
       approxSurface,
       selectedPkg,
       preferredDate,
+      preferredTime,
     } = req.body;
 
     if (!fullName || !phone || !email) {
@@ -45,7 +44,7 @@ app.post('/api/send-quote', async (req, res) => {
     }
 
     const timestamp = new Date().toLocaleString('ro-RO', { timeZone: 'Europe/Bucharest' });
-    const formattedDate = preferredDate ? preferredDate : 'De stabilit de comun acord';
+    const formattedDate = preferredDate ? `${preferredDate} (${preferredTime || 'Interval de stabilit'})` : 'De stabilit de comun acord';
 
     // 1. Email to Business Owner (transylview3d@gmail.com)
     const ownerMailOptions = {
@@ -111,7 +110,7 @@ app.post('/api/send-quote', async (req, res) => {
                   <td class="value">${approxSurface}</td>
                 </tr>
                 <tr>
-                  <td class="label">Data Preferată:</td>
+                  <td class="label">Data & Interval Orar:</td>
                   <td class="value">${formattedDate}</td>
                 </tr>
                 <tr>
@@ -132,7 +131,7 @@ app.post('/api/send-quote', async (req, res) => {
       `,
     };
 
-    // 2. Automated Confirmation Email to the Client (Formal, Professional, Warm & Friendly)
+    // 2. Automated Confirmation Email to the Client
     const clientMailOptions = {
       from: `"TransylView 3D" <${process.env.SMTP_USER || 'transylview3d@gmail.com'}>`,
       to: email,
@@ -197,7 +196,7 @@ app.post('/api/send-quote', async (req, res) => {
                     <td style="padding: 6px 0; text-align: right; font-weight: 600; color: #1c1917;">${propertyType} (${approxSurface})</td>
                   </tr>
                   <tr>
-                    <td style="padding: 6px 0; color: #78716c;">Dată dorită:</td>
+                    <td style="padding: 6px 0; color: #78716c;">Dată & Interval orar:</td>
                     <td style="padding: 6px 0; text-align: right; font-weight: 600; color: #1c1917;">${formattedDate}</td>
                   </tr>
                 </table>
