@@ -3,23 +3,28 @@ import { Navbar } from './components/Navbar';
 import { HeroSection } from './components/HeroSection';
 import { AboutSection } from './components/AboutSection';
 import { LiveTourSection } from './components/LiveTourSection';
+import { ToursPortfolioSection } from './components/ToursPortfolioSection';
 import { RetreatGallery } from './components/RetreatGallery';
 import { RoiBenefitsSection } from './components/RoiBenefitsSection';
 import { PricingSection } from './components/PricingSection';
 import { LocationSection } from './components/LocationSection';
 import { Footer } from './components/Footer';
 import { BookCallModal } from './components/BookCallModal';
+import { VirtualTourViewerModal } from './components/VirtualTourViewerModal';
+import { TourManagerModal } from './components/TourManagerModal';
 import { ImageManagerModal } from './components/ImageManagerModal';
 import { CookieBanner } from './components/CookieBanner';
 import { LegalModal, LegalDocType } from './components/LegalModal';
-import { CustomImages } from './types';
-import { initialImages } from './data/propertyData';
+import { CustomImages, VirtualTourItem } from './types';
+import { initialImages, initialVirtualTours } from './data/propertyData';
 
-const LOCAL_STORAGE_KEY = 'transylview_custom_images_v2';
+const LOCAL_STORAGE_IMAGES_KEY = 'transylview_custom_images_v2';
+const LOCAL_STORAGE_TOURS_KEY = 'transylview_virtual_tours_v1';
 
 export function App() {
+  // 1. Custom Images State
   const [images, setImages] = useState<CustomImages>(() => {
-    const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
+    const saved = localStorage.getItem(LOCAL_STORAGE_IMAGES_KEY);
     if (saved) {
       try {
         return JSON.parse(saved);
@@ -30,17 +35,34 @@ export function App() {
     return initialImages;
   });
 
+  // 2. Virtual Tours Portfolio State (with persistent LocalStorage)
+  const [virtualTours, setVirtualTours] = useState<VirtualTourItem[]>(() => {
+    const saved = localStorage.getItem(LOCAL_STORAGE_TOURS_KEY);
+    if (saved) {
+      try {
+        return JSON.parse(saved);
+      } catch (e) {
+        console.error('Failed to parse cached virtual tours', e);
+      }
+    }
+    return initialVirtualTours;
+  });
+
   const [bookCallOpen, setBookCallOpen] = useState(false);
   const [selectedPackage, setSelectedPackage] = useState<string | undefined>(undefined);
+  const [activeTourViewer, setActiveTourViewer] = useState<VirtualTourItem | null>(null);
+  const [tourManagerOpen, setTourManagerOpen] = useState(false);
   const [imageManagerOpen, setImageManagerOpen] = useState(false);
   const [legalDocOpen, setLegalDocOpen] = useState<LegalDocType>(null);
 
   // Secret admin triggers (Keyboard shortcut + URL hash listener)
   useEffect(() => {
-    // 1. URL Hash trigger (e.g. localhost:3000/#images or #admin or #terms or #privacy)
+    // 1. URL Hash trigger (e.g. localhost:3000/#tours or #admin or #images or #terms)
     const checkHash = () => {
       const hash = window.location.hash.toLowerCase();
-      if (hash === '#images' || hash === '#admin' || hash === '#manager') {
+      if (hash === '#tours' || hash === '#admin' || hash === '#manager') {
+        setTourManagerOpen(true);
+      } else if (hash === '#images') {
         setImageManagerOpen(true);
       } else if (hash === '#terms' || hash === '#termeni') {
         setLegalDocOpen('terms');
@@ -53,7 +75,7 @@ export function App() {
     checkHash();
     window.addEventListener('hashchange', checkHash);
 
-    // 2. Keyboard shortcut trigger (Ctrl+Shift+I or Alt+I or Ctrl+Alt+I)
+    // 2. Keyboard shortcut trigger (Ctrl+Shift+T for Tours, Ctrl+Shift+I for Images)
     const handleKeyDown = (e: KeyboardEvent) => {
       const target = e.target as HTMLElement;
       if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.tagName === 'SELECT') {
@@ -61,9 +83,14 @@ export function App() {
       }
 
       if (
+        (e.ctrlKey && e.shiftKey && (e.key === 'T' || e.key === 't')) ||
+        (e.altKey && (e.key === 't' || e.key === 'T'))
+      ) {
+        e.preventDefault();
+        setTourManagerOpen((prev) => !prev);
+      } else if (
         (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'i' || e.key === 'U' || e.key === 'u')) ||
-        (e.altKey && (e.key === 'i' || e.key === 'I')) ||
-        (e.ctrlKey && e.altKey && (e.key === 'i' || e.key === 'I'))
+        (e.altKey && (e.key === 'i' || e.key === 'I'))
       ) {
         e.preventDefault();
         setImageManagerOpen((prev) => !prev);
@@ -79,7 +106,12 @@ export function App() {
 
   const handleUpdateImages = (updated: CustomImages) => {
     setImages(updated);
-    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(updated));
+    localStorage.setItem(LOCAL_STORAGE_IMAGES_KEY, JSON.stringify(updated));
+  };
+
+  const handleUpdateVirtualTours = (updatedTours: VirtualTourItem[]) => {
+    setVirtualTours(updatedTours);
+    localStorage.setItem(LOCAL_STORAGE_TOURS_KEY, JSON.stringify(updatedTours));
   };
 
   const handleOpenBookCall = (packageName?: string) => {
@@ -105,30 +137,38 @@ export function App() {
         {/* Section 2: About & Camera Technology (Insta X5 8K, Dollhouse 3D) */}
         <AboutSection images={images} />
 
-        {/* Section 3: Live Real Matterport 3D Tour (Exact Link: YFWgEekGLHm) */}
+        {/* Section 3: Live Real Matterport 3D Tour Embed */}
         <LiveTourSection
           onBookCall={() => handleOpenBookCall()}
         />
 
-        {/* Section 4: Interactive 3D Portfolio (Mosaic Room Switcher) */}
+        {/* Section 4: NEW - 3D Virtual Tours Portfolio Showcase (Custom Uploads & Projects) */}
+        <ToursPortfolioSection
+          tours={virtualTours}
+          onOpenTourViewer={(tour) => setActiveTourViewer(tour)}
+          onRequestQuote={(propertyType) => handleOpenBookCall(propertyType)}
+          onOpenTourManager={() => setTourManagerOpen(true)}
+        />
+
+        {/* Section 5: Interactive 3D Room Switcher Gallery */}
         <RetreatGallery images={images} />
 
-        {/* Section 5: Real Estate ROI, Statistics & Benefits */}
+        {/* Section 6: Real Estate ROI, Statistics & Benefits */}
         <RoiBenefitsSection />
 
-        {/* Section 6: Transparent Pricing Packages (Calibrated for Romanian Market) */}
+        {/* Section 7: Transparent Pricing Packages (Calibrated for Romanian Market) */}
         <PricingSection
           onSelectPackage={(pkgName) => handleOpenBookCall(pkgName)}
         />
 
-        {/* Section 7: Coverage Area (Satu Mare & 100km in Transylvania) */}
+        {/* Section 8: Coverage Area (Satu Mare & 100km in Transylvania) */}
         <LocationSection />
       </main>
 
       {/* Footer with High-Res Clean Logo, ANPC Badges, and Legal Compliance Links */}
       <Footer
         onBookCall={() => handleOpenBookCall()}
-        onSecretOpenImageManager={() => setImageManagerOpen(true)}
+        onSecretOpenImageManager={() => setTourManagerOpen(true)}
         onOpenLegal={(doc) => setLegalDocOpen(doc)}
       />
 
@@ -140,7 +180,23 @@ export function App() {
         onOpenLegal={(doc) => setLegalDocOpen(doc)}
       />
 
-      {/* Secret Image & Asset Customizer Modal */}
+      {/* 3D Interactive Virtual Tour Fullscreen Modal Player */}
+      <VirtualTourViewerModal
+        tour={activeTourViewer}
+        onClose={() => setActiveTourViewer(null)}
+        onRequestQuote={(propType) => handleOpenBookCall(propType)}
+      />
+
+      {/* Tour Manager Admin Modal (Upload, Edit, Delete, Export 3D Tours) */}
+      <TourManagerModal
+        isOpen={tourManagerOpen}
+        onClose={() => setTourManagerOpen(false)}
+        tours={virtualTours}
+        onUpdateTours={handleUpdateVirtualTours}
+        onPreviewTour={(tour) => setActiveTourViewer(tour)}
+      />
+
+      {/* Image & Asset Customizer Modal */}
       <ImageManagerModal
         isOpen={imageManagerOpen}
         onClose={() => setImageManagerOpen(false)}

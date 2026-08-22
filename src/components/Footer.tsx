@@ -83,7 +83,7 @@ export const Footer: React.FC<FooterProps> = ({ onBookCall, onSecretOpenImageMan
               <li><a href="#home" className="hover:text-bronze transition-colors">Acasă</a></li>
               <li><a href="#about" className="hover:text-bronze transition-colors">Despre Noi & Tehnologie</a></li>
               <li><a href="#demo-tour" className="hover:text-bronze transition-colors">Demo 3D Interactiv</a></li>
-              <li><a href="#portfolio" className="hover:text-bronze transition-colors">Portofoliu</a></li>
+              <li><a href="#virtual-tours" className="hover:text-bronze transition-colors">Portofoliu Tururi 3D</a></li>
               <li><a href="#pricing" className="hover:text-bronze transition-colors">Pachete & Prețuri</a></li>
               <li><a href="#location" className="hover:text-bronze transition-colors">Zonă de Acoperire</a></li>
             </ul>

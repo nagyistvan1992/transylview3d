@@ -114,7 +114,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ heroImage, onBookCall 
             <a href="#home" onClick={handleScrollToTop} className="text-white hover:text-bronze transition-colors">ACASĂ</a>
             <a href="#about" className="hover:text-white transition-colors">DESPRE NOI</a>
             <a href="#demo-tour" className="hover:text-bronze transition-colors text-bronze-light font-bold">DEMO 3D</a>
-            <a href="#portfolio" className="hover:text-white transition-colors">PORTOFOLIU</a>
+            <a href="#virtual-tours" className="hover:text-white transition-colors">PORTOFOLIU 3D</a>
             <a href="#pricing" className="hover:text-white transition-colors">PREȚURI</a>
             <a href="#location" className="hover:text-white transition-colors">ZONĂ & CONTACT</a>
           </nav>

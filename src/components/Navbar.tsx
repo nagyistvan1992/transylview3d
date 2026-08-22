@@ -27,7 +27,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onBookCall }) => {
     { name: 'ACASĂ', href: '#home', onClick: handleScrollToTop },
     { name: 'DESPRE NOI', href: '#about' },
     { name: 'DEMO 3D', href: '#demo-tour' },
-    { name: 'PORTOFOLIU', href: '#portfolio' },
+    { name: 'PORTOFOLIU 3D', href: '#virtual-tours' },
     { name: 'PREȚURI', href: '#pricing' },
     { name: 'LOCAȚIE', href: '#location' },
   ];
@@ -55,20 +55,20 @@ export const Navbar: React.FC<NavbarProps> = ({ onBookCall }) => {
         </a>
 
         {/* Center Desktop Navigation */}
-        <nav className="hidden md:flex items-center space-x-6 lg:space-x-8">
+        <nav className="hidden md:flex items-center space-x-5 lg:space-x-7">
           {navLinks.map((link) => (
             <a
               key={link.name}
               href={link.href}
               onClick={link.onClick}
-              className="text-xs font-semibold tracking-[0.22em] text-stone-700 hover:text-bronze transition-all duration-300 relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1.5px] after:bg-bronze hover:after:w-full after:transition-all after:duration-300"
+              className="text-xs font-semibold tracking-[0.2em] text-stone-700 hover:text-bronze transition-all duration-300 relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1.5px] after:bg-bronze hover:after:w-full after:transition-all after:duration-300"
             >
               {link.name}
             </a>
           ))}
         </nav>
 
-        {/* Action Button without generic sparkles */}
+        {/* Action Button */}
         <div className="hidden sm:flex items-center gap-3">
           <button
             onClick={onBookCall}

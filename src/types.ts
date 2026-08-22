@@ -13,6 +13,22 @@ export interface GalleryItem {
   specs: string;
 }
 
+export interface VirtualTourItem {
+  id: string;
+  title: string;
+  category: 'Rezidențial' | 'Vile & Case' | 'Penthouse' | 'Comercial' | 'HoReCa' | string;
+  city: 'Satu Mare' | 'Baia Mare' | 'Oradea' | 'Carei' | 'Zalău' | string;
+  surface: string;
+  rooms?: string;
+  embedUrl: string;
+  coverImage: string;
+  description: string;
+  features: string[];
+  isFeatured?: boolean;
+  date?: string;
+  client?: string;
+}
+
 export interface PricingPackage {
   id: string;
   name: string;
