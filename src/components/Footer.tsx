@@ -25,7 +25,7 @@ export const Footer: React.FC<FooterProps> = ({ onBookCall, onSecretOpenImageMan
     <footer className="bg-stone-950 text-stone-300 pt-20 pb-12 border-t border-stone-800 relative overflow-hidden select-none">
       {/* Background Glow */}
       <div className="absolute top-0 right-1/4 w-[500px] h-[500px] bg-bronze/10 rounded-full blur-[140px] pointer-events-none" />
-      <div className="absolute bottom-0 left-1/6 w-[400px] h-[400px] bg-amber-500/5 rounded-full blur-[160px] pointer-events-none" />
+      <div className="absolute bottom-0 left-1/6 w-[400px] h-[400px] bg-stone-500/5 rounded-full blur-[160px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
@@ -35,24 +35,24 @@ export const Footer: React.FC<FooterProps> = ({ onBookCall, onSecretOpenImageMan
           {/* Column 1: Brand Logo & Mission (4 cols) */}
           <div className="lg:col-span-4 space-y-6">
             
-            {/* Seamless Embedded Gold Metallic Logo */}
+            {/* Seamless Embedded Logo */}
             <div
               onClick={handleLogoClick}
               className="relative inline-block cursor-pointer group"
               title="TransylView 3D (Faceți 3 clicuri pentru managerul de imagini)"
             >
-              {/* Subtle ambient gold radiance that blends the logo with the dark canvas */}
-              <div className="absolute -inset-3 bg-gradient-to-r from-bronze/25 via-amber-400/15 to-transparent rounded-3xl blur-2xl opacity-70 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+              {/* Subtle ambient warm radiance that blends the logo with the dark canvas */}
+              <div className="absolute -inset-3 bg-gradient-to-r from-bronze/20 via-stone-400/10 to-transparent rounded-3xl blur-2xl opacity-60 group-hover:opacity-90 transition-opacity duration-500 pointer-events-none" />
 
               <div className="relative space-y-2">
                 <img
                   src="/images/logo_clean_gold.png"
                   alt="TransylView 3D Logo"
-                  className="h-24 sm:h-28 w-auto max-w-[260px] sm:max-w-[300px] object-contain drop-shadow-[0_10px_30px_rgba(212,175,55,0.35)] group-hover:scale-102 transition-transform duration-300"
+                  className="h-20 sm:h-28 w-auto max-w-[240px] sm:max-w-[300px] object-contain drop-shadow-[0_10px_30px_rgba(0,0,0,0.5)] group-hover:scale-102 transition-transform duration-300"
                 />
                 
                 <div className="flex items-center gap-2 pl-1">
-                  <span className="w-1.5 h-1.5 rounded-full bg-bronze animate-pulse" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-bronze" />
                   <span className="text-[10px] sm:text-[11px] font-bold tracking-[0.26em] text-bronze uppercase">
                     TURURI VIRTUALE 8K & DIGITAL TWINS
                   </span>
@@ -67,10 +67,9 @@ export const Footer: React.FC<FooterProps> = ({ onBookCall, onSecretOpenImageMan
             <div className="pt-1">
               <button
                 onClick={onBookCall}
-                className="px-5 py-2.5 rounded-full bg-bronze hover:bg-bronze-dark text-stone-950 font-bold text-xs tracking-wider uppercase transition-all shadow-md flex items-center gap-2"
+                className="px-5 py-2.5 rounded-full bg-stone-100 hover:bg-white text-stone-950 font-bold text-xs tracking-wider uppercase transition-all shadow-md"
               >
-                <Sparkles className="w-3.5 h-3.5" />
-                <span>SOLICITĂ OFERTĂ & PROGRAMARE</span>
+                SOLICITĂ OFERTĂ & PROGRAMARE
               </button>
             </div>
           </div>

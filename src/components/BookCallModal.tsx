@@ -180,32 +180,34 @@ export const BookCallModal: React.FC<BookCallModalProps> = ({
           onClose();
         }
       }}
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 overflow-y-auto bg-stone-950/85 backdrop-blur-md cursor-pointer select-none"
+      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 overflow-y-auto bg-stone-950/85 backdrop-blur-md cursor-pointer select-none"
     >
       <motion.div
-        initial={{ opacity: 0, scale: 0.95, y: 20 }}
+        initial={{ opacity: 0, scale: 0.95, y: 15 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
-        exit={{ opacity: 0, scale: 0.95, y: 20 }}
-        transition={{ duration: 0.25 }}
+        exit={{ opacity: 0, scale: 0.95, y: 15 }}
+        transition={{ duration: 0.22 }}
         onClick={(e) => e.stopPropagation()}
-        className="relative w-full max-w-lg bg-stone-900 text-stone-100 rounded-3xl p-6 sm:p-8 shadow-luxury-floating border border-stone-700/70 overflow-hidden my-8 cursor-default"
+        className="relative w-full max-w-lg bg-stone-900 text-stone-100 rounded-2xl sm:rounded-3xl p-5 sm:p-8 shadow-luxury-floating border border-stone-750/80 overflow-hidden my-3 sm:my-8 cursor-default"
       >
+        {/* Prominent High-Contrast Close Button - Always visible on mobile & desktop */}
         <button
           onClick={onClose}
-          className="absolute top-5 right-5 p-2 rounded-full bg-stone-800 text-stone-400 hover:text-white hover:bg-stone-700 transition-colors"
-          aria-label="Închide"
+          className="absolute top-4 right-4 sm:top-5 sm:right-5 z-50 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-stone-800/90 text-stone-300 hover:text-white hover:bg-stone-700 transition-all border border-white/10 shadow-lg cursor-pointer flex items-center justify-center active:scale-95"
+          aria-label="Închide fereastra"
+          title="Închide"
         >
-          <X className="w-5 h-5" />
+          <X className="w-5 h-5 stroke-[2.5]" />
         </button>
 
         {!submitted ? (
           <div>
-            <div className="space-y-2 mb-6">
-              <div className="flex items-center gap-1.5 text-bronze text-xs font-bold tracking-[0.2em] uppercase">
+            <div className="space-y-1.5 sm:space-y-2 mb-5 sm:mb-6 pr-10">
+              <div className="flex items-center gap-1.5 text-bronze-light text-[10px] sm:text-xs font-bold tracking-[0.22em] uppercase">
                 <span className="w-1.5 h-1.5 rounded-full bg-bronze" />
                 <span>SOLICITĂ SCANARE & OFERTĂ 8K</span>
               </div>
-              <h3 className="font-serif text-2xl sm:text-3xl text-white font-normal">
+              <h3 className="font-serif text-xl sm:text-3xl text-white font-normal leading-tight">
                 Programează Turul Virtual 3D
               </h3>
               <p className="text-stone-400 text-xs sm:text-sm leading-relaxed">
@@ -214,16 +216,16 @@ export const BookCallModal: React.FC<BookCallModalProps> = ({
             </div>
 
             {errorMessage && (
-              <div className="mb-4 p-3.5 rounded-xl bg-red-950/70 border border-red-800 text-red-200 text-xs flex items-center gap-2">
+              <div className="mb-4 p-3 rounded-xl bg-red-950/70 border border-red-800 text-red-200 text-xs flex items-center gap-2">
                 <AlertCircle className="w-4 h-4 text-red-400 flex-shrink-0" />
                 <span>{errorMessage}</span>
               </div>
             )}
 
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <form onSubmit={handleSubmit} className="space-y-3.5 sm:space-y-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                 <div>
-                  <label className="block text-[11px] font-bold tracking-widest text-stone-300 uppercase mb-1.5">
+                  <label className="block text-[10px] sm:text-[11px] font-bold tracking-widest text-stone-300 uppercase mb-1">
                     Pachet Selectat
                   </label>
                   <select
@@ -241,7 +243,7 @@ export const BookCallModal: React.FC<BookCallModalProps> = ({
                 </div>
 
                 <div>
-                  <label className="block text-[11px] font-bold tracking-widest text-stone-300 uppercase mb-1.5">
+                  <label className="block text-[10px] sm:text-[11px] font-bold tracking-widest text-stone-300 uppercase mb-1">
                     Tip Proprietate
                   </label>
                   <select
@@ -258,9 +260,9 @@ export const BookCallModal: React.FC<BookCallModalProps> = ({
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                 <div>
-                  <label className="block text-[11px] font-bold tracking-widest text-stone-300 uppercase mb-1.5">
+                  <label className="block text-[10px] sm:text-[11px] font-bold tracking-widest text-stone-300 uppercase mb-1">
                     Oraș / Zonă Imobil
                   </label>
                   <div className="relative">
@@ -281,7 +283,7 @@ export const BookCallModal: React.FC<BookCallModalProps> = ({
                 </div>
 
                 <div>
-                  <label className="block text-[11px] font-bold tracking-widest text-stone-300 uppercase mb-1.5">
+                  <label className="block text-[10px] sm:text-[11px] font-bold tracking-widest text-stone-300 uppercase mb-1">
                     Suprafață Aproximativă
                   </label>
                   <div className="relative">
@@ -301,7 +303,7 @@ export const BookCallModal: React.FC<BookCallModalProps> = ({
               </div>
 
               <div>
-                <label className="block text-[11px] font-bold tracking-widest text-stone-300 uppercase mb-1.5">
+                <label className="block text-[10px] sm:text-[11px] font-bold tracking-widest text-stone-300 uppercase mb-1">
                   Nume & Prenume *
                 </label>
                 <div className="relative">
@@ -317,10 +319,10 @@ export const BookCallModal: React.FC<BookCallModalProps> = ({
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                 <div>
-                  <div className="flex items-center justify-between mb-1.5">
-                    <label className="block text-[11px] font-bold tracking-widest text-stone-300 uppercase">
+                  <div className="flex items-center justify-between mb-1">
+                    <label className="block text-[10px] sm:text-[11px] font-bold tracking-widest text-stone-300 uppercase">
                       Telefon (10 cifre) *
                     </label>
                     <span className="text-[10px] font-mono text-stone-400">
@@ -347,7 +349,7 @@ export const BookCallModal: React.FC<BookCallModalProps> = ({
                 </div>
 
                 <div>
-                  <label className="block text-[11px] font-bold tracking-widest text-stone-300 uppercase mb-1.5">
+                  <label className="block text-[10px] sm:text-[11px] font-bold tracking-widest text-stone-300 uppercase mb-1">
                     Adresă Email *
                   </label>
                   <div className="relative">
@@ -365,9 +367,9 @@ export const BookCallModal: React.FC<BookCallModalProps> = ({
               </div>
 
               {/* Date and Mandatory Time Slot in 2 columns */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                 <div>
-                  <label className="block text-[11px] font-bold tracking-widest text-stone-300 uppercase mb-1.5">
+                  <label className="block text-[10px] sm:text-[11px] font-bold tracking-widest text-stone-300 uppercase mb-1">
                     Data Scanării *
                   </label>
                   <div
@@ -397,7 +399,7 @@ export const BookCallModal: React.FC<BookCallModalProps> = ({
                 </div>
 
                 <div>
-                  <label className="block text-[11px] font-bold tracking-widest text-stone-300 uppercase mb-1.5">
+                  <label className="block text-[10px] sm:text-[11px] font-bold tracking-widest text-stone-300 uppercase mb-1">
                     Interval Orar Dorit *
                   </label>
                   <div className="relative">
@@ -419,33 +421,33 @@ export const BookCallModal: React.FC<BookCallModalProps> = ({
               </div>
 
               {/* Mandatory GDPR Consent Checkbox */}
-              <div className="flex items-start gap-2.5 pt-1.5">
+              <div className="flex items-start gap-2.5 pt-1">
                 <input
                   type="checkbox"
                   id="gdpr-consent"
                   required
                   checked={formData.gdprConsent}
                   onChange={(e) => updateField('gdprConsent', e.target.checked)}
-                  className="mt-0.5 w-4 h-4 rounded border-stone-700 bg-stone-950 text-bronze focus:ring-bronze accent-[#556B2F] cursor-pointer flex-shrink-0"
+                  className="mt-0.5 w-4 h-4 rounded border-stone-700 bg-stone-950 text-bronze focus:ring-bronze accent-bronze cursor-pointer flex-shrink-0"
                 />
                 <label htmlFor="gdpr-consent" className="text-[11px] text-stone-400 leading-snug cursor-pointer select-none">
-                  Sunt de acord cu prelucrarea datelor mele cu caracter personal conform{' '}
+                  Sunt de acord cu prelucrarea datelor mele conform{' '}
                   <button
                     type="button"
                     onClick={() => onOpenLegal?.('privacy')}
-                    className="text-bronze underline hover:text-white"
+                    className="text-stone-300 underline hover:text-white"
                   >
-                    Politicii de Confidențialitate (GDPR)
+                    Politicii GDPR
                   </button>{' '}
-                  în scopul procesării ofertei și programării turului 3D.
+                  în scopul procesării ofertei de tur 3D.
                 </label>
               </div>
 
-              <div className="pt-3">
+              <div className="pt-2.5">
                 <button
                   type="submit"
                   disabled={!formData.gdprConsent || isSubmitting || !!phoneError}
-                  className="w-full py-3.5 rounded-xl bg-bronze hover:bg-bronze-dark disabled:opacity-50 disabled:cursor-not-allowed text-stone-950 font-bold text-xs tracking-[0.2em] uppercase transition-all duration-300 shadow-lg hover:shadow-bronze/20 hover:scale-101 flex items-center justify-center gap-2"
+                  className="w-full py-3 sm:py-3.5 rounded-xl bg-stone-100 hover:bg-white text-stone-950 font-bold text-xs tracking-[0.2em] uppercase transition-all duration-300 shadow-lg hover:scale-101 flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {isSubmitting ? (
                     <>
@@ -463,20 +465,20 @@ export const BookCallModal: React.FC<BookCallModalProps> = ({
             </form>
           </div>
         ) : (
-          <div className="py-8 text-center space-y-4">
-            <div className="w-14 h-14 rounded-full bg-emerald-950/80 text-emerald-400 border border-emerald-700/60 mx-auto flex items-center justify-center">
-              <CheckCircle className="w-8 h-8" />
+          <div className="py-6 sm:py-8 text-center space-y-4">
+            <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-emerald-950/80 text-emerald-400 border border-emerald-700/60 mx-auto flex items-center justify-center">
+              <CheckCircle className="w-7 h-7 sm:w-8 sm:h-8" />
             </div>
-            <h3 className="font-serif text-2xl sm:text-3xl text-white font-bold">
+            <h3 className="font-serif text-xl sm:text-3xl text-white font-bold">
               Solicitare Înregistrată cu Succes!
             </h3>
-            <p className="text-stone-300 text-sm max-w-sm mx-auto leading-relaxed">
-              Vă mulțumim, <span className="text-white font-bold">{formData.fullName}</span>! Un email oficial de confirmare a fost trimis la adresa <span className="text-bronze font-semibold">{formData.email}</span>.
+            <p className="text-stone-300 text-xs sm:text-sm max-w-sm mx-auto leading-relaxed">
+              Vă mulțumim, <span className="text-white font-bold">{formData.fullName}</span>! Un email oficial de confirmare a fost trimis la adresa <span className="text-stone-200 font-semibold">{formData.email}</span>.
             </p>
-            <div className="p-3.5 rounded-2xl bg-stone-950/60 border border-stone-800 text-xs text-stone-400 max-w-sm mx-auto">
+            <div className="p-3 rounded-xl bg-stone-950/60 border border-stone-800 text-xs text-stone-400 max-w-sm mx-auto">
               Echipa TransylView 3D vă va contacta la numărul <strong className="text-stone-200">{formData.phone}</strong> în maximum <strong>2 ore</strong> pentru a confirma data de <strong className="text-stone-200">{formData.preferredDate} ({formData.preferredTime})</strong> în <strong className="text-stone-200">{formData.city}</strong>.
             </div>
-            <div className="pt-3">
+            <div className="pt-2">
               <button
                 onClick={handleReset}
                 className="px-6 py-2.5 rounded-full bg-stone-800 hover:bg-stone-700 text-white text-xs font-bold tracking-widest uppercase transition-colors"
