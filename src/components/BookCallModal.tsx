@@ -182,16 +182,6 @@ export const BookCallModal: React.FC<BookCallModalProps> = ({
       }}
       className="fixed inset-0 z-50 overflow-y-auto bg-stone-950/85 backdrop-blur-md flex items-start justify-center p-3 sm:p-6 min-h-[100dvh] cursor-pointer select-none"
     >
-      {/* Fixed Floating Top-Right Close Button - ALWAYS visible on screen */}
-      <button
-        onClick={onClose}
-        className="fixed top-3 right-3 sm:top-5 sm:right-5 z-[60] w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-stone-800/95 text-white hover:bg-stone-700 transition-all border border-white/25 shadow-[0_10px_25px_rgba(0,0,0,0.8)] cursor-pointer flex items-center justify-center active:scale-90"
-        aria-label="Închide fereastra"
-        title="Închide"
-      >
-        <X className="w-5 h-5 sm:w-6 sm:h-6 stroke-[2.5]" />
-      </button>
-
       <motion.div
         initial={{ opacity: 0, scale: 0.96, y: 15 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -200,13 +190,14 @@ export const BookCallModal: React.FC<BookCallModalProps> = ({
         onClick={(e) => e.stopPropagation()}
         className="relative w-full max-w-lg bg-stone-900 text-stone-100 rounded-2xl sm:rounded-3xl p-5 sm:p-8 shadow-luxury-floating border border-stone-750/80 my-4 sm:my-8 cursor-default"
       >
-        {/* Card Top Close Button */}
+        {/* Single Sleek Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 sm:top-5 sm:right-5 z-40 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-stone-800/90 text-stone-300 hover:text-white hover:bg-stone-700 transition-all border border-white/10 shadow-md cursor-pointer flex items-center justify-center active:scale-95"
+          className="absolute top-4 right-4 sm:top-5 sm:right-5 z-40 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-stone-800/90 text-stone-300 hover:text-white hover:bg-stone-700 transition-all border border-white/15 shadow-md cursor-pointer flex items-center justify-center active:scale-95"
           aria-label="Închide"
+          title="Închide"
         >
-          <X className="w-4 h-4 sm:w-5 sm:h-5 stroke-[2.5]" />
+          <X className="w-5 h-5 stroke-[2.5]" />
         </button>
 
         {!submitted ? (
