@@ -180,29 +180,38 @@ export const BookCallModal: React.FC<BookCallModalProps> = ({
           onClose();
         }
       }}
-      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 overflow-y-auto bg-stone-950/85 backdrop-blur-md cursor-pointer select-none"
+      className="fixed inset-0 z-50 overflow-y-auto bg-stone-950/85 backdrop-blur-md flex items-start justify-center p-3 sm:p-6 min-h-[100dvh] cursor-pointer select-none"
     >
+      {/* Fixed Floating Top-Right Close Button - ALWAYS visible on screen */}
+      <button
+        onClick={onClose}
+        className="fixed top-3 right-3 sm:top-5 sm:right-5 z-[60] w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-stone-800/95 text-white hover:bg-stone-700 transition-all border border-white/25 shadow-[0_10px_25px_rgba(0,0,0,0.8)] cursor-pointer flex items-center justify-center active:scale-90"
+        aria-label="Închide fereastra"
+        title="Închide"
+      >
+        <X className="w-5 h-5 sm:w-6 sm:h-6 stroke-[2.5]" />
+      </button>
+
       <motion.div
-        initial={{ opacity: 0, scale: 0.95, y: 15 }}
+        initial={{ opacity: 0, scale: 0.96, y: 15 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
-        exit={{ opacity: 0, scale: 0.95, y: 15 }}
+        exit={{ opacity: 0, scale: 0.96, y: 15 }}
         transition={{ duration: 0.22 }}
         onClick={(e) => e.stopPropagation()}
-        className="relative w-full max-w-lg bg-stone-900 text-stone-100 rounded-2xl sm:rounded-3xl p-5 sm:p-8 shadow-luxury-floating border border-stone-750/80 overflow-hidden my-3 sm:my-8 cursor-default"
+        className="relative w-full max-w-lg bg-stone-900 text-stone-100 rounded-2xl sm:rounded-3xl p-5 sm:p-8 shadow-luxury-floating border border-stone-750/80 my-4 sm:my-8 cursor-default"
       >
-        {/* Prominent High-Contrast Close Button - Always visible on mobile & desktop */}
+        {/* Card Top Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 sm:top-5 sm:right-5 z-50 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-stone-800/90 text-stone-300 hover:text-white hover:bg-stone-700 transition-all border border-white/10 shadow-lg cursor-pointer flex items-center justify-center active:scale-95"
-          aria-label="Închide fereastra"
-          title="Închide"
+          className="absolute top-4 right-4 sm:top-5 sm:right-5 z-40 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-stone-800/90 text-stone-300 hover:text-white hover:bg-stone-700 transition-all border border-white/10 shadow-md cursor-pointer flex items-center justify-center active:scale-95"
+          aria-label="Închide"
         >
-          <X className="w-5 h-5 stroke-[2.5]" />
+          <X className="w-4 h-4 sm:w-5 sm:h-5 stroke-[2.5]" />
         </button>
 
         {!submitted ? (
           <div>
-            <div className="space-y-1.5 sm:space-y-2 mb-5 sm:mb-6 pr-10">
+            <div className="space-y-1.5 sm:space-y-2 mb-5 sm:mb-6 pr-12">
               <div className="flex items-center gap-1.5 text-bronze-light text-[10px] sm:text-xs font-bold tracking-[0.22em] uppercase">
                 <span className="w-1.5 h-1.5 rounded-full bg-bronze" />
                 <span>SOLICITĂ SCANARE & OFERTĂ 8K</span>
@@ -443,25 +452,33 @@ export const BookCallModal: React.FC<BookCallModalProps> = ({
                 </label>
               </div>
 
-              <div className="pt-2.5">
+              {/* Dual Action Buttons: Submit & Clear Close Button */}
+              <div className="pt-2 flex items-center gap-2.5">
+                <button
+                  type="button"
+                  onClick={onClose}
+                  className="w-1/3 py-3 sm:py-3.5 rounded-xl bg-stone-800 hover:bg-stone-750 text-stone-300 hover:text-white font-bold text-xs tracking-wider uppercase transition-colors text-center cursor-pointer border border-stone-700"
+                >
+                  ÎNCHIDE
+                </button>
                 <button
                   type="submit"
                   disabled={!formData.gdprConsent || isSubmitting || !!phoneError}
-                  className="w-full py-3 sm:py-3.5 rounded-xl bg-stone-100 hover:bg-white text-stone-950 font-bold text-xs tracking-[0.2em] uppercase transition-all duration-300 shadow-lg hover:scale-101 flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-2/3 py-3 sm:py-3.5 rounded-xl bg-stone-100 hover:bg-white text-stone-950 font-bold text-xs tracking-[0.16em] sm:tracking-[0.2em] uppercase transition-all duration-300 shadow-lg hover:scale-101 flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {isSubmitting ? (
                     <>
                       <Loader2 className="w-4 h-4 animate-spin text-stone-950" />
-                      <span>SE TRIMITE SOLICITAREA...</span>
+                      <span>SE TRIMITE...</span>
                     </>
                   ) : (
-                    <span>TRIMITE SOLICITAREA DE TUR 3D</span>
+                    <span>TRIMITE SOLICITAREA</span>
                   )}
                 </button>
-                <p className="mt-2 text-center text-[10px] text-stone-500">
-                  Răspuns garantat în maxim 2 ore cu detalii complete.
-                </p>
               </div>
+              <p className="text-center text-[10px] text-stone-500">
+                Răspuns garantat în maxim 2 ore cu detalii complete.
+              </p>
             </form>
           </div>
         ) : (
