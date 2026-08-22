@@ -26,10 +26,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ heroImage, onBookCall 
 
   // 1. Background Image Transformations
   const bgScale = useTransform(smoothProgress, [0, 0.4, 1], [1.08, 1.02, 1.0]);
-  const bgDarken = useTransform(smoothProgress, [0, 0.45, 0.85], [0.2, 0.35, 0.55]);
+  const bgDarken = useTransform(smoothProgress, [0, 0.45, 0.85], [0.25, 0.4, 0.6]);
 
   // 2. Giant Typography "TRANSYLVIEW" in the Sky
-  const brandY = useTransform(smoothProgress, [0.04, 0.3], [60, 0]);
+  const brandY = useTransform(smoothProgress, [0.04, 0.3], [50, 0]);
   const brandOpacity = useTransform(smoothProgress, [0.04, 0.28], [0, 0.35]);
   const brandScale = useTransform(smoothProgress, [0.04, 0.3], [0.96, 1]);
 
@@ -40,7 +40,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ heroImage, onBookCall 
   const divider2Scale = useTransform(smoothProgress, [0.38, 0.5], [0, 1]);
 
   // 4. Bottom Title
-  const titleY = useTransform(smoothProgress, [0.5, 0.72], ['80%', '0%']);
+  const titleY = useTransform(smoothProgress, [0.5, 0.72], ['60%', '0%']);
   const titleOpacity = useTransform(smoothProgress, [0.5, 0.72], [0, 1]);
 
   // 5. CTA Button & Right Subtitle
@@ -58,10 +58,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ heroImage, onBookCall 
   };
 
   return (
-    <div id="home" ref={containerRef} className="relative h-[250vh] sm:h-[280vh] bg-stone-950">
+    <div id="home" ref={containerRef} className="relative h-[240vh] sm:h-[280vh] bg-stone-950">
       
-      {/* Sticky Fullscreen Viewport */}
-      <div className="sticky top-0 h-screen w-full overflow-hidden flex flex-col justify-between select-none">
+      {/* Sticky Fullscreen Viewport - using 100dvh for mobile viewport accuracy */}
+      <div className="sticky top-0 h-screen h-[100dvh] w-full overflow-hidden flex flex-col justify-between select-none">
         
         {/* Layer 1: Fullscreen Background 3D Tour / Interior Image */}
         <motion.div
@@ -78,33 +78,33 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ heroImage, onBookCall 
             style={{ opacity: bgDarken }}
             className="absolute inset-0 bg-black"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-stone-950 via-stone-950/30 to-stone-950/70" />
-          <div className="absolute inset-0 bg-gradient-to-r from-stone-950/80 via-stone-950/30 to-stone-950/50" />
+          <div className="absolute inset-0 bg-gradient-to-t from-stone-950 via-stone-950/40 to-stone-950/70" />
+          <div className="absolute inset-0 bg-gradient-to-r from-stone-950/85 via-stone-950/30 to-stone-950/60" />
         </motion.div>
 
         {/* Layer 2: Subtle Sky Watermark Typography "TRANSYLVIEW" */}
-        <div className="absolute inset-x-0 top-16 sm:top-24 flex items-center justify-center z-10 pointer-events-none px-4">
+        <div className="absolute inset-x-0 top-14 sm:top-24 flex items-center justify-center z-10 pointer-events-none px-4">
           <motion.h1
             style={{
               y: brandY,
               opacity: brandOpacity,
               scale: brandScale,
             }}
-            className="font-display font-extrabold text-[8vw] sm:text-[6.5vw] lg:text-[5.5vw] tracking-[0.14em] sm:tracking-[0.18em] text-stone-100 uppercase leading-none text-center whitespace-nowrap drop-shadow-[0_15px_30px_rgba(0,0,0,0.9)] max-w-full"
+            className="font-display font-extrabold text-[9vw] sm:text-[6.5vw] lg:text-[5.5vw] tracking-[0.12em] sm:tracking-[0.18em] text-stone-100 uppercase leading-none text-center whitespace-nowrap drop-shadow-[0_15px_30px_rgba(0,0,0,0.9)] max-w-full"
           >
             {propertyHeroData.brandName}
           </motion.h1>
         </div>
 
         {/* Layer 3: Top Navigation Bar */}
-        <header className="relative z-30 w-full px-4 sm:px-8 lg:px-16 pt-4 sm:pt-7 flex items-center justify-between pointer-events-auto">
+        <header className="relative z-30 w-full px-4 sm:px-8 lg:px-16 pt-3.5 sm:pt-7 flex items-center justify-between pointer-events-auto">
           <a
             href="#home"
             onClick={handleScrollToTop}
             className="group flex items-center gap-1.5 sm:gap-2 transition-transform hover:scale-102 cursor-pointer"
             title="Mergi la începutul paginii"
           >
-            <span className="font-display text-lg sm:text-2xl font-bold tracking-[0.2em] sm:tracking-[0.24em] text-white uppercase drop-shadow-md">
+            <span className="font-display text-base sm:text-2xl font-bold tracking-[0.18em] sm:tracking-[0.24em] text-white uppercase drop-shadow-md">
               TRANSYLVIEW <span className="text-bronze text-xs sm:text-base font-normal">3D</span>
             </span>
             <span className="w-1.5 h-1.5 rounded-full bg-bronze" />
@@ -122,28 +122,28 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ heroImage, onBookCall 
           <div>
             <button
               onClick={onBookCall}
-              className="text-[11px] sm:text-xs font-bold tracking-[0.18em] sm:tracking-[0.24em] text-white uppercase bg-stone-900/60 hover:bg-bronze hover:text-stone-950 px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-full border border-white/20 backdrop-blur-md transition-all shadow-md"
+              className="text-[10px] sm:text-xs font-bold tracking-[0.16em] sm:tracking-[0.24em] text-white uppercase bg-stone-900/70 hover:bg-bronze hover:text-stone-950 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full border border-white/20 backdrop-blur-md transition-all shadow-md"
             >
               SOLICITĂ TUR
             </button>
           </div>
         </header>
 
-        {/* Layer 4: Upper-Left Stats Card */}
+        {/* Layer 4: Upper-Left Stats Card (Compact on mobile) */}
         <div className="relative z-30 px-4 sm:px-8 lg:px-16 pt-2 pb-2 my-auto flex items-start">
           <motion.div
             style={{
               opacity: statsOpacity,
               x: statsX,
             }}
-            className="space-y-2.5 sm:space-y-3 max-w-[210px] sm:max-w-[240px] pointer-events-auto bg-stone-950/70 backdrop-blur-md p-3 sm:p-4 rounded-2xl border border-white/15 shadow-2xl"
+            className="space-y-2 sm:space-y-3 max-w-[170px] sm:max-w-[240px] pointer-events-auto bg-stone-950/75 backdrop-blur-md p-2.5 sm:p-4 rounded-2xl border border-white/15 shadow-2xl"
           >
             {/* Stat 1: 8K Ultra-HD */}
             <div className="group cursor-default">
-              <div className="font-display font-bold text-base sm:text-xl text-white tracking-tight leading-tight">
+              <div className="font-display font-bold text-sm sm:text-xl text-white tracking-tight leading-tight">
                 8K ULTRA-HD
               </div>
-              <div className="text-[8px] sm:text-[9px] font-bold tracking-[0.18em] text-stone-300 uppercase mt-0.5">
+              <div className="text-[7.5px] sm:text-[9px] font-bold tracking-[0.16em] sm:tracking-[0.18em] text-stone-300 uppercase mt-0.5">
                 CLARITATE INSTA X5
               </div>
             </div>
@@ -151,15 +151,15 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ heroImage, onBookCall 
             {/* Divider 1 */}
             <motion.div
               style={{ scaleX: divider1Scale }}
-              className="w-8 sm:w-10 h-[1px] bg-white/30 origin-left"
+              className="w-6 sm:w-10 h-[1px] bg-white/30 origin-left"
             />
 
             {/* Stat 2: 100 km Rază Satu Mare & Transilvania */}
             <div className="group cursor-default">
-              <div className="font-display font-bold text-base sm:text-xl text-white tracking-tight leading-tight">
+              <div className="font-display font-bold text-sm sm:text-xl text-white tracking-tight leading-tight">
                 100 KM
               </div>
-              <div className="text-[8px] sm:text-[9px] font-bold tracking-[0.18em] text-stone-300 uppercase mt-0.5">
+              <div className="text-[7.5px] sm:text-[9px] font-bold tracking-[0.16em] sm:tracking-[0.18em] text-stone-300 uppercase mt-0.5">
                 RAZĂ DEPLASARE TRANSILVANIA
               </div>
             </div>
@@ -167,32 +167,32 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ heroImage, onBookCall 
             {/* Divider 2 */}
             <motion.div
               style={{ scaleX: divider2Scale }}
-              className="w-8 sm:w-10 h-[1px] bg-white/30 origin-left"
+              className="w-6 sm:w-10 h-[1px] bg-white/30 origin-left"
             />
 
             {/* Stat 3: 24-48h Livrare Rapidă */}
             <div className="group cursor-default">
-              <div className="font-display font-bold text-base sm:text-xl text-white tracking-tight leading-tight">
+              <div className="font-display font-bold text-sm sm:text-xl text-white tracking-tight leading-tight">
                 24 - 48 ORE
               </div>
-              <div className="text-[8px] sm:text-[9px] font-bold tracking-[0.18em] text-stone-300 uppercase mt-0.5">
+              <div className="text-[7.5px] sm:text-[9px] font-bold tracking-[0.16em] sm:tracking-[0.18em] text-stone-300 uppercase mt-0.5">
                 LIVRARE TUR GATA DE VÂNZARE
               </div>
             </div>
           </motion.div>
         </div>
 
-        {/* Layer 5: Bottom Left Title (Magnetic Punchline) & Right Narrative */}
-        <div className="relative z-30 px-4 sm:px-8 lg:px-16 pb-6 sm:pb-12 pt-2 flex flex-col md:flex-row items-start md:items-end justify-between gap-4 sm:gap-6 pointer-events-auto">
+        {/* Layer 5: Bottom Left Title & Right Narrative (Zero Overlap with Bottom Elements) */}
+        <div className="relative z-30 px-4 sm:px-8 lg:px-16 pb-5 sm:pb-12 pt-2 flex flex-col md:flex-row items-start md:items-end justify-between gap-3 sm:gap-6 pointer-events-auto">
           
-          <div className="space-y-3 sm:space-y-4 max-w-xl lg:max-w-2xl">
+          <div className="space-y-2.5 sm:space-y-4 max-w-xl lg:max-w-2xl w-full sm:w-auto">
             <div className="overflow-hidden">
               <motion.h2
                 style={{
                   y: titleY,
                   opacity: titleOpacity,
                 }}
-                className="font-display font-extrabold text-xl sm:text-3xl md:text-4xl lg:text-[2.5rem] text-white uppercase leading-[1.12] sm:leading-[1.08] tracking-[0.04em] sm:tracking-[0.05em] drop-shadow-[0_15px_30px_rgba(0,0,0,0.9)]"
+                className="font-display font-extrabold text-lg sm:text-3xl md:text-4xl lg:text-[2.5rem] text-white uppercase leading-[1.14] sm:leading-[1.08] tracking-[0.03em] sm:tracking-[0.05em] drop-shadow-[0_15px_30px_rgba(0,0,0,0.9)]"
               >
                 DESCHIDE UȘA PROPRIETĂȚII TALE.
                 <br />
@@ -200,27 +200,28 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ heroImage, onBookCall 
               </motion.h2>
             </div>
 
+            {/* Responsive Action Buttons */}
             <motion.div
               style={{
                 y: btnY,
                 opacity: btnOpacity,
               }}
-              className="flex items-center gap-2.5 sm:gap-3 pt-0.5 sm:pt-1"
+              className="flex items-center gap-2 sm:gap-3 pt-0.5 sm:pt-1 flex-wrap sm:flex-nowrap"
             >
               <button
                 onClick={onBookCall}
-                className="inline-flex items-center gap-2 sm:gap-3 px-5 sm:px-7 py-2.5 sm:py-3 rounded-full bg-white text-stone-950 font-bold text-[11px] sm:text-xs tracking-[0.18em] sm:tracking-[0.22em] uppercase shadow-[0_15px_35px_rgba(0,0,0,0.6)] hover:bg-stone-100 hover:scale-103 transition-all duration-300 group"
+                className="inline-flex items-center gap-1.5 sm:gap-3 px-4 sm:px-7 py-2.5 sm:py-3 rounded-full bg-white text-stone-950 font-bold text-[10px] sm:text-xs tracking-[0.14em] sm:tracking-[0.22em] uppercase shadow-[0_15px_35px_rgba(0,0,0,0.6)] hover:bg-stone-100 hover:scale-103 transition-all duration-300 group"
               >
                 <span>PROGRAMEAZĂ SCANARE 3D</span>
                 <span className="flex items-center text-stone-500 group-hover:text-stone-950 group-hover:translate-x-1.5 transition-transform">
-                  <ChevronRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 -mr-1.5 stroke-[2.5]" />
-                  <ChevronRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 stroke-[2.5]" />
+                  <ChevronRight className="w-3 h-3 sm:w-4 sm:h-4 -mr-1 stroke-[2.5]" />
+                  <ChevronRight className="w-3 h-3 sm:w-4 sm:h-4 stroke-[2.5]" />
                 </span>
               </button>
 
               <a
                 href="#demo-tour"
-                className="inline-flex items-center gap-1.5 sm:gap-2 px-3.5 sm:px-5 py-2.5 sm:py-3 rounded-full bg-stone-900/80 hover:bg-stone-800 text-white font-bold text-[11px] sm:text-xs tracking-wider uppercase border border-white/20 backdrop-blur-sm transition-colors"
+                className="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-5 py-2.5 sm:py-3 rounded-full bg-stone-900/80 hover:bg-stone-800 text-white font-bold text-[10px] sm:text-xs tracking-wider uppercase border border-white/20 backdrop-blur-sm transition-colors"
               >
                 <span>VEZI DEMO 3D</span>
               </a>
@@ -241,8 +242,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ heroImage, onBookCall 
 
         </div>
 
-        {/* Bottom Scroll Progress Bar */}
-        <div className="absolute bottom-2 sm:bottom-3 left-1/2 -translate-x-1/2 z-40 flex items-center gap-2 sm:gap-3 bg-stone-950/80 backdrop-blur-md px-3 sm:px-4 py-1 sm:py-1.5 rounded-full border border-white/10 text-stone-400">
+        {/* Bottom Scroll Progress Bar - Desktop Only (Hidden on mobile to avoid any button collision) */}
+        <div className="hidden sm:flex absolute bottom-2 sm:bottom-3 left-1/2 -translate-x-1/2 z-40 items-center gap-2 sm:gap-3 bg-stone-950/80 backdrop-blur-md px-3 sm:px-4 py-1 sm:py-1.5 rounded-full border border-white/10 text-stone-400 pointer-events-none">
           <ArrowDown className="w-3 h-3 text-bronze animate-bounce" />
           <span className="text-[8px] sm:text-[9px] font-bold tracking-[0.2em] sm:tracking-[0.25em] uppercase text-stone-300">
             DERULEAZĂ PENTRU A DESCOPERI
