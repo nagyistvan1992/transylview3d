@@ -39,7 +39,7 @@ export const Footer: React.FC<FooterProps> = ({ onBookCall, onSecretOpenImageMan
             <div
               onClick={handleLogoClick}
               className="relative inline-block cursor-pointer group"
-              title="TransylView 3D (Faceți 3 clicuri pentru managerul de imagini)"
+              title="TransylView 3D"
             >
               {/* Subtle ambient warm radiance that blends the logo with the dark canvas */}
               <div className="absolute -inset-3 bg-gradient-to-r from-bronze/20 via-stone-400/10 to-transparent rounded-3xl blur-2xl opacity-60 group-hover:opacity-90 transition-opacity duration-500 pointer-events-none" />

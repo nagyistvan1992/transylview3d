@@ -71,8 +71,8 @@ export const VirtualTourViewerModal: React.FC<VirtualTourViewerModalProps> = ({
         {/* Top Header Bar */}
         <div className="px-4 sm:px-6 py-3.5 sm:py-4 bg-stone-950 border-b border-stone-800 flex flex-wrap items-center justify-between gap-3">
           <div className="space-y-0.5 max-w-xl pr-4">
-            <div className="flex items-center gap-2 text-[10px] sm:text-[11px] font-bold tracking-[0.2em] text-bronze uppercase">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+            <div className="flex items-center gap-2 text-[10px] sm:text-[11px] font-mono tracking-[0.2em] text-stone-300 uppercase">
+              <span className="w-1.5 h-1.5 rounded-full bg-bronze" />
               <span>{tour.category}</span>
               <span>•</span>
               <span className="flex items-center gap-1 text-stone-400">

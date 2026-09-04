@@ -67,10 +67,10 @@ export const LiveTourSection: React.FC<LiveTourSectionProps> = ({ onBookCall }) 
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-stone-900 border border-stone-800 text-bronze text-xs font-bold tracking-[0.22em] uppercase"
+            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-stone-900 border border-stone-800 text-stone-300 text-xs font-mono tracking-[0.25em] uppercase"
           >
             <span className="w-1.5 h-1.5 rounded-full bg-bronze" />
-            <span>TUR VIRTUAL 3D INTERACTIV COMPLET</span>
+            <span>EXEMPLU DEMO DIGITAL TWIN 3D</span>
           </motion.div>
 
           <motion.h2
@@ -78,9 +78,9 @@ export const LiveTourSection: React.FC<LiveTourSectionProps> = ({ onBookCall }) 
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="font-serif text-2xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight leading-tight px-2"
+            className="font-serif text-2xl sm:text-4xl lg:text-5xl font-normal text-white tracking-tight leading-tight px-2"
           >
-            Pășește Înăuntru: Explorează Turul Matterport 3D
+            Experiență Interactivă Matterport 3D
           </motion.h2>
 
           <motion.p
@@ -88,19 +88,19 @@ export const LiveTourSection: React.FC<LiveTourSectionProps> = ({ onBookCall }) 
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.15 }}
-            className="text-stone-400 text-xs sm:text-sm max-w-2xl mx-auto leading-relaxed px-4"
+            className="text-stone-400 text-xs sm:text-sm font-light max-w-2xl mx-auto leading-relaxed px-4"
           >
-            Experimentați tehnologia 3D exact așa cum o vor trăi clienții dumneavoastră: navigați liber prin fiecare încăpere, rotiți la 360°, inspectați modelul secțional Dollhouse 3D și verificați măsurătorile exacte.
+            Navigați liber prin fiecare încăpere la 360°, inspectați modelul secțional Dollhouse 3D și verificați măsurătorile de precizie direct în spațiu.
           </motion.p>
         </div>
 
         {/* Dedicated Top Controls Bar */}
-        <div className="mb-3 flex flex-wrap items-center justify-between gap-3 bg-stone-900/90 backdrop-blur-md px-4 sm:px-6 py-3 rounded-2xl border border-stone-800 shadow-md">
+        <div className="mb-3 flex flex-wrap items-center justify-between gap-3 bg-stone-900/90 backdrop-blur-md px-4 sm:px-6 py-3 rounded-2xl border border-stone-800/80 shadow-md">
           <div className="flex items-center gap-2.5">
-            <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse flex-shrink-0" />
-            <span className="text-xs font-bold tracking-wider text-stone-200 uppercase flex items-center gap-1.5 truncate">
+            <span className="w-2 h-2 rounded-full bg-bronze" />
+            <span className="text-xs font-mono tracking-widest text-stone-300 uppercase flex items-center gap-2">
               <Compass className="w-3.5 h-3.5 text-bronze flex-shrink-0" />
-              <span className="truncate">TUR VIRTUAL 3D IMERSIV LIVE</span>
+              <span>TERMINAL VIZUALIZARE 3D MATTEPORT</span>
             </span>
           </div>
 

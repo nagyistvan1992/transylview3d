@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Check, Star, ArrowRight } from 'lucide-react';
+import { Check, ArrowRight } from 'lucide-react';
 import { pricingPackages } from '../data/propertyData';
 
 interface PricingSectionProps {
@@ -48,9 +48,8 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ onSelectPackage 
               >
                 {/* Popular Badge */}
                 {isPopular && (
-                  <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-[#556B2F] text-white text-[11px] font-bold tracking-wider px-4 py-1 rounded-full shadow-md flex items-center gap-1.5 uppercase whitespace-nowrap">
-                    <Star className="w-3 h-3 fill-current" />
-                    <span>Cel mai popular</span>
+                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-stone-900 text-stone-100 text-[10px] font-mono tracking-widest px-3.5 py-1 rounded-full shadow-md uppercase whitespace-nowrap border border-stone-700">
+                    <span>RECOMANDAT PENTRU VÂNZARE</span>
                   </div>
                 )}
 
