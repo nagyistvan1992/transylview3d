@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Check, ArrowRight, Info } from 'lucide-react';
+import { Check, ArrowRight, Info, Building2, Gift, BadgePercent, Sparkles, PhoneCall } from 'lucide-react';
 import { pricingPackages } from '../data/propertyData';
 
 interface PricingSectionProps {
@@ -131,22 +131,140 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ onSelectPackage 
           </div>
         </div>
 
-        {/* Custom Project Note */}
-        <div className="mt-12 sm:mt-16 p-6 sm:p-8 rounded-2xl sm:rounded-3xl bg-stone-100 border border-stone-300/80 text-center max-w-2xl mx-auto space-y-2.5">
-          <h4 className="font-display text-sm sm:text-base font-bold text-stone-900 uppercase tracking-wider">
-            Ai un proiect comercial, hotelier sau ansamblu rezidențial mare?
-          </h4>
-          <p className="text-stone-600 text-xs sm:text-sm leading-relaxed">
-            Oferim soluții dedicate cu scanare 360° la sol a spațiilor exterioare, planuri tehnice detaliate, virtual staging avansat și integrare completă pe website.
-          </p>
-          <div className="pt-2">
+        {/* Dedicated B2B Section for Real Estate Agents & 10+ Property Portfolios */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7 }}
+          className="mt-14 sm:mt-20 relative rounded-3xl sm:rounded-4xl overflow-hidden bg-gradient-to-br from-stone-950 via-stone-900 to-stone-950 border border-stone-800 text-stone-100 shadow-[0_30px_90px_-20px_rgba(0,0,0,0.5)]"
+        >
+          {/* Subtle background ambient accents */}
+          <div className="absolute -top-32 -right-32 w-80 h-80 bg-[#556B2F]/15 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute -bottom-32 -left-32 w-80 h-80 bg-bronze/15 rounded-full blur-3xl pointer-events-none" />
+
+          <div className="relative p-6 sm:p-10 lg:p-14">
+            {/* Top row with badges */}
+            <div className="flex flex-wrap items-center justify-between gap-3 mb-6 sm:mb-8">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-stone-800/90 border border-stone-700 text-stone-300 text-[11px] sm:text-xs font-bold tracking-[0.2em] uppercase font-mono">
+                <Building2 className="w-3.5 h-3.5 text-bronze" />
+                <span>PARTENERIAT B2B • AGENȚII & DEZVOLTATORI</span>
+              </div>
+              <span className="px-3.5 py-1 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 text-xs font-bold tracking-wider uppercase font-mono shadow-sm">
+                🎁 Primul Tur 100% Gratuit
+              </span>
+            </div>
+
+            {/* Header Content */}
+            <div className="max-w-3xl space-y-3 sm:space-y-4 mb-8 sm:mb-12">
+              <h3 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold text-white tracking-tight leading-tight">
+                Ești Agent Imobiliar sau Deții Peste 10 Proprietăți?
+              </h3>
+              <p className="text-stone-300 text-xs sm:text-sm lg:text-base leading-relaxed font-light">
+                Îți oferim ocazia să testezi eficiența scanărilor noastre 3D la cele mai înalte standarde: <strong className="text-white font-semibold underline decoration-bronze underline-offset-4">primul tur virtual este 100% GRATUIT</strong>, fără niciun cost ascuns sau obligație contractuală preliminară.
+              </p>
+            </div>
+
+            {/* 3 Pillar Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 mb-10 sm:mb-12">
+              {/* Pillar 1 */}
+              <div className="p-5 sm:p-6 rounded-2xl bg-stone-900/90 border border-stone-800/90 flex flex-col justify-between hover:border-stone-700 transition-colors">
+                <div className="space-y-3">
+                  <div className="w-10 h-10 rounded-xl bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
+                    <Gift className="w-5 h-5" />
+                  </div>
+                  <h4 className="font-display font-bold text-sm sm:text-base text-white tracking-wide">
+                    1. Primul Tur 3D Gratuit
+                  </h4>
+                  <p className="text-xs sm:text-sm text-stone-400 leading-relaxed font-light">
+                    O scanare pilot completă pentru orice apartament sau casă din portofoliul tău. Primești turul 3D interactiv 8K și fotografiile HDR gata de promovare imediată.
+                  </p>
+                </div>
+                <div className="pt-4 mt-4 border-t border-stone-800/80 flex items-center gap-2 text-[11px] font-mono text-emerald-400">
+                  <Check className="w-3.5 h-3.5 stroke-[2.5]" /> Fără cost • Testezi calitatea
+                </div>
+              </div>
+
+              {/* Pillar 2 */}
+              <div className="p-5 sm:p-6 rounded-2xl bg-stone-900/90 border border-stone-800/90 flex flex-col justify-between hover:border-stone-700 transition-colors">
+                <div className="space-y-3">
+                  <div className="w-10 h-10 rounded-xl bg-amber-500/15 border border-amber-500/30 flex items-center justify-center text-amber-400">
+                    <BadgePercent className="w-5 h-5" />
+                  </div>
+                  <h4 className="font-display font-bold text-sm sm:text-base text-white tracking-wide">
+                    2. Tarife Personalizate de Volum
+                  </h4>
+                  <p className="text-xs sm:text-sm text-stone-400 leading-relaxed font-light">
+                    La semnarea unui contract cadru pentru mai multe proprietăți, primești un tarif avantajos de volum, mult mai rentabil per unitate decât prețurile standard.
+                  </p>
+                </div>
+                <div className="pt-4 mt-4 border-t border-stone-800/80 flex items-center gap-2 text-[11px] font-mono text-amber-300">
+                  <Check className="w-3.5 h-3.5 stroke-[2.5]" /> Cost optimizat per proprietate
+                </div>
+              </div>
+
+              {/* Pillar 3 */}
+              <div className="p-5 sm:p-6 rounded-2xl bg-stone-900/90 border border-stone-800/90 flex flex-col justify-between hover:border-stone-700 transition-colors">
+                <div className="space-y-3">
+                  <div className="w-10 h-10 rounded-xl bg-sky-500/15 border border-sky-500/30 flex items-center justify-center text-sky-400">
+                    <Sparkles className="w-5 h-5" />
+                  </div>
+                  <h4 className="font-display font-bold text-sm sm:text-base text-white tracking-wide">
+                    3. Prioritate & Co-Branding Agenție
+                  </h4>
+                  <p className="text-xs sm:text-sm text-stone-400 leading-relaxed font-light">
+                    Integrare directă a siglei agenției, numărului de telefon și link-urilor de contact în tur. Scanare și livrare prioritară în 24h pentru listările urgente.
+                  </p>
+                </div>
+                <div className="pt-4 mt-4 border-t border-stone-800/80 flex items-center gap-2 text-[11px] font-mono text-sky-300">
+                  <Check className="w-3.5 h-3.5 stroke-[2.5]" /> Livrare 24h • Branding integrat
+                </div>
+              </div>
+            </div>
+
+            {/* CTA Box */}
+            <div className="p-6 sm:p-8 rounded-2xl bg-stone-900/95 border border-stone-800 flex flex-col lg:flex-row items-center justify-between gap-6">
+              <div className="space-y-1.5 text-center lg:text-left">
+                <h5 className="font-serif text-lg sm:text-xl font-bold text-white">
+                  Pregătit să transformi prezentarea proprietăților tale?
+                </h5>
+                <p className="text-xs sm:text-sm text-stone-400 font-light max-w-xl">
+                  Trimite-ne o solicitare rapidă pentru a programa primul tur gratuit sau contactează-ne direct pentru a discuta un pachet personalizat de volum.
+                </p>
+              </div>
+
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full lg:w-auto">
+                <button
+                  onClick={() => onSelectPackage('Parteneriat B2B (Primul Tur Gratuit - 10+ Proprietăți)')}
+                  className="inline-flex items-center justify-center gap-2.5 px-6 sm:px-8 py-3.5 rounded-xl bg-[#556B2F] hover:bg-[#435424] text-white font-bold text-xs uppercase tracking-widest transition-all duration-200 shadow-lg shadow-black/30 hover:scale-[1.02] active:scale-[0.98]"
+                >
+                  <span>Solicită Turul Gratuit B2B</span>
+                  <ArrowRight className="w-4 h-4" />
+                </button>
+                <a
+                  href="tel:0751801025"
+                  className="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl bg-stone-800 hover:bg-stone-700 text-stone-200 font-medium text-xs tracking-wider transition-colors border border-stone-700/60"
+                >
+                  <PhoneCall className="w-3.5 h-3.5 text-bronze" />
+                  <span>0751 801 025</span>
+                </a>
+              </div>
+            </div>
+
+          </div>
+        </motion.div>
+
+        {/* Commercial & Big Complexes Secondary Note */}
+        <div className="mt-8 text-center">
+          <p className="text-xs text-stone-500 font-light">
+            Deții un hotel, showroom auto, spațiu industrial sau ansamblu rezidențial mare?{' '}
             <button
               onClick={() => onSelectPackage('Pachet Personalizat / Complex Rezidențial')}
-              className="text-xs font-bold tracking-widest text-bronze-dark uppercase hover:underline"
+              className="font-medium text-stone-700 hover:text-bronze underline underline-offset-2 transition-colors ml-1"
             >
-              Cere ofertă personalizată →
+              Solicită o ofertă dedicată pentru spații mari →
             </button>
-          </div>
+          </p>
         </div>
 
       </div>
