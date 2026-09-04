@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Check, ArrowRight, Info, Building2, Gift, BadgePercent, Sparkles, PhoneCall } from 'lucide-react';
+import { Check, ArrowRight, Info, Building2, Gift, BadgePercent, Layers, PhoneCall } from 'lucide-react';
 import { pricingPackages } from '../data/propertyData';
 
 interface PricingSectionProps {
@@ -150,8 +150,9 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ onSelectPackage 
                 <Building2 className="w-3.5 h-3.5 text-bronze" />
                 <span>PARTENERIAT B2B • AGENȚII & DEZVOLTATORI</span>
               </div>
-              <span className="px-3.5 py-1 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 text-xs font-bold tracking-wider uppercase font-mono shadow-sm">
-                🎁 Primul Tur 100% Gratuit
+              <span className="px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-[11px] font-bold tracking-wider uppercase font-mono shadow-sm flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                <span>PILOT GRATUIT • FĂRĂ RISC</span>
               </span>
             </div>
 
@@ -207,7 +208,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ onSelectPackage 
               <div className="p-5 sm:p-6 rounded-2xl bg-stone-900/90 border border-stone-800/90 flex flex-col justify-between hover:border-stone-700 transition-colors">
                 <div className="space-y-3">
                   <div className="w-10 h-10 rounded-xl bg-sky-500/15 border border-sky-500/30 flex items-center justify-center text-sky-400">
-                    <Sparkles className="w-5 h-5" />
+                    <Layers className="w-5 h-5" />
                   </div>
                   <h4 className="font-display font-bold text-sm sm:text-base text-white tracking-wide">
                     3. Prioritate & Co-Branding Agenție

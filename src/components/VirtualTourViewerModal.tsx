@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Maximize2, Minimize2, ExternalLink, MapPin, Building, Sparkles, ChevronRight, CheckCircle2 } from 'lucide-react';
+import { X, Maximize2, Minimize2, ExternalLink, MapPin, Building, ChevronRight, CheckCircle2 } from 'lucide-react';
 import { VirtualTourItem } from '../types';
 
 interface VirtualTourViewerModalProps {

@@ -11,10 +11,16 @@ export const Navbar: React.FC<NavbarProps> = ({ onBookCall }) => {
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > window.innerHeight * 1.5);
+      const threshold = window.innerWidth < 768 ? 120 : Math.min(window.innerHeight * 1.2, 700);
+      setScrolled(window.scrollY > threshold);
     };
+    handleScroll();
     window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener('resize', handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleScroll);
+    };
   }, []);
 
   const handleScrollToTop = (e: React.MouseEvent) => {
@@ -81,8 +87,8 @@ export const Navbar: React.FC<NavbarProps> = ({ onBookCall }) => {
         {/* Mobile Menu Toggle */}
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="md:hidden p-2 rounded-lg text-stone-900"
-          aria-label="Deschide meniul"
+          className="md:hidden min-w-[44px] min-h-[44px] p-2.5 rounded-xl text-stone-900 flex items-center justify-center hover:bg-stone-200/60 transition-colors active:scale-95"
+          aria-label={mobileMenuOpen ? "Închide meniul" : "Deschide meniul"}
         >
           {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
         </button>

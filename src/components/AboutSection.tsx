@@ -45,6 +45,8 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ images }) => {
               <img
                 src={images.aboutGear}
                 alt="Insta X5 8K Cameră Profesională Tururi Virtuale 3D"
+                loading="lazy"
+                decoding="async"
                 className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-104"
               />
               

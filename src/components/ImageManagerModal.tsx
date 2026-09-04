@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { X, Upload, RefreshCw, Check, Sparkles, Copy } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { X, Upload, RefreshCw, Check, Camera, Copy } from 'lucide-react';
 import { CustomImages } from '../types';
 import { initialImages } from '../data/propertyData';
 
@@ -86,7 +86,7 @@ export const ImageManagerModal: React.FC<ImageManagerModalProps> = ({
         <div className="flex items-start justify-between border-b border-stone-800 pb-5">
           <div>
             <div className="flex items-center gap-2 text-bronze text-xs font-bold tracking-[0.2em] uppercase">
-              <Sparkles className="w-3.5 h-3.5" />
+              <Camera className="w-3.5 h-3.5" />
               <span>PERSONALIZARE IMAGINI PORTOFOLIU</span>
             </div>
             <h3 className="font-serif text-2xl sm:text-3xl text-white font-normal mt-1">
@@ -184,7 +184,7 @@ export const ImageManagerModal: React.FC<ImageManagerModalProps> = ({
               onClick={handleSave}
               className="flex-1 sm:flex-none px-6 py-2.5 rounded-full bg-bronze hover:bg-bronze-dark text-stone-950 text-xs font-bold tracking-wider uppercase transition-all flex items-center justify-center gap-2"
             >
-              {savedFeedback ? <Check className="w-4 h-4" /> : <Sparkles className="w-4 h-4" />}
+              {savedFeedback ? <Check className="w-4 h-4" /> : <Upload className="w-4 h-4" />}
               <span>{savedFeedback ? 'Salvat!' : 'Aplică Modificările'}</span>
             </button>
           </div>

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, lazy, Suspense } from 'react';
 import { Navbar } from './components/Navbar';
 import { HeroSection } from './components/HeroSection';
 import { AboutSection } from './components/AboutSection';
@@ -9,14 +9,17 @@ import { RoiBenefitsSection } from './components/RoiBenefitsSection';
 import { PricingSection } from './components/PricingSection';
 import { LocationSection } from './components/LocationSection';
 import { Footer } from './components/Footer';
-import { BookCallModal } from './components/BookCallModal';
-import { VirtualTourViewerModal } from './components/VirtualTourViewerModal';
-import { TourManagerModal } from './components/TourManagerModal';
-import { ImageManagerModal } from './components/ImageManagerModal';
 import { CookieBanner } from './components/CookieBanner';
-import { LegalModal, LegalDocType } from './components/LegalModal';
+import { LegalDocType } from './components/LegalModal';
 import { CustomImages, VirtualTourItem } from './types';
 import { initialImages, initialVirtualTours } from './data/propertyData';
+
+// Lazy-loaded modal components for fast initial mobile rendering
+const BookCallModal = lazy(() => import('./components/BookCallModal').then((m) => ({ default: m.BookCallModal })));
+const VirtualTourViewerModal = lazy(() => import('./components/VirtualTourViewerModal').then((m) => ({ default: m.VirtualTourViewerModal })));
+const TourManagerModal = lazy(() => import('./components/TourManagerModal').then((m) => ({ default: m.TourManagerModal })));
+const ImageManagerModal = lazy(() => import('./components/ImageManagerModal').then((m) => ({ default: m.ImageManagerModal })));
+const LegalModal = lazy(() => import('./components/LegalModal').then((m) => ({ default: m.LegalModal })));
 
 const LOCAL_STORAGE_IMAGES_KEY = 'transylview_custom_images_v4';
 const LOCAL_STORAGE_TOURS_KEY = 'transylview_virtual_tours_v3';
@@ -172,48 +175,61 @@ export function App() {
         onOpenLegal={(doc) => setLegalDocOpen(doc)}
       />
 
-      {/* Booking & Quote Modal with Mandatory GDPR Consent Checkbox */}
-      <BookCallModal
-        isOpen={bookCallOpen}
-        onClose={() => setBookCallOpen(false)}
-        defaultPackage={selectedPackage}
-        onOpenLegal={(doc) => setLegalDocOpen(doc)}
-      />
+      {/* Lazy-Loaded Modals wrapped in Suspense */}
+      <Suspense fallback={null}>
+        {/* Booking & Quote Modal with Mandatory GDPR Consent Checkbox */}
+        {bookCallOpen && (
+          <BookCallModal
+            isOpen={bookCallOpen}
+            onClose={() => setBookCallOpen(false)}
+            defaultPackage={selectedPackage}
+            onOpenLegal={(doc) => setLegalDocOpen(doc)}
+          />
+        )}
 
-      {/* 3D Interactive Virtual Tour Fullscreen Modal Player */}
-      <VirtualTourViewerModal
-        tour={activeTourViewer}
-        onClose={() => setActiveTourViewer(null)}
-        onRequestQuote={(propType) => handleOpenBookCall(propType)}
-      />
+        {/* 3D Interactive Virtual Tour Fullscreen Modal Player */}
+        {activeTourViewer && (
+          <VirtualTourViewerModal
+            tour={activeTourViewer}
+            onClose={() => setActiveTourViewer(null)}
+            onRequestQuote={(propType) => handleOpenBookCall(propType)}
+          />
+        )}
 
-      {/* Tour Manager Admin Modal (Upload, Edit, Delete, Export 3D Tours) */}
-      <TourManagerModal
-        isOpen={tourManagerOpen}
-        onClose={() => setTourManagerOpen(false)}
-        tours={virtualTours}
-        onUpdateTours={handleUpdateVirtualTours}
-        onPreviewTour={(tour) => setActiveTourViewer(tour)}
-      />
+        {/* Tour Manager Admin Modal (Upload, Edit, Delete, Export 3D Tours) */}
+        {tourManagerOpen && (
+          <TourManagerModal
+            isOpen={tourManagerOpen}
+            onClose={() => setTourManagerOpen(false)}
+            tours={virtualTours}
+            onUpdateTours={handleUpdateVirtualTours}
+            onPreviewTour={(tour) => setActiveTourViewer(tour)}
+          />
+        )}
 
-      {/* Image & Asset Customizer Modal */}
-      <ImageManagerModal
-        isOpen={imageManagerOpen}
-        onClose={() => setImageManagerOpen(false)}
-        images={images}
-        onUpdateImages={handleUpdateImages}
-      />
+        {/* Image & Asset Customizer Modal */}
+        {imageManagerOpen && (
+          <ImageManagerModal
+            isOpen={imageManagerOpen}
+            onClose={() => setImageManagerOpen(false)}
+            images={images}
+            onUpdateImages={handleUpdateImages}
+          />
+        )}
+
+        {/* Complete Legal Documents Modal (Terms, GDPR Privacy Policy, Cookie Policy) */}
+        {legalDocOpen && (
+          <LegalModal
+            activeDoc={legalDocOpen}
+            onClose={() => setLegalDocOpen(null)}
+            onSelectDoc={(doc) => setLegalDocOpen(doc)}
+          />
+        )}
+      </Suspense>
 
       {/* GDPR Compliant Interactive Cookie Consent Banner */}
       <CookieBanner
         onOpenLegal={(doc) => setLegalDocOpen(doc)}
-      />
-
-      {/* Complete Legal Documents Modal (Terms, GDPR Privacy Policy, Cookie Policy) */}
-      <LegalModal
-        activeDoc={legalDocOpen}
-        onClose={() => setLegalDocOpen(null)}
-        onSelectDoc={(doc) => setLegalDocOpen(doc)}
       />
     </div>
   );

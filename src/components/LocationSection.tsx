@@ -41,6 +41,8 @@ export const LocationSection: React.FC = () => {
             <img
               src="/images/retreat_terrace.jpg"
               alt="TransylView 3D Acoperire Satu Mare și Transilvania"
+              loading="lazy"
+              decoding="async"
               className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-stone-950/80 via-stone-950/20 to-transparent" />

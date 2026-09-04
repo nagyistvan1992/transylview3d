@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { TrendingUp, Clock, Eye, Filter, Globe2, DollarSign, ShieldCheck, Sparkles } from 'lucide-react';
+import { TrendingUp, Clock, Eye, Filter, Globe2, DollarSign, ShieldCheck } from 'lucide-react';
 
 export const RoiBenefitsSection: React.FC = () => {
   const stats = [

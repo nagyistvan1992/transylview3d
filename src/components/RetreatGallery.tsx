@@ -84,6 +84,8 @@ export const RetreatGallery: React.FC<RetreatGalleryProps> = ({ images }) => {
                   <img
                     src={item.image}
                     alt={item.title}
+                    loading="lazy"
+                    decoding="async"
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-108"
                   />
                   
@@ -131,6 +133,8 @@ export const RetreatGallery: React.FC<RetreatGalleryProps> = ({ images }) => {
                   <img
                     src={activeItem.image}
                     alt={activeItem.title}
+                    loading="lazy"
+                    decoding="async"
                     className="w-full h-full object-cover object-center"
                   />
                   {/* Subtle desktop gradient, invisible or light on mobile */}

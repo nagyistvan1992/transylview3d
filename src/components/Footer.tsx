@@ -1,5 +1,5 @@
 import React from 'react';
-import { Mail, Phone, MapPin, Sparkles, Shield, FileText, Cookie } from 'lucide-react';
+import { Mail, Phone, MapPin, Shield, FileText, Cookie } from 'lucide-react';
 import { LegalDocType } from './LegalModal';
 import { contactData } from '../data/propertyData';
 
@@ -47,7 +47,9 @@ export const Footer: React.FC<FooterProps> = ({ onBookCall, onSecretOpenImageMan
               <div className="relative space-y-2">
                 <img
                   src="/images/logo_clean_gold.png"
-                  alt="TransylView 3D Logo"
+                  alt="TransylView 3D Logo Satu Mare"
+                  loading="lazy"
+                  decoding="async"
                   className="h-20 sm:h-28 w-auto max-w-[240px] sm:max-w-[300px] object-contain drop-shadow-[0_10px_30px_rgba(0,0,0,0.5)] group-hover:scale-102 transition-transform duration-300"
                 />
                 
@@ -146,6 +148,8 @@ export const Footer: React.FC<FooterProps> = ({ onBookCall, onSecretOpenImageMan
                 <img
                   src="/images/anpc-sal.svg"
                   alt="ANPC SAL - Soluționarea Alternativă a Litigiilor"
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-auto block"
                 />
               </a>
@@ -161,6 +165,8 @@ export const Footer: React.FC<FooterProps> = ({ onBookCall, onSecretOpenImageMan
                 <img
                   src="/images/anpc-sol.svg"
                   alt="Comisia Europeană SOL - Soluționarea Online a Litigiilor"
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-auto block"
                 />
               </a>
