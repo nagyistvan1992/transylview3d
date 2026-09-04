@@ -11,9 +11,17 @@ export const Navbar: React.FC<NavbarProps> = ({ onBookCall }) => {
 
   useEffect(() => {
     const handleScroll = () => {
-      const threshold = window.innerWidth < 768 ? 120 : Math.min(window.innerHeight * 1.2, 700);
-      setScrolled(window.scrollY > threshold);
+      const heroEl = document.getElementById('home');
+      if (heroEl) {
+        const heroBottom = heroEl.getBoundingClientRect().bottom;
+        // Navbar only appears when the user has scrolled past the pinned Hero section
+        // (so it NEVER overlaps or covers the Hero's title, watermark, or Hero menu)
+        setScrolled(heroBottom <= 80);
+      } else {
+        setScrolled(window.scrollY > window.innerHeight * 1.5);
+      }
     };
+
     handleScroll();
     window.addEventListener('scroll', handleScroll, { passive: true });
     window.addEventListener('resize', handleScroll, { passive: true });

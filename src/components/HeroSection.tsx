@@ -1,6 +1,6 @@
-import React, { useRef } from 'react';
-import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
-import { ChevronRight, ArrowDown } from 'lucide-react';
+import React, { useRef, useState } from 'react';
+import { motion, useScroll, useTransform, useSpring, AnimatePresence } from 'framer-motion';
+import { ChevronRight, ArrowDown, Menu, X } from 'lucide-react';
 import { propertyHeroData } from '../data/propertyData';
 
 interface HeroSectionProps {
@@ -10,6 +10,7 @@ interface HeroSectionProps {
 
 export const HeroSection: React.FC<HeroSectionProps> = ({ heroImage, onBookCall }) => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [heroMenuOpen, setHeroMenuOpen] = useState(false);
 
   // Track scroll progression inside this 260vh pinned track
   const { scrollYProgress } = useScroll({
@@ -49,6 +50,11 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ heroImage, onBookCall 
   const subtitleOpacity = useTransform(smoothProgress, [0.68, 0.88], [0, 1]);
   const subtitleY = useTransform(smoothProgress, [0.68, 0.88], [15, 0]);
 
+  // 6. Scroll Prompts Opacity
+  // Mobile prompt is fully visible at start (1) and fades out smoothly as soon as user begins scrolling (by 0.08)
+  const mobileScrollPromptOpacity = useTransform(smoothProgress, [0, 0.08], [1, 0]);
+  const desktopScrollIndicatorOpacity = useTransform(smoothProgress, [0, 0.88, 0.96], [1, 1, 0]);
+
   // Scroll Progress Bar percentage
   const scrollIndicatorWidth = useTransform(smoothProgress, [0, 1], ['12%', '100%']);
 
@@ -58,7 +64,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ heroImage, onBookCall 
   };
 
   return (
-    <div id="home" ref={containerRef} className="relative h-[240vh] sm:h-[280vh] bg-stone-950">
+    <div id="home" ref={containerRef} className="relative h-[210vh] sm:h-[260vh] bg-stone-950">
       
       {/* Sticky Fullscreen Viewport - using 100dvh for mobile viewport accuracy */}
       <div className="sticky top-0 h-screen h-[100dvh] w-full overflow-hidden flex flex-col justify-between select-none">
@@ -121,14 +127,96 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ heroImage, onBookCall 
             <a href="#location" className="hover:text-white transition-colors">ZONĂ & CONTACT</a>
           </nav>
 
-          <div>
+          <div className="flex items-center gap-2">
             <button
               onClick={onBookCall}
-              className="text-[10px] sm:text-xs font-bold tracking-[0.16em] sm:tracking-[0.24em] text-white uppercase bg-stone-900/70 hover:bg-bronze hover:text-stone-950 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full border border-white/20 backdrop-blur-md transition-all shadow-md"
+              className="text-[10px] sm:text-xs font-bold tracking-[0.16em] sm:tracking-[0.24em] text-white uppercase bg-stone-900/70 hover:bg-bronze hover:text-stone-950 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full border border-white/20 backdrop-blur-md transition-all shadow-md active:scale-95"
             >
               SOLICITĂ TUR
             </button>
+
+            {/* Mobile Menu Toggle Button */}
+            <button
+              onClick={() => setHeroMenuOpen(!heroMenuOpen)}
+              className="md:hidden min-w-[34px] min-h-[34px] p-2 rounded-full bg-stone-900/80 hover:bg-stone-800 text-stone-200 hover:text-white border border-white/20 backdrop-blur-md transition-all flex items-center justify-center active:scale-95"
+              aria-label={heroMenuOpen ? "Închide meniul" : "Deschide meniul"}
+            >
+              {heroMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
+            </button>
           </div>
+
+          {/* Mobile Hero Dropdown Menu */}
+          <AnimatePresence>
+            {heroMenuOpen && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.2 }}
+                className="md:hidden absolute top-full left-4 right-4 mt-2 p-5 bg-stone-950/95 backdrop-blur-xl rounded-2xl border border-stone-800/90 shadow-2xl space-y-3 z-50 pointer-events-auto"
+              >
+                <div className="flex flex-col space-y-2.5 text-xs font-bold tracking-[0.2em] uppercase font-mono">
+                  <a
+                    href="#home"
+                    onClick={(e) => {
+                      handleScrollToTop(e);
+                      setHeroMenuOpen(false);
+                    }}
+                    className="text-stone-300 hover:text-white py-2 border-b border-stone-800/60"
+                  >
+                    ACASĂ
+                  </a>
+                  <a
+                    href="#about"
+                    onClick={() => setHeroMenuOpen(false)}
+                    className="text-stone-300 hover:text-white py-2 border-b border-stone-800/60"
+                  >
+                    DESPRE NOI & TEHNOLOGIE
+                  </a>
+                  <a
+                    href="#demo-tour"
+                    onClick={() => setHeroMenuOpen(false)}
+                    className="text-bronze-light hover:text-white py-2 border-b border-stone-800/60"
+                  >
+                    DEMO 3D INTERACTIV
+                  </a>
+                  <a
+                    href="#virtual-tours"
+                    onClick={() => setHeroMenuOpen(false)}
+                    className="text-stone-300 hover:text-white py-2 border-b border-stone-800/60"
+                  >
+                    PORTOFOLIU 3D
+                  </a>
+                  <a
+                    href="#pricing"
+                    onClick={() => setHeroMenuOpen(false)}
+                    className="text-stone-300 hover:text-white py-2 border-b border-stone-800/60"
+                  >
+                    PACHETE & PREȚURI
+                  </a>
+                  <a
+                    href="#location"
+                    onClick={() => setHeroMenuOpen(false)}
+                    className="text-stone-300 hover:text-white py-2"
+                  >
+                    ZONĂ & CONTACT
+                  </a>
+                </div>
+
+                <div className="pt-2">
+                  <button
+                    onClick={() => {
+                      setHeroMenuOpen(false);
+                      onBookCall();
+                    }}
+                    className="w-full py-3 rounded-full bg-bronze hover:bg-bronze-dark text-stone-950 font-bold text-xs uppercase tracking-widest shadow-md transition-all"
+                  >
+                    PROGRAMEAZĂ SCANARE 3D
+                  </button>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </header>
 
         {/* Layer 4: Upper-Left Stats Card (Compact on mobile) */}
@@ -244,8 +332,36 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ heroImage, onBookCall 
 
         </div>
 
-        {/* Bottom Scroll Progress Bar - Desktop Only (Hidden on mobile to avoid any button collision) */}
-        <div className="hidden sm:flex absolute bottom-2 sm:bottom-3 left-1/2 -translate-x-1/2 z-40 items-center gap-2 sm:gap-3 bg-stone-950/80 backdrop-blur-md px-3 sm:px-4 py-1 sm:py-1.5 rounded-full border border-white/10 text-stone-400 pointer-events-none">
+        {/* Mobile Animated Scroll Prompt Indicator */}
+        <motion.div
+          style={{ opacity: mobileScrollPromptOpacity }}
+          className="sm:hidden absolute bottom-5 left-1/2 -translate-x-1/2 z-40 flex flex-col items-center gap-1.5 pointer-events-none select-none"
+        >
+          <div className="flex items-center gap-1.5 bg-stone-950/85 backdrop-blur-md px-3 py-1 rounded-full border border-white/20 shadow-xl">
+            <span className="w-1.5 h-1.5 rounded-full bg-bronze animate-pulse" />
+            <span className="text-[9px] font-mono font-bold tracking-[0.22em] text-stone-200 uppercase">
+              GLISEAZĂ PENTRU A EXPLORA
+            </span>
+          </div>
+
+          <motion.div
+            animate={{ y: [0, 5, 0] }}
+            transition={{ repeat: Infinity, duration: 1.4, ease: "easeInOut" }}
+            className="w-5 h-8 rounded-full border-2 border-white/35 bg-stone-950/60 backdrop-blur-sm flex items-start justify-center pt-1.5 shadow-lg"
+          >
+            <motion.div
+              animate={{ y: [0, 10, 0], opacity: [1, 0.2, 1] }}
+              transition={{ repeat: Infinity, duration: 1.4, ease: "easeInOut" }}
+              className="w-1.5 h-2 rounded-full bg-bronze"
+            />
+          </motion.div>
+        </motion.div>
+
+        {/* Bottom Scroll Progress Bar - Desktop */}
+        <motion.div
+          style={{ opacity: desktopScrollIndicatorOpacity }}
+          className="hidden sm:flex absolute bottom-2 sm:bottom-3 left-1/2 -translate-x-1/2 z-40 items-center gap-2 sm:gap-3 bg-stone-950/80 backdrop-blur-md px-3 sm:px-4 py-1 sm:py-1.5 rounded-full border border-white/10 text-stone-400 pointer-events-none"
+        >
           <ArrowDown className="w-3 h-3 text-bronze animate-bounce" />
           <span className="text-[8px] sm:text-[9px] font-bold tracking-[0.2em] sm:tracking-[0.25em] uppercase text-stone-300">
             DERULEAZĂ PENTRU A DESCOPERI
@@ -256,7 +372,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ heroImage, onBookCall 
               className="h-full bg-bronze rounded-full"
             />
           </div>
-        </div>
+        </motion.div>
 
       </div>
 
