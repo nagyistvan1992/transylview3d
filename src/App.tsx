@@ -38,13 +38,13 @@ export function App() {
     return initialImages;
   });
 
-  // 2. Virtual Tours Portfolio State (with persistent LocalStorage and multi-device parity)
+  // 2. Virtual Tours Portfolio State (with persistent LocalStorage)
   const [virtualTours, setVirtualTours] = useState<VirtualTourItem[]>(() => {
     const saved = localStorage.getItem(LOCAL_STORAGE_TOURS_KEY);
     if (saved) {
       try {
         const parsed = JSON.parse(saved);
-        if (Array.isArray(parsed) && parsed.length >= initialVirtualTours.length) {
+        if (Array.isArray(parsed)) {
           return parsed;
         }
       } catch (e) {
@@ -110,6 +110,36 @@ export function App() {
     };
   }, []);
 
+  // Sync virtual tours in real-time across multiple tabs or responsive mobile/desktop windows
+  useEffect(() => {
+    const handleStorageUpdate = (e: StorageEvent) => {
+      if (e.key === LOCAL_STORAGE_TOURS_KEY && e.newValue) {
+        try {
+          const parsed = JSON.parse(e.newValue);
+          if (Array.isArray(parsed)) {
+            setVirtualTours(parsed);
+          }
+        } catch (err) {
+          console.error('Failed to sync tours from storage event', err);
+        }
+      }
+    };
+
+    const handleCustomUpdate = (e: Event) => {
+      const customEvent = e as CustomEvent<VirtualTourItem[]>;
+      if (customEvent.detail && Array.isArray(customEvent.detail)) {
+        setVirtualTours(customEvent.detail);
+      }
+    };
+
+    window.addEventListener('storage', handleStorageUpdate);
+    window.addEventListener('tv3d_tours_updated', handleCustomUpdate);
+    return () => {
+      window.removeEventListener('storage', handleStorageUpdate);
+      window.removeEventListener('tv3d_tours_updated', handleCustomUpdate);
+    };
+  }, []);
+
   const handleUpdateImages = (updated: CustomImages) => {
     setImages(updated);
     localStorage.setItem(LOCAL_STORAGE_IMAGES_KEY, JSON.stringify(updated));
@@ -118,6 +148,7 @@ export function App() {
   const handleUpdateVirtualTours = (updatedTours: VirtualTourItem[]) => {
     setVirtualTours(updatedTours);
     localStorage.setItem(LOCAL_STORAGE_TOURS_KEY, JSON.stringify(updatedTours));
+    window.dispatchEvent(new CustomEvent('tv3d_tours_updated', { detail: updatedTours }));
   };
 
   const handleOpenBookCall = (packageName?: string) => {

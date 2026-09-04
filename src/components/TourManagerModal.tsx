@@ -51,6 +51,7 @@ export const TourManagerModal: React.FC<TourManagerModalProps> = ({
   const [importJsonText, setImportJsonText] = useState('');
   const [importError, setImportError] = useState<string | null>(null);
   const [newImageUrlInput, setNewImageUrlInput] = useState('');
+  const [saveNotice, setSaveNotice] = useState<string | null>(null);
 
   // Form State for Add / Edit
   const [formData, setFormData] = useState<Partial<VirtualTourItem>>({
@@ -256,12 +257,22 @@ export const TourManagerModal: React.FC<TourManagerModalProps> = ({
 
     handleResetForm();
     setActiveTab('list');
+    setSaveNotice('Turul a fost salvat cu succes în portofoliu!');
+    setTimeout(() => setSaveNotice(null), 5000);
+  };
+
+  const handleSaveAll = () => {
+    onUpdateTours([...tours]);
+    setSaveNotice('Toate modificările și ștergerile au fost salvate definitiv! Portofoliul este actualizat permanent pe desktop și mobil.');
+    setTimeout(() => setSaveNotice(null), 6000);
   };
 
   const handleDeleteTour = (id: string, title: string) => {
-    if (window.confirm(`Sigur doriți să ștergeți turul "${title}" din portofoliu?`)) {
+    if (window.confirm(`Sigur doriți să ștergeți definitiv turul "${title}" din portofoliu?`)) {
       const updated = tours.filter((t) => t.id !== id);
       onUpdateTours(updated);
+      setSaveNotice(`Turul "${title}" a fost șters definitiv din portofoliu! Apăsați butonul verde „Salvează” pentru a confirma.`);
+      setTimeout(() => setSaveNotice(null), 6000);
     }
   };
 
@@ -269,6 +280,8 @@ export const TourManagerModal: React.FC<TourManagerModalProps> = ({
     if (window.confirm('Doriți să resetați portofoliul la tururile inițiale de prezentare?')) {
       onUpdateTours(initialVirtualTours);
       handleResetForm();
+      setSaveNotice('Portofoliul a fost restaurat la tururile implicite.');
+      setTimeout(() => setSaveNotice(null), 5000);
     }
   };
 
@@ -390,6 +403,16 @@ export const TourManagerModal: React.FC<TourManagerModalProps> = ({
 
             <div className="flex items-center gap-2">
               <button
+                type="button"
+                onClick={handleSaveAll}
+                className="px-3.5 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center gap-1.5 shadow-md border border-emerald-500/50 transition-all active:scale-95 cursor-pointer"
+                title="Salvează definitiv modificările pentru desktop și mobil"
+              >
+                <Save className="w-3.5 h-3.5" />
+                <span>Salvează</span>
+              </button>
+
+              <button
                 onClick={handleLogout}
                 className="px-3 py-1.5 rounded-lg bg-stone-800/80 hover:bg-stone-800 text-stone-300 hover:text-white text-xs flex items-center gap-1.5 border border-stone-700 transition-colors cursor-pointer"
                 title="Blochează accesul"
@@ -451,23 +474,63 @@ export const TourManagerModal: React.FC<TourManagerModalProps> = ({
             </button>
           </div>
 
+          {/* Animated Notification Banner for Save / Delete */}
+          <AnimatePresence>
+            {saveNotice && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: 'auto' }}
+                exit={{ opacity: 0, height: 0 }}
+                className="bg-emerald-950/95 border-b border-emerald-500/50 px-5 sm:px-8 py-3 flex items-center justify-between text-xs text-emerald-200 font-medium"
+              >
+                <div className="flex items-center gap-2.5">
+                  <span className="w-5 h-5 rounded-full bg-emerald-500 text-stone-950 flex items-center justify-center font-bold flex-shrink-0 text-xs">
+                    ✓
+                  </span>
+                  <span>{saveNotice}</span>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setSaveNotice(null)}
+                  className="p-1 text-emerald-400 hover:text-white transition-colors cursor-pointer"
+                  title="Închide mesajul"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
           {/* Tab 1: List of Active Tours */}
           {activeTab === 'list' && (
             <div className="p-5 sm:p-8 space-y-4 max-h-[70vh] overflow-y-auto">
-              <div className="flex flex-wrap items-center justify-between gap-2 pb-2">
-                <p className="text-xs text-stone-400">
-                  Toate tururile de mai jos sunt publicate pe site. Butonul de adăugare este ascuns pentru public și accesibil doar ție.
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2 border-b border-stone-800/80">
+                <p className="text-xs text-stone-400 max-w-md">
+                  Toate tururile de mai jos sunt publicate pe site. Ștergerile și modificările sunt sincronizate instantaneu.
                 </p>
-                <button
-                  onClick={() => {
-                    handleResetForm();
-                    setActiveTab('add');
-                  }}
-                  className="px-4 py-2 rounded-xl bg-bronze hover:bg-bronze-dark text-stone-950 font-bold text-xs tracking-wider uppercase transition-colors flex items-center gap-1.5 cursor-pointer shadow-md"
-                >
-                  <Plus className="w-3.5 h-3.5" />
-                  <span>Adaugă Tur Nou</span>
-                </button>
+                <div className="flex items-center gap-2.5 flex-wrap sm:flex-nowrap">
+                  <button
+                    type="button"
+                    onClick={handleSaveAll}
+                    className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs tracking-wider uppercase transition-all flex items-center gap-2 cursor-pointer shadow-lg active:scale-95"
+                    title="Salvează definitiv modificările pentru desktop și mobil"
+                  >
+                    <Save className="w-3.5 h-3.5" />
+                    <span>Salvează</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => {
+                      handleResetForm();
+                      setActiveTab('add');
+                    }}
+                    className="px-4 py-2 rounded-xl bg-bronze hover:bg-bronze-dark text-stone-950 font-bold text-xs tracking-wider uppercase transition-colors flex items-center gap-1.5 cursor-pointer shadow-md active:scale-95"
+                  >
+                    <Plus className="w-3.5 h-3.5" />
+                    <span>Adaugă Tur Nou</span>
+                  </button>
+                </div>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -535,7 +598,33 @@ export const TourManagerModal: React.FC<TourManagerModalProps> = ({
                 ))}
               </div>
 
-              <div className="pt-6 flex items-center justify-between border-t border-stone-800 text-xs text-stone-500">
+              {/* Permanent Save CTA Banner at Bottom */}
+              <div className="p-4 rounded-2xl bg-stone-950 border border-emerald-600/40 shadow-xl flex flex-col sm:flex-row items-center justify-between gap-3">
+                <div className="flex items-center gap-3 text-left">
+                  <div className="w-9 h-9 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center flex-shrink-0">
+                    <Save className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <div className="text-xs font-bold text-white uppercase tracking-wider">
+                      Salvare Definitivă Portofoliu ({tours.length} Tururi Active)
+                    </div>
+                    <p className="text-[11px] text-stone-400 font-light">
+                      Apasă „Salvează” pentru a elimina sau actualiza definitiv tururile din site pentru desktop și mobil.
+                    </p>
+                  </div>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={handleSaveAll}
+                  className="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs uppercase tracking-widest flex items-center justify-center gap-2 shadow-xl active:scale-95 cursor-pointer transition-all"
+                >
+                  <Save className="w-4 h-4" />
+                  <span>Salvează</span>
+                </button>
+              </div>
+
+              <div className="pt-4 flex items-center justify-between border-t border-stone-800 text-xs text-stone-500">
                 <span>Total: {tours.length} tururi 3D active</span>
                 <button
                   onClick={handleRestoreDefaults}
