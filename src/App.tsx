@@ -21,8 +21,8 @@ const TourManagerModal = lazy(() => import('./components/TourManagerModal').then
 const ImageManagerModal = lazy(() => import('./components/ImageManagerModal').then((m) => ({ default: m.ImageManagerModal })));
 const LegalModal = lazy(() => import('./components/LegalModal').then((m) => ({ default: m.LegalModal })));
 
-const LOCAL_STORAGE_IMAGES_KEY = 'transylview_custom_images_v4';
-const LOCAL_STORAGE_TOURS_KEY = 'transylview_virtual_tours_v3';
+const LOCAL_STORAGE_IMAGES_KEY = 'transylview_custom_images_v5';
+const LOCAL_STORAGE_TOURS_KEY = 'transylview_virtual_tours_v5';
 
 export function App() {
   // 1. Custom Images State
@@ -38,12 +38,15 @@ export function App() {
     return initialImages;
   });
 
-  // 2. Virtual Tours Portfolio State (with persistent LocalStorage)
+  // 2. Virtual Tours Portfolio State (with persistent LocalStorage and multi-device parity)
   const [virtualTours, setVirtualTours] = useState<VirtualTourItem[]>(() => {
     const saved = localStorage.getItem(LOCAL_STORAGE_TOURS_KEY);
     if (saved) {
       try {
-        return JSON.parse(saved);
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed) && parsed.length >= initialVirtualTours.length) {
+          return parsed;
+        }
       } catch (e) {
         console.error('Failed to parse cached virtual tours', e);
       }

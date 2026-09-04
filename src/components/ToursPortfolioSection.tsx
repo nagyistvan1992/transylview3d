@@ -329,8 +329,8 @@ export const ToursPortfolioSection: React.FC<ToursPortfolioSectionProps> = ({
             </div>
 
             {/* City & Search Controls */}
-            <div className="flex items-center gap-3">
-              <div className="relative min-w-[140px]">
+            <div className="flex items-center gap-2.5 sm:gap-3 w-full md:w-auto">
+              <div className="relative flex-1 md:flex-initial md:min-w-[140px]">
                 <MapPin className="w-3.5 h-3.5 text-stone-500 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
                 <select
                   value={selectedCity}
@@ -345,7 +345,7 @@ export const ToursPortfolioSection: React.FC<ToursPortfolioSectionProps> = ({
                 </select>
               </div>
 
-              <div className="relative w-44 sm:w-56">
+              <div className="relative flex-1 md:flex-initial md:w-56">
                 <Search className="w-3.5 h-3.5 text-stone-500 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
                 <input
                   type="text"
