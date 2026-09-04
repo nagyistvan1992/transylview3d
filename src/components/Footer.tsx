@@ -61,7 +61,7 @@ export const Footer: React.FC<FooterProps> = ({ onBookCall, onSecretOpenImageMan
             </div>
 
             <p className="text-xs sm:text-sm text-stone-400 leading-relaxed max-w-sm">
-              Standardul de excelență în digitalizarea proprietăților imobiliare din Satu Mare și Transilvania. Tehnologie Insta X5 8K, planuri 2D cotate și modele secționale Dollhouse 3D.
+              Standardul de excelență în digitalizarea proprietăților imobiliare din Satu Mare și Transilvania. Tehnologie Insta X5 8K, tururi virtuale imersive 360° și modele secționale Dollhouse 3D.
             </p>
 
             <div className="pt-1">

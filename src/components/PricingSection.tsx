@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Check, ArrowRight } from 'lucide-react';
+import { Check, ArrowRight, Info } from 'lucide-react';
 import { pricingPackages } from '../data/propertyData';
 
 interface PricingSectionProps {
@@ -115,6 +115,20 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ onSelectPackage 
               </motion.div>
             );
           })}
+        </div>
+
+        {/* Extra Cost Disclaimer for 2D Floor Plans */}
+        <div className="mt-8 sm:mt-10 p-5 sm:p-6 rounded-2xl sm:rounded-3xl bg-amber-500/10 border border-amber-600/30 max-w-3xl mx-auto flex items-start gap-3.5 text-stone-800">
+          <Info className="w-5 h-5 text-amber-700 flex-shrink-0 mt-0.5" />
+          <div className="space-y-1 text-xs sm:text-sm">
+            <span className="font-bold text-amber-950 uppercase tracking-wide block font-mono text-[11px] sm:text-xs">
+              Notă Importantă: Serviciul de Plan 2D Cotat (Releveu Tehnic)
+            </span>
+            <p className="text-stone-700 leading-relaxed font-light">
+              Pachetele noastre de scanare 3D se concentrează pe experiența imersivă la 360°, turul virtual interactiv 8K și fotografiile HDR de înaltă rezoluție. 
+              <strong className="font-semibold text-stone-900"> Generarea planului 2D cotat cu cote milimetrice este un serviciu opțional care implică un cost suplimentar</strong>, calculat în funcție de complexitatea și suprafața proprietății.
+            </p>
+          </div>
         </div>
 
         {/* Custom Project Note */}

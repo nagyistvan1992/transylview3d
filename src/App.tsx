@@ -19,7 +19,7 @@ import { CustomImages, VirtualTourItem } from './types';
 import { initialImages, initialVirtualTours } from './data/propertyData';
 
 const LOCAL_STORAGE_IMAGES_KEY = 'transylview_custom_images_v3';
-const LOCAL_STORAGE_TOURS_KEY = 'transylview_virtual_tours_v2';
+const LOCAL_STORAGE_TOURS_KEY = 'transylview_virtual_tours_v3';
 
 export function App() {
   // 1. Custom Images State

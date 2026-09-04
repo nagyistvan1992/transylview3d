@@ -29,6 +29,7 @@ export default async function handler(req, res) {
       selectedPkg,
       preferredDate,
       preferredTime,
+      wantsPlan2D,
     } = req.body || {};
 
     if (!fullName || !phone || !email) {
@@ -118,6 +119,10 @@ export default async function handler(req, res) {
                   <td class="value">${formattedDate}</td>
                 </tr>
                 <tr>
+                  <td class="label">Plan 2D Cotat (Extra):</td>
+                  <td class="value">${wantsPlan2D ? '<span style="color: #4ade80; font-weight: bold;">✅ DA (Opțional – cost extra)</span>' : '<span style="color: #a8a29e;">❌ Nu (Doar tur 3D)</span>'}</td>
+                </tr>
+                <tr>
                   <td class="label">Data Înregistrării:</td>
                   <td class="value" style="color: #a8a29e; font-size: 12px;">${timestamp}</td>
                 </tr>
@@ -202,6 +207,10 @@ export default async function handler(req, res) {
                   <tr>
                     <td style="padding: 6px 0; color: #78716c;">Dată & Interval orar:</td>
                     <td style="padding: 6px 0; text-align: right; font-weight: 600; color: #1c1917;">${formattedDate}</td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 6px 0; color: #78716c;">Plan 2D Cotat (Extra):</td>
+                    <td style="padding: 6px 0; text-align: right; font-weight: 600; color: #1c1917;">${wantsPlan2D ? 'Solicitat (Opțional – cost suplimentar)' : 'Nu este inclus'}</td>
                   </tr>
                 </table>
               </div>

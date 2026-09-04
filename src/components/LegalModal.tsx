@@ -127,7 +127,7 @@ export const LegalModal: React.FC<LegalModalProps> = ({ activeDoc, onClose, onSe
                   2. Obiectul Serviciilor
                 </h5>
                 <p>
-                  TransylView 3D oferă servicii specializate de digitalizare imobiliară, incluzând: realizarea de tururi virtuale 3D interactive, fotografii de înaltă rezoluție 8K la 360°, planuri 2D cotate (relevee), modele secționale 3D Dollhouse și găzduire cloud.
+                  TransylView 3D oferă servicii specializate de digitalizare imobiliară, incluzând: realizarea de tururi virtuale 3D interactive, fotografii de înaltă rezoluție 8K la 360°, planuri 2D cotate opționale (serviciu extra contra cost, la cerere), modele secționale 3D Dollhouse și găzduire cloud.
                 </p>
 
                 <h5 className="font-bold text-white text-xs uppercase tracking-wider text-bronze">

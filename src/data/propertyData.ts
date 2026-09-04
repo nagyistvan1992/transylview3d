@@ -30,7 +30,7 @@ export const propertyAboutData = {
   paragraph1:
     'Oferim proprietarilor, agenților imobiliari și dezvoltatorilor din Satu Mare și Transilvania un avantaj competitiv decisiv: transformăm fiecare spațiu într-o experiență digitală interactivă, în care clienții pot păși virtual chiar înainte de a programa o vizionare fizică.',
   paragraph2:
-    'Folosind camera profesională de top Insta X5 8K și trepiezi de carbon ultra-stabili, captăm fiecare încăpere la rezoluție maximă. Livrăm pachete complete cu tur 360° interactiv, vederi secționale 3D Dollhouse, planuri 2D cotate de precizie și fotografii HDR de înaltă rezoluție.',
+    'Folosind camera profesională de top Insta X5 8K și trepiezi de carbon ultra-stabili, captăm fiecare încăpere la rezoluție maximă. Livrăm pachete complete cu tur 360° interactiv, vederi secționale 3D Dollhouse și fotografii HDR de înaltă rezoluție (serviciul de plan 2D cotat fiind disponibil opțional, la cerere).',
   stats: [
     { value: '8K', label: 'CALITATE ULTRA-HD' },
     { value: '100 km', label: 'RAZĂ TRANSILVANIA' },
@@ -52,7 +52,7 @@ export const getRetreatGalleryItems = (images: CustomImages): GalleryItem[] => [
     category: 'Arhitectură & Nivele',
     image: images.aboutDollhouse,
     caption: 'Vedere 3D completă a întregii clădiri, permițând explorarea etajelor, compartimentării și teraselor.',
-    specs: 'Scanare 3D Spațială • Navigare Liberă • Integrare Plan 2D',
+    specs: 'Scanare 3D Spațială • Navigare Liberă 360° • Măsurători Digitale',
   },
   {
     id: 'camera',
@@ -114,7 +114,7 @@ export const initialVirtualTours: VirtualTourItem[] = [
       '/images/about_interior.jpg',
     ],
     description: 'Proprietate premium cu două niveluri, zonă generoasă de zi, piscină exterioară și terasă acoperită scanată integral la 360°.',
-    features: ['Rezoluție 8K Ultra-HD', 'Model 3D Dollhouse pe 2 Niveluri', 'Scanare Curte & Piscină', 'Plan 2D Cotat Inclus'],
+    features: ['Rezoluție 8K Ultra-HD', 'Model 3D Dollhouse pe 2 Niveluri', 'Scanare Curte & Piscină', 'Măsurători Digitale Interactive'],
     isFeatured: true,
     date: '2026',
     client: 'Proprietar Privat',
@@ -156,7 +156,7 @@ export const initialVirtualTours: VirtualTourItem[] = [
       '/images/retreat_spa_bath.jpg',
     ],
     description: 'Amenajare interioară contemporană cu mobilier din lemn masiv, electrocasnice premium integrate și living spațios.',
-    features: ['Scanare Detaliată Finisaje', 'Plan Tehnic 2D PDF', 'Fotografii HDR de Catalog', 'Link Direct Portaluri'],
+    features: ['Scanare Detaliată Finisaje', 'Prezentare Detaliată 8K', 'Fotografii HDR de Catalog', 'Link Direct Portaluri'],
     isFeatured: false,
     date: '2026',
     client: 'Agenție Imobiliară Parteneră',
@@ -232,9 +232,9 @@ export const pricingPackages: PricingPackage[] = [
     features: [
       'Tur virtual 3D interactiv complet',
       'Până la 130 m²',
-      'Plan 2D cotat cu dimensiuni',
       'Vedere secțională 3D Dollhouse',
       '35+ fotografii profesionale HD',
+      'Plan 2D cotat (opțional – cost suplimentar)',
       'Cod embed pentru website & portaluri',
       'Găzduire cloud 12 luni inclusă',
       'Predare în 24 - 48 de ore',
@@ -250,11 +250,11 @@ export const pricingPackages: PricingPackage[] = [
     features: [
       'Tur 3D complet (Interior + Curte/Terasă la sol)',
       'Suprafață generoasă până la 300 m²',
-      'Plan 2D cotat de mare precizie (Releveu)',
       'Model 3D Dollhouse pe toate nivelurile',
       'Puncte de interes interactive (Hotspots info)',
-      'Virtual staging (mobilare digitală opțională)',
       '50+ fotografii profesionale HDR 8K',
+      'Plan 2D cotat / Releveu (opțional – cost suplimentar)',
+      'Virtual staging (mobilare digitală opțională)',
       'Corecție premium de culoare & luminozitate',
       'Predare prioritară în 24 de ore',
     ],

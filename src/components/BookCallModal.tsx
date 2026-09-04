@@ -40,6 +40,7 @@ export const BookCallModal: React.FC<BookCallModalProps> = ({
       selectedPkg: 'Pachet Premium',
       preferredDate: '',
       preferredTime: 'Dimineața (09:00 - 11:30)',
+      wantsPlan2D: false,
       gdprConsent: false,
     };
   });
@@ -418,6 +419,26 @@ export const BookCallModal: React.FC<BookCallModalProps> = ({
                     </select>
                   </div>
                 </div>
+              </div>
+
+              {/* Optional 2D Plan Extra Add-on Checkbox */}
+              <div className="p-3.5 rounded-xl bg-stone-950 border border-stone-800 flex items-start gap-3">
+                <input
+                  type="checkbox"
+                  id="plan2d-addon"
+                  checked={Boolean(formData.wantsPlan2D)}
+                  onChange={(e) => updateField('wantsPlan2D', e.target.checked)}
+                  className="mt-0.5 w-4 h-4 rounded border-stone-700 bg-stone-900 text-bronze focus:ring-bronze accent-bronze cursor-pointer flex-shrink-0"
+                />
+                <label htmlFor="plan2d-addon" className="text-xs text-stone-300 leading-snug cursor-pointer select-none">
+                  <span className="font-semibold text-white">Doresc și Plan 2D Cotat / Releveu</span>
+                  <span className="text-amber-400 font-mono text-[11px] block sm:inline sm:ml-1.5 font-medium">
+                    (Serviciu Opțional – Cost Suplimentar)
+                  </span>
+                  <span className="block text-stone-400 text-[11px] mt-0.5 font-light">
+                    Măsurători tehnice de precizie și desen 2D cu dimensiuni exacte pentru fiecare cameră.
+                  </span>
+                </label>
               </div>
 
               {/* Mandatory GDPR Consent Checkbox */}

@@ -63,12 +63,12 @@ export const TourManagerModal: React.FC<TourManagerModalProps> = ({
     coverImage: '/images/retreat_courtyard.jpg',
     images: ['/images/retreat_courtyard.jpg'],
     description: '',
-    features: ['Rezoluție 8K Ultra-HD', 'Model 3D Dollhouse', 'Plan 2D Cotat'],
+    features: ['Rezoluție 8K Ultra-HD', 'Model 3D Dollhouse', 'Măsurători Interactive 3D'],
     isFeatured: true,
     client: 'Proprietar Privat',
   });
 
-  const [featureInput, setFeatureInput] = useState('Rezoluție 8K Ultra-HD, Model 3D Dollhouse, Plan 2D Cotat');
+  const [featureInput, setFeatureInput] = useState('Rezoluție 8K Ultra-HD, Model 3D Dollhouse, Măsurători Interactive 3D');
 
   if (!isOpen) return null;
 
@@ -118,11 +118,11 @@ export const TourManagerModal: React.FC<TourManagerModalProps> = ({
       coverImage: '/images/retreat_courtyard.jpg',
       images: ['/images/retreat_courtyard.jpg'],
       description: '',
-      features: ['Rezoluție 8K Ultra-HD', 'Model 3D Dollhouse', 'Plan 2D Cotat'],
+      features: ['Rezoluție 8K Ultra-HD', 'Model 3D Dollhouse', 'Măsurători Interactive 3D'],
       isFeatured: true,
       client: 'Proprietar Privat',
     });
-    setFeatureInput('Rezoluție 8K Ultra-HD, Model 3D Dollhouse, Plan 2D Cotat');
+    setFeatureInput('Rezoluție 8K Ultra-HD, Model 3D Dollhouse, Măsurători Interactive 3D');
     setNewImageUrlInput('');
   };
 
@@ -788,7 +788,7 @@ export const TourManagerModal: React.FC<TourManagerModalProps> = ({
                   type="text"
                   value={featureInput}
                   onChange={(e) => setFeatureInput(e.target.value)}
-                  placeholder="Ex: Rezoluție 8K, Model 3D Dollhouse, Plan 2D Cotat, Terasă 360°"
+                  placeholder="Ex: Rezoluție 8K, Model 3D Dollhouse, Măsurători Interactive 3D, Terasă 360°"
                   className="w-full bg-stone-950 border border-stone-800 focus:border-bronze rounded-xl px-3 py-2.5 text-xs sm:text-sm text-white focus:outline-none"
                 />
               </div>

@@ -124,10 +124,10 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ images }) => {
                 <div className="p-4 sm:p-5 rounded-2xl bg-white border border-stone-200 shadow-sm space-y-2">
                   <div className="w-2 h-2 rounded-full bg-bronze" />
                   <h4 className="font-display text-sm font-bold text-stone-900">
-                    Planuri 2D Cotate de Precizie
+                    Măsurători Interactive Direct în 3D
                   </h4>
                   <p className="text-xs text-stone-600 leading-relaxed">
-                    Planuri tehnice cu dimensiuni exacte pentru fiecare încăpere, gata de descărcat în PDF și JPG.
+                    Cumpărătorii pot măsura pereții și spațiile direct în turul 3D interactiv (planurile 2D cotate sunt disponibile opțional, ca serviciu extra).
                   </p>
                 </div>
               </div>
