@@ -61,38 +61,27 @@ export const LiveTourSection: React.FC<LiveTourSectionProps> = ({ onBookCall }) 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-12 space-y-3 sm:space-y-4">
-          <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-stone-900 border border-stone-800 text-stone-300 text-xs font-mono tracking-[0.25em] uppercase"
-          >
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+          style={{ transform: 'translateZ(0)', backfaceVisibility: 'hidden' }}
+          className="gpu-smooth text-center max-w-3xl mx-auto mb-8 sm:mb-12 space-y-3 sm:space-y-4"
+        >
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-stone-900 border border-stone-800 text-stone-300 text-xs font-mono tracking-[0.25em] uppercase">
             <span className="w-1.5 h-1.5 rounded-full bg-bronze" />
             <span>EXEMPLU DEMO DIGITAL TWIN 3D</span>
-          </motion.div>
+          </div>
 
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="font-serif text-2xl sm:text-4xl lg:text-5xl font-normal text-white tracking-tight leading-tight px-2"
-          >
+          <h2 className="font-serif text-2xl sm:text-4xl lg:text-5xl font-normal text-white tracking-tight leading-tight px-2">
             Experiență Interactivă Matterport 3D
-          </motion.h2>
+          </h2>
 
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.15 }}
-            className="text-stone-400 text-xs sm:text-sm font-light max-w-2xl mx-auto leading-relaxed px-4"
-          >
+          <p className="text-stone-400 text-xs sm:text-sm font-light max-w-2xl mx-auto leading-relaxed px-4">
             Navigați liber prin fiecare încăpere la 360°, inspectați modelul secțional Dollhouse 3D și verificați măsurătorile de precizie direct în spațiu.
-          </motion.p>
-        </div>
+          </p>
+        </motion.div>
 
         {/* Dedicated Top Controls Bar */}
         <div className="mb-3 flex flex-wrap items-center justify-between gap-3 bg-stone-900/90 backdrop-blur-md px-4 sm:px-6 py-3 rounded-2xl border border-stone-800/80 shadow-md">

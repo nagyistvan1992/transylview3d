@@ -17,11 +17,12 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ images }) => {
         
         {/* Section Badge */}
         <motion.div
-          initial={{ opacity: 0, y: 15 }}
+          initial={{ opacity: 0, y: 8 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-100px' }}
-          transition={{ duration: 0.6 }}
-          className="flex items-center gap-2 mb-10 sm:mb-16"
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+          style={{ transform: 'translateZ(0)', backfaceVisibility: 'hidden' }}
+          className="gpu-smooth flex items-center gap-2 mb-10 sm:mb-16"
         >
           <span className="w-1.5 h-1.5 rounded-full bg-bronze" />
           <span className="text-xs sm:text-sm font-bold tracking-[0.28em] text-stone-800 uppercase">
@@ -36,11 +37,12 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ images }) => {
             
             {/* Insta X5 Camera Gear Card - Complete uncropped landscape display showing full height from lens to tripod base */}
             <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
+              initial={{ opacity: 0, scale: 0.98 }}
               whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true, margin: '-80px' }}
-              transition={{ duration: 0.8 }}
-              className="relative aspect-[16/10] sm:aspect-[4/3] rounded-3xl overflow-hidden shadow-luxury-card border border-stone-300/80 bg-stone-950 flex items-center justify-center group"
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+              style={{ transform: 'translateZ(0)', backfaceVisibility: 'hidden' }}
+              className="gpu-smooth relative aspect-[16/10] sm:aspect-[4/3] rounded-3xl overflow-hidden shadow-luxury-card border border-stone-300/80 bg-stone-950 flex items-center justify-center group"
             >
               <img
                 src={images.aboutGear}
@@ -63,11 +65,12 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ images }) => {
 
             {/* Key Metric Numbers */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="grid grid-cols-3 gap-4 sm:gap-6 pt-4 border-t border-stone-300/80"
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+              style={{ transform: 'translateZ(0)', backfaceVisibility: 'hidden' }}
+              className="gpu-smooth grid grid-cols-3 gap-4 sm:gap-6 pt-4 border-t border-stone-300/80"
             >
               {propertyAboutData.stats.map((stat, idx) => (
                 <div key={idx} className="space-y-1 group">
@@ -85,11 +88,12 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ images }) => {
           {/* Right Column: Editorial Narrative */}
           <div className="lg:col-span-7 space-y-8 sm:space-y-12">
             <motion.div
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 12 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-80px' }}
-              transition={{ duration: 0.8 }}
-              className="space-y-4 sm:space-y-6"
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+              style={{ transform: 'translateZ(0)', backfaceVisibility: 'hidden' }}
+              className="gpu-smooth space-y-4 sm:space-y-6"
             >
               <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-normal text-stone-950 leading-[1.12] tracking-tight">
                 Digitalizare Imobiliară de Precizie la Rezoluție 8K
@@ -101,11 +105,12 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ images }) => {
 
             {/* Secondary Paragraph & Feature List */}
             <motion.div
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 12 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-60px' }}
-              transition={{ duration: 0.8, delay: 0.15 }}
-              className="space-y-6 pt-6 border-t border-stone-300/80"
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.5, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+              style={{ transform: 'translateZ(0)', backfaceVisibility: 'hidden' }}
+              className="gpu-smooth space-y-6 pt-6 border-t border-stone-300/80"
             >
               <p className="text-stone-600 text-xs sm:text-sm leading-relaxed">
                 {propertyAboutData.paragraph2}

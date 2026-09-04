@@ -48,7 +48,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onBookCall }) => {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+      className={`gpu-smooth fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         scrolled
           ? 'translate-y-0 opacity-100 py-3.5 bg-canvas-light/95 backdrop-blur-md shadow-luxury-soft border-b border-stone-300/50'
           : '-translate-y-full opacity-0 pointer-events-none'

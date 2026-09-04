@@ -294,38 +294,27 @@ export const NativeVirtualTourViewer: React.FC<NativeVirtualTourViewerProps> = (
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-12 space-y-3 sm:space-y-4">
-          <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-stone-900 border border-stone-800 text-bronze text-xs font-bold tracking-[0.22em] uppercase"
-          >
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+          style={{ transform: 'translateZ(0)', backfaceVisibility: 'hidden' }}
+          className="gpu-smooth text-center max-w-3xl mx-auto mb-8 sm:mb-12 space-y-3 sm:space-y-4"
+        >
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-stone-900 border border-stone-800 text-bronze text-xs font-bold tracking-[0.22em] uppercase">
             <Sparkles className="w-3.5 h-3.5" />
             <span>TUR VIRTUAL 3D INTERACTIV NATIV</span>
-          </motion.div>
+          </div>
 
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="font-serif text-2xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight leading-tight px-2"
-          >
+          <h2 className="font-serif text-2xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight leading-tight px-2">
             Pășește Înăuntru: Explorează Turul 3D
-          </motion.h2>
+          </h2>
 
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.15 }}
-            className="text-stone-400 text-xs sm:text-sm max-w-2xl mx-auto leading-relaxed px-4"
-          >
+          <p className="text-stone-400 text-xs sm:text-sm max-w-2xl mx-auto leading-relaxed px-4">
             Trageți cu degetul pe telefon sau cu mouse-ul pe desktop pentru a vă roti liber la 360°. Atingeți punctele de navigare sau schimbați încăperea din meniul de mai jos.
-          </motion.p>
-        </div>
+          </p>
+        </motion.div>
 
         {/* 3D WebGL Canvas Viewport Card */}
         <div

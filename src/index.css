@@ -3,9 +3,12 @@
 @tailwind utilities;
 
 @layer base {
-  * {
+  *, *::before, *::after {
     scrollbar-width: none !important; /* Firefox */
     -ms-overflow-style: none !important; /* IE/Edge */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
 
   *::-webkit-scrollbar {
@@ -16,11 +19,33 @@
   }
 
   html {
-    scroll-behavior: smooth;
-    font-family: 'Cinzel', 'Cinzel Decorative', serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
 
   body {
-    @apply bg-canvas text-stone-900 antialiased overflow-x-hidden;
+    @apply bg-canvas text-stone-900 overflow-x-hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
+}
+
+/* Hardware-accelerated GPU layer stability to prevent composite flicker and font weight snaps on scroll */
+.gpu-smooth {
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  perspective: 1000px;
+  will-change: transform, opacity;
+}
+
+/* Prevent text jitter during motion transitions */
+.text-stabilize {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }

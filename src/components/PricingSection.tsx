@@ -36,11 +36,12 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ onSelectPackage 
             return (
               <motion.div
                 key={pkg.id}
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 0, y: 12 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: idx * 0.12 }}
-                className={`relative rounded-3xl bg-white p-6 sm:p-8 lg:p-9 transition-all duration-300 flex flex-col justify-between ${
+                viewport={{ once: true, amount: 0.15 }}
+                transition={{ duration: 0.45, delay: idx * 0.08, ease: [0.22, 1, 0.36, 1] }}
+                style={{ transform: 'translateZ(0)', backfaceVisibility: 'hidden' }}
+                className={`gpu-smooth relative rounded-3xl bg-white p-6 sm:p-8 lg:p-9 transition-all duration-300 flex flex-col justify-between ${
                   isPopular
                     ? 'border-2 border-stone-900 shadow-[0_25px_60px_-15px_rgba(27,23,21,0.2)] md:-translate-y-3 z-10 ring-1 ring-stone-900/10'
                     : 'border border-stone-200/90 shadow-luxury-soft hover:shadow-luxury-card hover:border-stone-300'
@@ -133,11 +134,12 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ onSelectPackage 
 
         {/* Dedicated B2B Section for Real Estate Agents & 10+ Property Portfolios */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
-          className="mt-12 sm:mt-20 relative rounded-2xl sm:rounded-3xl md:rounded-4xl overflow-hidden bg-white border-2 border-stone-900/90 shadow-[0_20px_60px_-15px_rgba(27,23,21,0.12)] -mx-3 sm:mx-0 p-3.5 sm:p-8 lg:p-12"
+          viewport={{ once: true, amount: 0.15 }}
+          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+          style={{ transform: 'translateZ(0)', backfaceVisibility: 'hidden' }}
+          className="gpu-smooth mt-12 sm:mt-20 relative rounded-2xl sm:rounded-3xl md:rounded-4xl overflow-hidden bg-white border-2 border-stone-900/90 shadow-[0_20px_60px_-15px_rgba(27,23,21,0.12)] -mx-3 sm:mx-0 p-3.5 sm:p-8 lg:p-12"
         >
           {/* Subtle top architectural bronze accent hairline */}
           <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-bronze via-[#556B2F] to-bronze opacity-80" />

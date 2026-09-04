@@ -77,11 +77,12 @@ export const RoiBenefitsSection: React.FC = () => {
             return (
               <motion.div
                 key={item.title}
-                initial={{ opacity: 0, y: 25 }}
+                initial={{ opacity: 0, y: 12 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: idx * 0.08 }}
-                className="p-7 sm:p-8 rounded-3xl bg-white border border-stone-200/90 shadow-luxury-soft hover:shadow-luxury-card hover:border-bronze/40 transition-all duration-300 flex flex-col justify-between group"
+                viewport={{ once: true, amount: 0.15 }}
+                transition={{ duration: 0.45, delay: idx * 0.05, ease: [0.22, 1, 0.36, 1] }}
+                style={{ transform: 'translateZ(0)', backfaceVisibility: 'hidden' }}
+                className="gpu-smooth p-7 sm:p-8 rounded-3xl bg-white border border-stone-200/90 shadow-luxury-soft hover:shadow-luxury-card hover:border-bronze/40 transition-all duration-300 flex flex-col justify-between group"
               >
                 <div>
                   <div className="flex items-center justify-between mb-6">

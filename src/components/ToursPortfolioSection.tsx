@@ -52,11 +52,12 @@ const ProjectCard: React.FC<{
 
   return (
     <motion.article
-      initial={{ opacity: 0, y: 30 }}
+      initial={{ opacity: 0, y: 12 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.6 }}
-      className="group flex flex-col justify-between space-y-4"
+      viewport={{ once: true, amount: 0.15 }}
+      transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+      style={{ transform: 'translateZ(0)', backfaceVisibility: 'hidden' }}
+      className="gpu-smooth group flex flex-col justify-between space-y-4"
     >
       {/* Image Frame with Multi-Image Slider */}
       <div className="space-y-3">

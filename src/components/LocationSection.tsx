@@ -67,11 +67,12 @@ export const LocationSection: React.FC = () => {
             {cities.map((item, idx) => (
               <motion.div
                 key={item.name}
-                initial={{ opacity: 0, x: 20 }}
+                initial={{ opacity: 0, x: 10 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: idx * 0.08 }}
-                className="p-4 rounded-2xl bg-white border border-stone-200/90 hover:border-bronze transition-all duration-300 flex items-center justify-between group shadow-sm hover:shadow-md"
+                viewport={{ once: true, amount: 0.15 }}
+                transition={{ duration: 0.45, delay: idx * 0.05, ease: [0.22, 1, 0.36, 1] }}
+                style={{ transform: 'translateZ(0)', backfaceVisibility: 'hidden' }}
+                className="gpu-smooth p-4 rounded-2xl bg-white border border-stone-200/90 hover:border-bronze transition-all duration-300 flex items-center justify-between group shadow-sm hover:shadow-md"
               >
                 <div className="flex items-center gap-3">
                   <div className="w-2 h-2 rounded-full bg-stone-300 group-hover:bg-bronze transition-colors flex-shrink-0" />

@@ -66,14 +66,15 @@ export const RetreatGallery: React.FC<RetreatGalleryProps> = ({ images }) => {
     setActiveItem(item);
   };
 
-  // Auto-scroll the active mobile thumbnail into center view
+  // Auto-scroll the active mobile thumbnail into center view (container-only, never affects window scroll)
   useEffect(() => {
     const activeEl = mobileThumbRefs.current[activeItem.id];
-    if (activeEl && mobileStripRef.current) {
-      activeEl.scrollIntoView({
+    const container = mobileStripRef.current;
+    if (activeEl && container) {
+      const scrollLeft = activeEl.offsetLeft - (container.clientWidth / 2) + (activeEl.clientWidth / 2);
+      container.scrollTo({
+        left: Math.max(0, scrollLeft),
         behavior: 'smooth',
-        inline: 'center',
-        block: 'nearest',
       });
     }
   }, [activeItem.id]);
@@ -109,43 +110,34 @@ export const RetreatGallery: React.FC<RetreatGalleryProps> = ({ images }) => {
         
         {/* Section Header */}
         <motion.div
-          initial={{ opacity: 0, y: 15 }}
+          initial={{ opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="flex items-center gap-2 mb-4 sm:mb-8"
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+          style={{ transform: 'translateZ(0)', backfaceVisibility: 'hidden' }}
+          className="gpu-smooth mb-8 sm:mb-16"
         >
-          <span className="w-1.5 h-1.5 rounded-full bg-bronze" />
-          <span className="text-xs sm:text-sm font-bold tracking-[0.28em] text-stone-800 uppercase">
-            {retreatSectionData.sectionBadge}
-          </span>
+          <div className="flex items-center gap-2 mb-4 sm:mb-8">
+            <span className="w-1.5 h-1.5 rounded-full bg-bronze" />
+            <span className="text-xs sm:text-sm font-bold tracking-[0.28em] text-stone-800 uppercase">
+              {retreatSectionData.sectionBadge}
+            </span>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-16 items-start">
+            <div className="lg:col-span-6">
+              <h2 className="font-serif text-2xl sm:text-5xl lg:text-6xl text-stone-950 font-normal leading-[1.1] tracking-tight">
+                {retreatSectionData.title}
+              </h2>
+            </div>
+
+            <div className="lg:col-span-6">
+              <p className="text-stone-600 text-xs sm:text-base leading-relaxed">
+                {retreatSectionData.description}
+              </p>
+            </div>
+          </div>
         </motion.div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-16 items-start mb-8 sm:mb-16">
-          <div className="lg:col-span-6">
-            <motion.h2
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-              className="font-serif text-2xl sm:text-5xl lg:text-6xl text-stone-950 font-normal leading-[1.1] tracking-tight"
-            >
-              {retreatSectionData.title}
-            </motion.h2>
-          </div>
-
-          <div className="lg:col-span-6">
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.15 }}
-              className="text-stone-600 text-xs sm:text-base leading-relaxed"
-            >
-              {retreatSectionData.description}
-            </motion.p>
-          </div>
-        </div>
 
         {/* ----------------------------------------------------------------- */}
         {/* MOBILE LAYOUT (< lg): Large Image + Side-by-side Thumbnails Under */}
@@ -338,13 +330,14 @@ export const RetreatGallery: React.FC<RetreatGalleryProps> = ({ images }) => {
               return (
                 <motion.div
                   key={item.id}
-                  initial={{ opacity: 0, scale: 0.95 }}
+                  initial={{ opacity: 0, scale: 0.97 }}
                   whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: idx * 0.08 }}
+                  viewport={{ once: true, amount: 0.15 }}
+                  transition={{ duration: 0.45, delay: idx * 0.05, ease: [0.22, 1, 0.36, 1] }}
+                  style={{ transform: 'translateZ(0)', backfaceVisibility: 'hidden' }}
                   onClick={() => setActiveItem(item)}
                   onMouseEnter={() => setActiveItem(item)}
-                  className={`group relative aspect-[4/3] rounded-2xl overflow-hidden cursor-pointer transition-all duration-300 ${
+                  className={`gpu-smooth group relative aspect-[4/3] rounded-2xl overflow-hidden cursor-pointer transition-all duration-300 ${
                     isActive
                       ? 'ring-2 ring-bronze ring-offset-2 ring-offset-stone-100 shadow-luxury-card scale-102 z-10'
                       : 'opacity-85 hover:opacity-100 hover:scale-101 border border-stone-300/70'

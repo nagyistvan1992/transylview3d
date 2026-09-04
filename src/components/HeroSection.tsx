@@ -18,11 +18,11 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ heroImage, onBookCall 
     offset: ['start start', 'end end'],
   });
 
-  // Spring-smoothed scroll progress
+  // Ultra-responsive, smooth scroll progress (no spring lag, no subpixel oscillation/jitter)
   const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 75,
-    damping: 26,
-    restDelta: 0.001,
+    stiffness: 280,
+    damping: 36,
+    restDelta: 0.0002,
   });
 
   // 1. Background Image Transformations
@@ -30,25 +30,25 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ heroImage, onBookCall 
   const bgDarken = useTransform(smoothProgress, [0, 0.45, 0.85], [0.25, 0.4, 0.6]);
 
   // 2. Giant Typography "TRANSYLVIEW" in the Sky
-  const brandY = useTransform(smoothProgress, [0.04, 0.3], [50, 0]);
+  const brandY = useTransform(smoothProgress, [0.04, 0.3], [30, 0]);
   const brandOpacity = useTransform(smoothProgress, [0.04, 0.28], [0, 0.35]);
-  const brandScale = useTransform(smoothProgress, [0.04, 0.3], [0.96, 1]);
+  const brandScale = useTransform(smoothProgress, [0.04, 0.3], [0.97, 1]);
 
   // 3. Left Stats Badges
   const statsOpacity = useTransform(smoothProgress, [0.26, 0.48], [0, 1]);
-  const statsX = useTransform(smoothProgress, [0.26, 0.48], [-20, 0]);
+  const statsX = useTransform(smoothProgress, [0.26, 0.48], [-15, 0]);
   const divider1Scale = useTransform(smoothProgress, [0.32, 0.44], [0, 1]);
   const divider2Scale = useTransform(smoothProgress, [0.38, 0.5], [0, 1]);
 
-  // 4. Bottom Title
-  const titleY = useTransform(smoothProgress, [0.5, 0.72], ['60%', '0%']);
+  // 4. Bottom Title - Using numeric pixel offsets instead of percentage strings to eliminate layout shifts
+  const titleY = useTransform(smoothProgress, [0.5, 0.72], [32, 0]);
   const titleOpacity = useTransform(smoothProgress, [0.5, 0.72], [0, 1]);
 
   // 5. CTA Button & Right Subtitle
-  const btnY = useTransform(smoothProgress, [0.66, 0.86], [20, 0]);
+  const btnY = useTransform(smoothProgress, [0.66, 0.86], [16, 0]);
   const btnOpacity = useTransform(smoothProgress, [0.66, 0.86], [0, 1]);
   const subtitleOpacity = useTransform(smoothProgress, [0.68, 0.88], [0, 1]);
-  const subtitleY = useTransform(smoothProgress, [0.68, 0.88], [15, 0]);
+  const subtitleY = useTransform(smoothProgress, [0.68, 0.88], [12, 0]);
 
   // 6. Scroll Prompts Opacity
   // Mobile prompt is fully visible at start (1) and fades out smoothly as soon as user begins scrolling (by 0.08)
@@ -97,8 +97,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ heroImage, onBookCall 
               y: brandY,
               opacity: brandOpacity,
               scale: brandScale,
+              transform: 'translateZ(0)',
+              backfaceVisibility: 'hidden',
             }}
-            className="font-display font-extrabold text-[7.5vw] sm:text-[6.5vw] lg:text-[5.5vw] tracking-[0.08em] sm:tracking-[0.18em] text-stone-100 uppercase leading-none text-center whitespace-nowrap drop-shadow-[0_15px_30px_rgba(0,0,0,0.9)] max-w-full"
+            className="gpu-smooth font-display font-extrabold text-[7.5vw] sm:text-[6.5vw] lg:text-[5.5vw] tracking-[0.08em] sm:tracking-[0.18em] text-stone-100 uppercase leading-none text-center whitespace-nowrap drop-shadow-[0_15px_30px_rgba(0,0,0,0.9)] max-w-full"
           >
             {propertyHeroData.brandName}
           </motion.h1>
@@ -225,8 +227,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ heroImage, onBookCall 
             style={{
               opacity: statsOpacity,
               x: statsX,
+              transform: 'translateZ(0)',
+              backfaceVisibility: 'hidden',
             }}
-            className="space-y-1.5 sm:space-y-3 max-w-[150px] sm:max-w-[240px] pointer-events-auto bg-stone-950/80 backdrop-blur-md p-2.5 sm:p-4 rounded-xl sm:rounded-2xl border border-white/15 shadow-2xl"
+            className="gpu-smooth space-y-1.5 sm:space-y-3 max-w-[150px] sm:max-w-[240px] pointer-events-auto bg-stone-950/80 backdrop-blur-md p-2.5 sm:p-4 rounded-xl sm:rounded-2xl border border-white/15 shadow-2xl"
           >
             {/* Stat 1: 8K Ultra-HD */}
             <div className="group cursor-default">
@@ -281,8 +285,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ heroImage, onBookCall 
                 style={{
                   y: titleY,
                   opacity: titleOpacity,
+                  transform: 'translateZ(0)',
+                  backfaceVisibility: 'hidden',
                 }}
-                className="font-display font-extrabold text-base sm:text-3xl md:text-4xl lg:text-[2.5rem] text-white uppercase leading-[1.18] sm:leading-[1.08] tracking-[0.03em] sm:tracking-[0.05em] drop-shadow-[0_15px_30px_rgba(0,0,0,0.9)]"
+                className="gpu-smooth font-display font-extrabold text-base sm:text-3xl md:text-4xl lg:text-[2.5rem] text-white uppercase leading-[1.18] sm:leading-[1.08] tracking-[0.03em] sm:tracking-[0.05em] drop-shadow-[0_15px_30px_rgba(0,0,0,0.9)]"
               >
                 DESCHIDE UȘA PROPRIETĂȚII TALE.
                 <br />
@@ -295,8 +301,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ heroImage, onBookCall 
               style={{
                 y: btnY,
                 opacity: btnOpacity,
+                transform: 'translateZ(0)',
+                backfaceVisibility: 'hidden',
               }}
-              className="flex items-center gap-2 sm:gap-3 pt-0.5 sm:pt-1 flex-wrap sm:flex-nowrap"
+              className="gpu-smooth flex items-center gap-2 sm:gap-3 pt-0.5 sm:pt-1 flex-wrap sm:flex-nowrap"
             >
               <button
                 onClick={onBookCall}
@@ -322,8 +330,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ heroImage, onBookCall 
             style={{
               opacity: subtitleOpacity,
               y: subtitleY,
+              transform: 'translateZ(0)',
+              backfaceVisibility: 'hidden',
             }}
-            className="max-w-xs sm:max-w-md md:text-right hidden sm:block"
+            className="gpu-smooth max-w-xs sm:max-w-md md:text-right hidden sm:block"
           >
             <p className="text-xs sm:text-[13px] font-medium tracking-wider text-stone-200 uppercase leading-relaxed drop-shadow-[0_10px_20px_rgba(0,0,0,0.9)]">
               {propertyHeroData.tagline}
@@ -334,8 +344,12 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ heroImage, onBookCall 
 
         {/* Mobile Animated Scroll Prompt Indicator - Perfectly Centered & Highly Eye-Catching */}
         <motion.div
-          style={{ opacity: mobileScrollPromptOpacity }}
-          className="sm:hidden absolute bottom-5 left-1/2 -translate-x-1/2 z-40 flex flex-col items-center justify-center text-center pointer-events-none select-none w-max"
+          style={{
+            opacity: mobileScrollPromptOpacity,
+            transform: 'translateZ(0)',
+            backfaceVisibility: 'hidden',
+          }}
+          className="gpu-smooth sm:hidden absolute bottom-5 left-1/2 -translate-x-1/2 z-40 flex flex-col items-center justify-center text-center pointer-events-none select-none w-max"
         >
           {/* Luminous Symmetrical Text Pill */}
           <div className="inline-flex items-center justify-center gap-2 bg-stone-950/90 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-bronze/40 shadow-[0_4px_20px_rgba(0,0,0,0.8),0_0_15px_rgba(205,162,116,0.3)]">
@@ -389,8 +403,12 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ heroImage, onBookCall 
 
         {/* Bottom Scroll Progress Bar - Desktop */}
         <motion.div
-          style={{ opacity: desktopScrollIndicatorOpacity }}
-          className="hidden sm:flex absolute bottom-2 sm:bottom-3 left-1/2 -translate-x-1/2 z-40 items-center gap-2 sm:gap-3 bg-stone-950/80 backdrop-blur-md px-3 sm:px-4 py-1 sm:py-1.5 rounded-full border border-white/10 text-stone-400 pointer-events-none"
+          style={{
+            opacity: desktopScrollIndicatorOpacity,
+            transform: 'translateZ(0)',
+            backfaceVisibility: 'hidden',
+          }}
+          className="gpu-smooth hidden sm:flex absolute bottom-2 sm:bottom-3 left-1/2 -translate-x-1/2 z-40 items-center gap-2 sm:gap-3 bg-stone-950/80 backdrop-blur-md px-3 sm:px-4 py-1 sm:py-1.5 rounded-full border border-white/10 text-stone-400 pointer-events-none"
         >
           <ArrowDown className="w-3 h-3 text-bronze animate-bounce" />
           <span className="text-[8px] sm:text-[9px] font-bold tracking-[0.2em] sm:tracking-[0.25em] uppercase text-stone-300">
