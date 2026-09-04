@@ -387,25 +387,25 @@ export const TourManagerModal: React.FC<TourManagerModalProps> = ({
           className="relative w-full max-w-4xl bg-stone-900 text-stone-100 rounded-2xl sm:rounded-3xl border border-stone-750/90 shadow-2xl my-4 sm:my-8 overflow-hidden flex flex-col"
         >
           {/* Modal Top Header */}
-          <div className="px-5 sm:px-8 py-4 sm:py-5 bg-stone-950 border-b border-stone-800 flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <span className="w-2.5 h-2.5 rounded-full bg-emerald-500" />
-              <div>
-                <div className="text-[10px] font-bold tracking-[0.25em] text-bronze uppercase flex items-center gap-1.5">
-                  <ShieldCheck className="w-3 h-3 text-emerald-400" />
+          <div className="px-3.5 sm:px-8 py-3 sm:py-5 bg-stone-950 border-b border-stone-800 flex items-center justify-between gap-2">
+            <div className="flex items-center gap-2.5 min-w-0">
+              <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 flex-shrink-0" />
+              <div className="min-w-0">
+                <div className="text-[9px] sm:text-[10px] font-bold tracking-[0.2em] text-bronze uppercase flex items-center gap-1 truncate">
+                  <ShieldCheck className="w-3 h-3 text-emerald-400 flex-shrink-0" />
                   <span>ADMINISTRATOR CONECTAT</span>
                 </div>
-                <h3 className="font-serif text-lg sm:text-2xl text-white font-semibold">
-                  Manager Portofoliu Tururi Virtuale 3D
+                <h3 className="font-serif text-sm sm:text-2xl text-white font-semibold truncate leading-tight">
+                  Manager Portofoliu 3D
                 </h3>
               </div>
             </div>
 
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1.5 sm:gap-2 flex-shrink-0">
               <button
                 type="button"
                 onClick={handleSaveAll}
-                className="px-3.5 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center gap-1.5 shadow-md border border-emerald-500/50 transition-all active:scale-95 cursor-pointer"
+                className="px-2.5 sm:px-3.5 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center gap-1 shadow-md border border-emerald-500/50 transition-all active:scale-95 cursor-pointer"
                 title="Salvează definitiv modificările pentru desktop și mobil"
               >
                 <Save className="w-3.5 h-3.5" />
@@ -414,7 +414,7 @@ export const TourManagerModal: React.FC<TourManagerModalProps> = ({
 
               <button
                 onClick={handleLogout}
-                className="px-3 py-1.5 rounded-lg bg-stone-800/80 hover:bg-stone-800 text-stone-300 hover:text-white text-xs flex items-center gap-1.5 border border-stone-700 transition-colors cursor-pointer"
+                className="px-2.5 sm:px-3 py-1.5 rounded-lg bg-stone-800/80 hover:bg-stone-800 text-stone-300 hover:text-white text-xs flex items-center gap-1 border border-stone-700 transition-colors cursor-pointer"
                 title="Blochează accesul"
               >
                 <LogOut className="w-3.5 h-3.5 text-stone-400" />
@@ -423,11 +423,11 @@ export const TourManagerModal: React.FC<TourManagerModalProps> = ({
 
               <button
                 onClick={onClose}
-                className="w-9 h-9 rounded-full bg-stone-800 text-stone-300 hover:text-white hover:bg-stone-700 transition-colors flex items-center justify-center cursor-pointer"
+                className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-stone-800 text-stone-300 hover:text-white hover:bg-stone-700 transition-colors flex items-center justify-center cursor-pointer active:scale-95"
                 aria-label="Închide"
                 title="Închide"
               >
-                <X className="w-5 h-5 stroke-[2.5]" />
+                <X className="w-4 h-4 sm:w-5 sm:h-5 stroke-[2.5]" />
               </button>
             </div>
           </div>

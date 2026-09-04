@@ -49,7 +49,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ onSelectPackage 
               >
                 {/* Popular Badge */}
                 {isPopular && (
-                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-stone-900 text-stone-100 text-[10px] font-mono tracking-widest px-3.5 py-1 rounded-full shadow-md uppercase whitespace-nowrap border border-stone-700">
+                  <div className="absolute -top-3 inset-x-0 mx-auto w-fit bg-stone-900 text-stone-100 text-[10px] font-mono tracking-widest px-3.5 py-1 rounded-full shadow-md uppercase whitespace-nowrap border border-stone-700">
                     <span>RECOMANDAT PENTRU VÂNZARE</span>
                   </div>
                 )}

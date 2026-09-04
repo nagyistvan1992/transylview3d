@@ -70,14 +70,14 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ images }) => {
               viewport={{ once: true, amount: 0.2 }}
               transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
               style={{ transform: 'translateZ(0)', backfaceVisibility: 'hidden' }}
-              className="gpu-smooth grid grid-cols-3 gap-4 sm:gap-6 pt-4 border-t border-stone-300/80"
+              className="gpu-smooth grid grid-cols-3 gap-2 sm:gap-6 pt-4 border-t border-stone-300/80"
             >
               {propertyAboutData.stats.map((stat, idx) => (
                 <div key={idx} className="space-y-1 group">
                   <div className="font-display font-black text-2xl sm:text-3xl lg:text-4xl text-stone-900 tracking-tight group-hover:text-bronze transition-colors">
                     {stat.value}
                   </div>
-                  <div className="text-[9px] sm:text-[10px] font-bold tracking-[0.18em] text-stone-600 uppercase leading-snug">
+                  <div className="text-[8px] sm:text-[10px] font-bold tracking-[0.1em] sm:tracking-[0.18em] text-stone-600 uppercase leading-tight">
                     {stat.label}
                   </div>
                 </div>

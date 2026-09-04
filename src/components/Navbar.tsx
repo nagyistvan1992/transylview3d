@@ -82,24 +82,31 @@ export const Navbar: React.FC<NavbarProps> = ({ onBookCall }) => {
           ))}
         </nav>
 
-        {/* Action Button */}
-        <div className="hidden sm:flex items-center gap-3">
+        {/* Action Buttons & Mobile Toggle */}
+        <div className="flex items-center gap-2 sm:gap-3">
           <button
             onClick={onBookCall}
-            className="px-5 py-2.5 rounded-full text-xs font-bold tracking-[0.2em] uppercase transition-all duration-300 bg-stone-900 text-stone-50 hover:bg-bronze hover:text-stone-950 shadow-sm"
+            className="sm:hidden px-3 py-1.5 rounded-full text-[10px] font-bold tracking-wider uppercase bg-stone-900 text-stone-50 active:scale-95 shadow-sm cursor-pointer"
+          >
+            SOLICITĂ TUR
+          </button>
+
+          <button
+            onClick={onBookCall}
+            className="hidden sm:inline-flex px-5 py-2.5 rounded-full text-xs font-bold tracking-[0.2em] uppercase transition-all duration-300 bg-stone-900 text-stone-50 hover:bg-bronze hover:text-stone-950 shadow-sm cursor-pointer"
           >
             SOLICITĂ OFERTĂ
           </button>
-        </div>
 
-        {/* Mobile Menu Toggle */}
-        <button
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="md:hidden min-w-[44px] min-h-[44px] p-2.5 rounded-xl text-stone-900 flex items-center justify-center hover:bg-stone-200/60 transition-colors active:scale-95"
-          aria-label={mobileMenuOpen ? "Închide meniul" : "Deschide meniul"}
-        >
-          {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-        </button>
+          {/* Mobile Menu Toggle */}
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="md:hidden min-w-[38px] min-h-[38px] p-2 rounded-xl text-stone-900 flex items-center justify-center hover:bg-stone-200/60 transition-colors active:scale-95 cursor-pointer"
+            aria-label={mobileMenuOpen ? "Închide meniul" : "Deschide meniul"}
+          >
+            {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+          </button>
+        </div>
       </div>
 
       {/* Mobile Dropdown Menu */}

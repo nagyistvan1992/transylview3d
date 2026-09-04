@@ -97,8 +97,6 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ heroImage, onBookCall 
               y: brandY,
               opacity: brandOpacity,
               scale: brandScale,
-              transform: 'translateZ(0)',
-              backfaceVisibility: 'hidden',
             }}
             className="gpu-smooth font-display font-extrabold text-[7.5vw] sm:text-[6.5vw] lg:text-[5.5vw] tracking-[0.08em] sm:tracking-[0.18em] text-stone-100 uppercase leading-none text-center whitespace-nowrap drop-shadow-[0_15px_30px_rgba(0,0,0,0.9)] max-w-full"
           >
@@ -227,8 +225,6 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ heroImage, onBookCall 
             style={{
               opacity: statsOpacity,
               x: statsX,
-              transform: 'translateZ(0)',
-              backfaceVisibility: 'hidden',
             }}
             className="gpu-smooth space-y-1.5 sm:space-y-3 max-w-[150px] sm:max-w-[240px] pointer-events-auto bg-stone-950/80 backdrop-blur-md p-2.5 sm:p-4 rounded-xl sm:rounded-2xl border border-white/15 shadow-2xl"
           >
@@ -285,8 +281,6 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ heroImage, onBookCall 
                 style={{
                   y: titleY,
                   opacity: titleOpacity,
-                  transform: 'translateZ(0)',
-                  backfaceVisibility: 'hidden',
                 }}
                 className="gpu-smooth font-display font-extrabold text-base sm:text-3xl md:text-4xl lg:text-[2.5rem] text-white uppercase leading-[1.18] sm:leading-[1.08] tracking-[0.03em] sm:tracking-[0.05em] drop-shadow-[0_15px_30px_rgba(0,0,0,0.9)]"
               >
@@ -301,14 +295,12 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ heroImage, onBookCall 
               style={{
                 y: btnY,
                 opacity: btnOpacity,
-                transform: 'translateZ(0)',
-                backfaceVisibility: 'hidden',
               }}
               className="gpu-smooth flex items-center gap-2 sm:gap-3 pt-0.5 sm:pt-1 flex-wrap sm:flex-nowrap"
             >
               <button
                 onClick={onBookCall}
-                className="inline-flex items-center gap-1.5 sm:gap-3 px-4 sm:px-7 py-2.5 sm:py-3 rounded-full bg-white text-stone-950 font-bold text-[10px] sm:text-xs tracking-[0.14em] sm:tracking-[0.22em] uppercase shadow-[0_15px_35px_rgba(0,0,0,0.6)] hover:bg-stone-100 hover:scale-103 transition-all duration-300 group"
+                className="inline-flex items-center gap-1.5 sm:gap-3 px-4 sm:px-7 py-2.5 sm:py-3 rounded-full bg-white text-stone-950 font-bold text-[10px] sm:text-xs tracking-[0.14em] sm:tracking-[0.22em] uppercase shadow-[0_15px_35px_rgba(0,0,0,0.6)] hover:bg-stone-100 hover:scale-103 transition-all duration-300 group cursor-pointer"
               >
                 <span>PROGRAMEAZĂ SCANARE 3D</span>
                 <span className="flex items-center text-stone-500 group-hover:text-stone-950 group-hover:translate-x-1.5 transition-transform">
@@ -319,7 +311,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ heroImage, onBookCall 
 
               <a
                 href="#demo-tour"
-                className="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-5 py-2.5 sm:py-3 rounded-full bg-stone-900/80 hover:bg-stone-800 text-white font-bold text-[10px] sm:text-xs tracking-wider uppercase border border-white/20 backdrop-blur-sm transition-colors"
+                className="inline-flex items-center gap-1.5 sm:gap-2 px-3.5 sm:px-5 py-2.5 sm:py-3 rounded-full bg-stone-900/80 hover:bg-stone-800 text-white font-bold text-[10px] sm:text-xs tracking-wider uppercase border border-white/20 backdrop-blur-sm transition-colors cursor-pointer"
               >
                 <span>VEZI DEMO 3D</span>
               </a>
@@ -330,8 +322,6 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ heroImage, onBookCall 
             style={{
               opacity: subtitleOpacity,
               y: subtitleY,
-              transform: 'translateZ(0)',
-              backfaceVisibility: 'hidden',
             }}
             className="gpu-smooth max-w-xs sm:max-w-md md:text-right hidden sm:block"
           >
@@ -342,20 +332,18 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ heroImage, onBookCall 
 
         </div>
 
-        {/* Mobile Animated Scroll Prompt Indicator - Perfectly Centered & Highly Eye-Catching */}
+        {/* Mobile Animated Scroll Prompt Indicator - Perfectly Centered via inset-x-0 mx-auto w-fit */}
         <motion.div
           style={{
             opacity: mobileScrollPromptOpacity,
-            transform: 'translateZ(0)',
-            backfaceVisibility: 'hidden',
           }}
-          className="gpu-smooth sm:hidden absolute bottom-5 left-1/2 -translate-x-1/2 z-40 flex flex-col items-center justify-center text-center pointer-events-none select-none w-max"
+          className="gpu-smooth sm:hidden absolute bottom-5 sm:bottom-6 inset-x-0 mx-auto w-fit max-w-[92vw] z-40 flex flex-col items-center justify-center text-center pointer-events-none select-none px-2"
         >
           {/* Luminous Symmetrical Text Pill */}
           <div className="inline-flex items-center justify-center gap-2 bg-stone-950/90 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-bronze/40 shadow-[0_4px_20px_rgba(0,0,0,0.8),0_0_15px_rgba(205,162,116,0.3)]">
             <span className="w-1.5 h-1.5 rounded-full bg-bronze animate-ping" />
             <span className="text-[9.5px] font-mono font-bold tracking-[0.2em] text-white uppercase text-center pl-0.5">
-              GLISEAZĂ PENTRU A EXPLORA
+              DERULEAZĂ ÎN JOS
             </span>
             <span className="w-1.5 h-1.5 rounded-full bg-bronze animate-pulse" />
           </div>
@@ -401,14 +389,12 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ heroImage, onBookCall 
           </div>
         </motion.div>
 
-        {/* Bottom Scroll Progress Bar - Desktop */}
+        {/* Bottom Scroll Progress Bar - Desktop - Perfectly Centered via inset-x-0 mx-auto w-fit */}
         <motion.div
           style={{
             opacity: desktopScrollIndicatorOpacity,
-            transform: 'translateZ(0)',
-            backfaceVisibility: 'hidden',
           }}
-          className="gpu-smooth hidden sm:flex absolute bottom-2 sm:bottom-3 left-1/2 -translate-x-1/2 z-40 items-center gap-2 sm:gap-3 bg-stone-950/80 backdrop-blur-md px-3 sm:px-4 py-1 sm:py-1.5 rounded-full border border-white/10 text-stone-400 pointer-events-none"
+          className="gpu-smooth hidden sm:flex absolute bottom-2 sm:bottom-3 inset-x-0 mx-auto w-fit z-40 items-center gap-2 sm:gap-3 bg-stone-950/80 backdrop-blur-md px-3.5 sm:px-4 py-1 sm:py-1.5 rounded-full border border-white/10 text-stone-400 pointer-events-none"
         >
           <ArrowDown className="w-3 h-3 text-bronze animate-bounce" />
           <span className="text-[8px] sm:text-[9px] font-bold tracking-[0.2em] sm:tracking-[0.25em] uppercase text-stone-300">
