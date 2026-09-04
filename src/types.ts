@@ -22,6 +22,7 @@ export interface VirtualTourItem {
   rooms?: string;
   embedUrl: string;
   coverImage: string;
+  images?: string[];
   description: string;
   features: string[];
   isFeatured?: boolean;

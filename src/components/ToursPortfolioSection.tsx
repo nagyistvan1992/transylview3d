@@ -5,7 +5,9 @@ import {
   Search,
   ArrowRight,
   Eye,
-  SlidersHorizontal,
+  ChevronLeft,
+  ChevronRight,
+  Camera,
 } from 'lucide-react';
 import { VirtualTourItem } from '../types';
 
@@ -15,6 +17,185 @@ interface ToursPortfolioSectionProps {
   onRequestQuote: (propertyType?: string) => void;
   onOpenTourManager?: () => void;
 }
+
+// Individual Project Card with interactive multi-image paging (up to 10 images)
+const ProjectCard: React.FC<{
+  tour: VirtualTourItem;
+  projectIndex: string;
+  onOpenTourViewer: (tour: VirtualTourItem) => void;
+  onRequestQuote: (category?: string) => void;
+}> = ({ tour, projectIndex, onOpenTourViewer, onRequestQuote }) => {
+  // Collect images: prioritize tour.images, fallback to [tour.coverImage]
+  const images = useMemo(() => {
+    if (tour.images && tour.images.length > 0) {
+      return tour.images.slice(0, 10);
+    }
+    return tour.coverImage ? [tour.coverImage] : ['/images/retreat_courtyard.jpg'];
+  }, [tour.images, tour.coverImage]);
+
+  const [currentImgIndex, setCurrentImgIndex] = useState(0);
+
+  const handlePrev = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setCurrentImgIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
+  };
+
+  const handleNext = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setCurrentImgIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
+  };
+
+  const handleSelectDot = (e: React.MouseEvent, index: number) => {
+    e.stopPropagation();
+    setCurrentImgIndex(index);
+  };
+
+  return (
+    <motion.article
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.6 }}
+      className="group flex flex-col justify-between space-y-4"
+    >
+      {/* Image Frame with Multi-Image Slider */}
+      <div className="space-y-3">
+        <div
+          onClick={() => onOpenTourViewer(tour)}
+          className="relative aspect-[16/10] w-full overflow-hidden rounded-2xl bg-stone-950 border border-stone-800/80 cursor-pointer select-none"
+        >
+          {/* Active Image */}
+          <AnimatePresence mode="wait">
+            <motion.img
+              key={images[currentImgIndex]}
+              src={images[currentImgIndex]}
+              alt={`${tour.title} - Foto ${currentImgIndex + 1}`}
+              initial={{ opacity: 0.8 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0.8 }}
+              transition={{ duration: 0.25 }}
+              className="w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-104"
+            />
+          </AnimatePresence>
+
+          {/* Quiet Vignette */}
+          <div className="absolute inset-0 bg-gradient-to-t from-[#11100F]/80 via-transparent to-[#11100F]/20 opacity-60 pointer-events-none" />
+
+          {/* Top Minimalist Data Pill */}
+          <div className="absolute top-3 left-3 right-3 flex items-center justify-between pointer-events-none">
+            <span className="font-mono text-[10px] tracking-widest text-stone-300 bg-stone-950/80 backdrop-blur-md px-2.5 py-1 rounded-md border border-white/10 uppercase">
+              {projectIndex} • {tour.city}
+            </span>
+
+            {/* Photo Counter Pill (e.g. 1 / 4 FOTO) */}
+            <span className="font-mono text-[10px] tracking-widest text-stone-300 bg-stone-950/80 backdrop-blur-md px-2.5 py-1 rounded-md border border-white/10 uppercase flex items-center gap-1.5">
+              <Camera className="w-3 h-3 text-bronze" />
+              <span>
+                {currentImgIndex + 1} / {images.length}
+              </span>
+            </span>
+          </div>
+
+          {/* Previous / Next Arrow Controls (Visible on hover & touch) */}
+          {images.length > 1 && (
+            <div className="absolute inset-y-0 inset-x-2 flex items-center justify-between pointer-events-none">
+              <button
+                type="button"
+                onClick={handlePrev}
+                className="w-8 h-8 rounded-full bg-stone-950/80 hover:bg-stone-900 text-stone-200 hover:text-white border border-white/15 flex items-center justify-center pointer-events-auto transition-all duration-200 opacity-80 sm:opacity-0 sm:group-hover:opacity-100 hover:scale-110 active:scale-95 cursor-pointer shadow-lg"
+                aria-label="Imaginea anterioară"
+                title="Imaginea anterioară"
+              >
+                <ChevronLeft className="w-4 h-4" />
+              </button>
+
+              <button
+                type="button"
+                onClick={handleNext}
+                className="w-8 h-8 rounded-full bg-stone-950/80 hover:bg-stone-900 text-stone-200 hover:text-white border border-white/15 flex items-center justify-center pointer-events-auto transition-all duration-200 opacity-80 sm:opacity-0 sm:group-hover:opacity-100 hover:scale-110 active:scale-95 cursor-pointer shadow-lg"
+                aria-label="Imaginea următoare"
+                title="Imaginea următoare"
+              >
+                <ChevronRight className="w-4 h-4" />
+              </button>
+            </div>
+          )}
+
+          {/* Bottom Pagination Dots */}
+          {images.length > 1 && (
+            <div className="absolute bottom-3 left-3 flex items-center gap-1.5 bg-stone-950/70 backdrop-blur-md px-2 py-1 rounded-full border border-white/10">
+              {images.map((_, i) => (
+                <button
+                  key={i}
+                  type="button"
+                  onClick={(e) => handleSelectDot(e, i)}
+                  className={`h-1.5 rounded-full transition-all cursor-pointer ${
+                    i === currentImgIndex
+                      ? 'w-4 bg-white'
+                      : 'w-1.5 bg-white/40 hover:bg-white/70'
+                  }`}
+                  aria-label={`Sari la fotografia ${i + 1}`}
+                />
+              ))}
+            </div>
+          )}
+
+          {/* Bottom Right Floating Badge */}
+          <div className="absolute bottom-3 right-3 pointer-events-none">
+            <div className="px-3 py-1.5 rounded-full bg-stone-950/85 backdrop-blur-md border border-white/15 text-[10px] font-mono tracking-wider text-stone-200 uppercase flex items-center gap-1.5 shadow-lg group-hover:border-stone-400 transition-colors">
+              <Eye className="w-3 h-3 text-bronze" />
+              <span>TUR INTERACTIV</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Metadata & Title */}
+        <div className="space-y-2 pt-1">
+          <div className="flex items-center gap-2 font-mono text-[11px] text-stone-400">
+            {tour.surface && <span>{tour.surface}</span>}
+            {tour.surface && tour.rooms && <span>•</span>}
+            {tour.rooms && <span>{tour.rooms}</span>}
+            {tour.category && (
+              <>
+                <span>•</span>
+                <span className="text-stone-300">{tour.category}</span>
+              </>
+            )}
+          </div>
+
+          <h3
+            onClick={() => onOpenTourViewer(tour)}
+            className="font-serif text-xl sm:text-2xl text-stone-100 font-normal leading-snug cursor-pointer group-hover:text-bronze transition-colors"
+          >
+            {tour.title}
+          </h3>
+
+          <p className="text-xs text-stone-400 font-light leading-relaxed line-clamp-2">
+            {tour.description}
+          </p>
+        </div>
+      </div>
+
+      {/* Editorial Actions */}
+      <div className="pt-3 border-t border-stone-850 flex items-center justify-between">
+        <button
+          onClick={() => onOpenTourViewer(tour)}
+          className="inline-flex items-center gap-2 text-xs font-semibold tracking-wider uppercase text-stone-200 hover:text-white transition-colors cursor-pointer group/btn"
+        >
+          <span>Vizionează Turul 3D</span>
+          <ArrowRight className="w-3.5 h-3.5 text-bronze group-hover/btn:translate-x-1 transition-transform" />
+        </button>
+
+        <button
+          onClick={() => onRequestQuote(tour.category)}
+          className="text-xs text-stone-400 hover:text-stone-200 transition-colors cursor-pointer font-light"
+        >
+          Cotație similară
+        </button>
+      </div>
+    </motion.article>
+  );
+};
 
 export const ToursPortfolioSection: React.FC<ToursPortfolioSectionProps> = ({
   tours,
@@ -103,7 +284,7 @@ export const ToursPortfolioSection: React.FC<ToursPortfolioSectionProps> = ({
             </h2>
 
             <p className="text-stone-400 text-sm sm:text-base font-light leading-relaxed max-w-2xl">
-              Fiecare proiect reprezintă o replică digitală tridimensională de mare precizie, realizată cu senzori 8K Insta X5. Navigare la 360°, secțiuni 3D Dollhouse și măsurători milimetrice.
+              Fiecare proiect include tur 3D interactiv complet și o galerie foto de înaltă rezoluție. Răsfoiți fotografiile sau lansați turul virtual la 360° pentru a păși direct în spațiu.
             </p>
           </div>
 
@@ -184,90 +365,14 @@ export const ToursPortfolioSection: React.FC<ToursPortfolioSectionProps> = ({
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10">
             {filteredTours.map((tour, idx) => {
               const projectIndex = String(idx + 1).padStart(2, '0');
-
               return (
-                <motion.article
+                <ProjectCard
                   key={tour.id}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: idx * 0.08 }}
-                  className="group flex flex-col justify-between space-y-4"
-                >
-                  {/* Image Frame with Minimalist Hover State */}
-                  <div className="space-y-3">
-                    <div
-                      onClick={() => onOpenTourViewer(tour)}
-                      className="relative aspect-[16/10] w-full overflow-hidden rounded-2xl bg-stone-950 border border-stone-800/80 cursor-pointer"
-                    >
-                      <img
-                        src={tour.coverImage}
-                        alt={tour.title}
-                        className="w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-104"
-                      />
-
-                      {/* Quiet Vignette */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#11100F]/80 via-transparent to-[#11100F]/20 opacity-60 group-hover:opacity-40 transition-opacity" />
-
-                      {/* Top Minimalist Data Pill */}
-                      <div className="absolute top-3.5 left-3.5 right-3.5 flex items-center justify-between pointer-events-none">
-                        <span className="font-mono text-[10px] tracking-widest text-stone-300 bg-stone-950/80 backdrop-blur-md px-2.5 py-1 rounded-md border border-white/10 uppercase">
-                          {projectIndex} • {tour.city}
-                        </span>
-
-                        <span className="font-mono text-[10px] tracking-widest text-stone-300 bg-stone-950/80 backdrop-blur-md px-2.5 py-1 rounded-md border border-white/10 uppercase">
-                          {tour.category}
-                        </span>
-                      </div>
-
-                      {/* Bottom Right Floating Badge */}
-                      <div className="absolute bottom-3.5 right-3.5 pointer-events-none">
-                        <div className="px-3 py-1.5 rounded-full bg-stone-950/85 backdrop-blur-md border border-white/15 text-[10px] font-mono tracking-wider text-stone-200 uppercase flex items-center gap-1.5 shadow-lg group-hover:border-stone-400 transition-colors">
-                          <Eye className="w-3 h-3 text-bronze" />
-                          <span>TUR INTERACTIV</span>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Metadata & Title */}
-                    <div className="space-y-2 pt-1">
-                      <div className="flex items-center gap-2 font-mono text-[11px] text-stone-400">
-                        {tour.surface && <span>{tour.surface}</span>}
-                        {tour.surface && tour.rooms && <span>•</span>}
-                        {tour.rooms && <span>{tour.rooms}</span>}
-                      </div>
-
-                      <h3
-                        onClick={() => onOpenTourViewer(tour)}
-                        className="font-serif text-xl sm:text-2xl text-stone-100 font-normal leading-snug cursor-pointer group-hover:text-bronze transition-colors"
-                      >
-                        {tour.title}
-                      </h3>
-
-                      <p className="text-xs text-stone-400 font-light leading-relaxed line-clamp-2">
-                        {tour.description}
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Editorial Actions */}
-                  <div className="pt-3 border-t border-stone-850 flex items-center justify-between">
-                    <button
-                      onClick={() => onOpenTourViewer(tour)}
-                      className="inline-flex items-center gap-2 text-xs font-semibold tracking-wider uppercase text-stone-200 hover:text-white transition-colors cursor-pointer group/btn"
-                    >
-                      <span>Vizionează Turul 3D</span>
-                      <ArrowRight className="w-3.5 h-3.5 text-bronze group-hover/btn:translate-x-1 transition-transform" />
-                    </button>
-
-                    <button
-                      onClick={() => onRequestQuote(tour.category)}
-                      className="text-xs text-stone-400 hover:text-stone-200 transition-colors cursor-pointer font-light"
-                    >
-                      Cotație similară
-                    </button>
-                  </div>
-                </motion.article>
+                  tour={tour}
+                  projectIndex={projectIndex}
+                  onOpenTourViewer={onOpenTourViewer}
+                  onRequestQuote={onRequestQuote}
+                />
               );
             })}
           </div>

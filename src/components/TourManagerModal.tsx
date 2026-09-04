@@ -17,6 +17,8 @@ import {
   KeyRound,
   ShieldCheck,
   LogOut,
+  Camera,
+  Star,
 } from 'lucide-react';
 import { VirtualTourItem } from '../types';
 import { initialVirtualTours } from '../data/propertyData';
@@ -48,6 +50,7 @@ export const TourManagerModal: React.FC<TourManagerModalProps> = ({
   const [copiedJson, setCopiedJson] = useState(false);
   const [importJsonText, setImportJsonText] = useState('');
   const [importError, setImportError] = useState<string | null>(null);
+  const [newImageUrlInput, setNewImageUrlInput] = useState('');
 
   // Form State for Add / Edit
   const [formData, setFormData] = useState<Partial<VirtualTourItem>>({
@@ -58,6 +61,7 @@ export const TourManagerModal: React.FC<TourManagerModalProps> = ({
     rooms: '4 Camere • 2 Băi',
     embedUrl: 'https://my.matterport.com/show/?m=YFWgEekGLHm',
     coverImage: '/images/retreat_courtyard.jpg',
+    images: ['/images/retreat_courtyard.jpg'],
     description: '',
     features: ['Rezoluție 8K Ultra-HD', 'Model 3D Dollhouse', 'Plan 2D Cotat'],
     isFeatured: true,
@@ -90,7 +94,14 @@ export const TourManagerModal: React.FC<TourManagerModalProps> = ({
 
   const handleStartEdit = (tour: VirtualTourItem) => {
     setEditingTourId(tour.id);
-    setFormData({ ...tour });
+    const existingImages = tour.images && tour.images.length > 0 
+      ? [...tour.images] 
+      : (tour.coverImage ? [tour.coverImage] : ['/images/retreat_courtyard.jpg']);
+    
+    setFormData({ 
+      ...tour,
+      images: existingImages,
+    });
     setFeatureInput(tour.features ? tour.features.join(', ') : '');
     setActiveTab('add');
   };
@@ -105,26 +116,92 @@ export const TourManagerModal: React.FC<TourManagerModalProps> = ({
       rooms: '4 Camere • 2 Băi',
       embedUrl: 'https://my.matterport.com/show/?m=YFWgEekGLHm',
       coverImage: '/images/retreat_courtyard.jpg',
+      images: ['/images/retreat_courtyard.jpg'],
       description: '',
       features: ['Rezoluție 8K Ultra-HD', 'Model 3D Dollhouse', 'Plan 2D Cotat'],
       isFeatured: true,
       client: 'Proprietar Privat',
     });
     setFeatureInput('Rezoluție 8K Ultra-HD, Model 3D Dollhouse, Plan 2D Cotat');
+    setNewImageUrlInput('');
   };
 
-  // Image Upload handler (converts local file to base64 data URL)
-  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
+  // Multiple Image Upload handler (up to 10 images)
+  const handleMultipleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (!files || files.length === 0) return;
+
+    const currentImages = formData.images ? [...formData.images] : [];
+    const availableSlots = 10 - currentImages.length;
+
+    if (availableSlots <= 0) {
+      alert('Ați atins limita maximă de 10 imagini pentru acest proiect.');
+      return;
+    }
+
+    const filesToProcess = Array.from(files).slice(0, availableSlots);
+    let loadedCount = 0;
+    const newBase64Images: string[] = [];
+
+    filesToProcess.forEach((file) => {
       const reader = new FileReader();
       reader.onload = (event) => {
         if (event.target?.result) {
-          setFormData((prev) => ({ ...prev, coverImage: event.target!.result as string }));
+          newBase64Images.push(event.target.result as string);
+        }
+        loadedCount++;
+        if (loadedCount === filesToProcess.length) {
+          const updated = [...currentImages, ...newBase64Images].slice(0, 10);
+          setFormData((prev) => ({
+            ...prev,
+            images: updated,
+            coverImage: updated[0] || prev.coverImage,
+          }));
         }
       };
       reader.readAsDataURL(file);
+    });
+  };
+
+  // Add Image via URL
+  const handleAddImageUrl = () => {
+    if (!newImageUrlInput.trim()) return;
+    const currentImages = formData.images ? [...formData.images] : [];
+    if (currentImages.length >= 10) {
+      alert('Limita este de maxim 10 imagini per proiect.');
+      return;
     }
+    const updated = [...currentImages, newImageUrlInput.trim()];
+    setFormData((prev) => ({
+      ...prev,
+      images: updated,
+      coverImage: updated[0] || prev.coverImage,
+    }));
+    setNewImageUrlInput('');
+  };
+
+  // Remove individual image from gallery
+  const handleRemoveImage = (indexToRemove: number) => {
+    const currentImages = formData.images ? [...formData.images] : [];
+    const updated = currentImages.filter((_, idx) => idx !== indexToRemove);
+    setFormData((prev) => ({
+      ...prev,
+      images: updated,
+      coverImage: updated[0] || '',
+    }));
+  };
+
+  // Set selected image as cover (move to position 0)
+  const handleSetAsCover = (index: number) => {
+    const currentImages = formData.images ? [...formData.images] : [];
+    if (index === 0 || !currentImages[index]) return;
+    const target = currentImages.splice(index, 1)[0];
+    const updated = [target, ...currentImages];
+    setFormData((prev) => ({
+      ...prev,
+      images: updated,
+      coverImage: target,
+    }));
   };
 
   const handleSaveTour = (e: React.FormEvent) => {
@@ -134,6 +211,10 @@ export const TourManagerModal: React.FC<TourManagerModalProps> = ({
       alert('Vă rugăm să introduceți cel puțin un titlu și link-ul turului 3D.');
       return;
     }
+
+    const currentImages = formData.images && formData.images.length > 0 
+      ? formData.images 
+      : (formData.coverImage ? [formData.coverImage] : ['/images/retreat_courtyard.jpg']);
 
     const parsedFeatures = featureInput
       .split(',')
@@ -146,6 +227,8 @@ export const TourManagerModal: React.FC<TourManagerModalProps> = ({
           ? ({
               ...t,
               ...formData,
+              images: currentImages,
+              coverImage: currentImages[0],
               features: parsedFeatures,
             } as VirtualTourItem)
           : t
@@ -160,7 +243,8 @@ export const TourManagerModal: React.FC<TourManagerModalProps> = ({
         surface: formData.surface || '100 m²',
         rooms: formData.rooms || '3 Camere',
         embedUrl: formData.embedUrl || 'https://my.matterport.com/show/?m=YFWgEekGLHm',
-        coverImage: formData.coverImage || '/images/retreat_courtyard.jpg',
+        coverImage: currentImages[0],
+        images: currentImages,
         description: formData.description || 'Tur virtual 3D realizat cu tehnologie Insta X5 8K.',
         features: parsedFeatures.length > 0 ? parsedFeatures : ['Scanare 8K', 'Model 3D'],
         isFeatured: formData.isFeatured ?? true,
@@ -393,11 +477,16 @@ export const TourManagerModal: React.FC<TourManagerModalProps> = ({
                     className="p-4 rounded-2xl bg-stone-950/80 border border-stone-800 flex flex-col justify-between gap-3 group hover:border-stone-700 transition-colors"
                   >
                     <div className="flex items-start gap-3">
-                      <img
-                        src={tour.coverImage}
-                        alt={tour.title}
-                        className="w-20 h-20 rounded-xl object-cover border border-stone-700 flex-shrink-0 bg-stone-900"
-                      />
+                      <div className="relative flex-shrink-0">
+                        <img
+                          src={tour.coverImage}
+                          alt={tour.title}
+                          className="w-20 h-20 rounded-xl object-cover border border-stone-700 bg-stone-900"
+                        />
+                        <span className="absolute bottom-1 right-1 bg-stone-950/90 text-[9px] font-mono px-1.5 py-0.5 rounded text-stone-300 border border-white/10">
+                          {tour.images && tour.images.length > 0 ? tour.images.length : 1} foto
+                        </span>
+                      </div>
                       <div className="space-y-1 min-w-0 flex-1">
                         <div className="flex items-center gap-1.5 text-[10px] font-bold text-bronze tracking-wider uppercase truncate">
                           <span>{tour.category}</span>
@@ -575,39 +664,105 @@ export const TourManagerModal: React.FC<TourManagerModalProps> = ({
                 </p>
               </div>
 
-              {/* Cover Image URL and Local Upload */}
-              <div className="space-y-2">
-                <label className="block text-[11px] font-bold tracking-widest text-stone-300 uppercase">
-                  Imagine de Copertă (URL sau Încarcă de pe telefon/PC)
-                </label>
-                <div className="flex flex-col sm:flex-row items-center gap-3">
-                  <input
-                    type="text"
-                    value={formData.coverImage || ''}
-                    onChange={(e) => setFormData({ ...formData, coverImage: e.target.value })}
-                    placeholder="/images/retreat_courtyard.jpg sau https://..."
-                    className="w-full bg-stone-950 border border-stone-800 focus:border-bronze rounded-xl px-3 py-2.5 text-xs sm:text-sm text-white focus:outline-none"
-                  />
-                  <label className="w-full sm:w-auto px-4 py-2.5 rounded-xl bg-stone-800 hover:bg-stone-700 text-stone-200 hover:text-white text-xs font-bold whitespace-nowrap cursor-pointer flex items-center justify-center gap-1.5 border border-stone-700 transition-colors">
-                    <Upload className="w-3.5 h-3.5 text-bronze" />
-                    <span>Alege Fișier</span>
-                    <input
-                      type="file"
-                      accept="image/*"
-                      onChange={handleFileUpload}
-                      className="hidden"
-                    />
-                  </label>
+              {/* MULTI-IMAGE GALLERY MANAGER (UP TO 10 PHOTOS) */}
+              <div className="p-4 rounded-2xl bg-stone-950 border border-stone-800 space-y-3">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                  <div>
+                    <label className="text-xs font-bold tracking-wider text-stone-200 uppercase flex items-center gap-2">
+                      <Camera className="w-4 h-4 text-bronze" />
+                      <span>Galerie Fotografii Proiect (Maxim 10 Imagini)</span>
+                    </label>
+                    <p className="text-[11px] text-stone-400">
+                      Vizitatorii vor putea răsfoi aceste imagini direct pe cardul proiectului. Prima imagine este coperta principală.
+                    </p>
+                  </div>
+
+                  <span className="text-xs font-mono text-bronze font-bold bg-stone-900 px-3 py-1 rounded-full border border-stone-800">
+                    {(formData.images || []).length} / 10 IMAGINI
+                  </span>
                 </div>
 
-                {formData.coverImage && (
-                  <div className="pt-2 flex items-center gap-3">
-                    <img
-                      src={formData.coverImage}
-                      alt="Previzualizare copertă"
-                      className="w-24 h-16 rounded-xl object-cover border border-stone-700 bg-stone-950"
+                {/* Upload & URL Controls */}
+                <div className="grid grid-cols-1 sm:grid-cols-12 gap-2.5 pt-1">
+                  <div className="sm:col-span-8 flex items-center gap-2">
+                    <input
+                      type="text"
+                      value={newImageUrlInput}
+                      onChange={(e) => setNewImageUrlInput(e.target.value)}
+                      placeholder="Lipiți un URL de imagine (ex: /images/nume.jpg sau https://...)"
+                      className="w-full bg-stone-900 border border-stone-800 focus:border-bronze rounded-xl px-3 py-2 text-xs text-white focus:outline-none"
                     />
-                    <span className="text-[11px] text-stone-400">Previzualizare copertă selectată</span>
+                    <button
+                      type="button"
+                      onClick={handleAddImageUrl}
+                      className="px-3.5 py-2 rounded-xl bg-stone-800 hover:bg-stone-700 text-stone-200 text-xs font-bold whitespace-nowrap cursor-pointer transition-colors"
+                    >
+                      Adaugă URL
+                    </button>
+                  </div>
+
+                  <div className="sm:col-span-4">
+                    <label className="w-full py-2 px-3 rounded-xl bg-bronze hover:bg-bronze-dark text-stone-950 text-xs font-bold tracking-wider uppercase whitespace-nowrap cursor-pointer flex items-center justify-center gap-2 transition-colors shadow-sm">
+                      <Upload className="w-3.5 h-3.5" />
+                      <span>Alege din PC / Tel</span>
+                      <input
+                        type="file"
+                        multiple
+                        accept="image/*"
+                        onChange={handleMultipleFileUpload}
+                        className="hidden"
+                      />
+                    </label>
+                  </div>
+                </div>
+
+                {/* Thumbnails Grid Preview */}
+                {formData.images && formData.images.length > 0 && (
+                  <div className="pt-2 grid grid-cols-2 sm:grid-cols-5 gap-3">
+                    {formData.images.map((img, idx) => (
+                      <div
+                        key={idx}
+                        className={`relative aspect-[4/3] rounded-xl overflow-hidden border bg-stone-900 group ${
+                          idx === 0 ? 'border-bronze ring-2 ring-bronze/40' : 'border-stone-800'
+                        }`}
+                      >
+                        <img
+                          src={img}
+                          alt={`Foto ${idx + 1}`}
+                          className="w-full h-full object-cover"
+                        />
+
+                        {/* Badge for Cover */}
+                        {idx === 0 && (
+                          <span className="absolute top-1.5 left-1.5 bg-bronze text-stone-950 text-[9px] font-bold px-1.5 py-0.5 rounded shadow">
+                            COPERTĂ
+                          </span>
+                        )}
+
+                        {/* Hover Overlay Controls */}
+                        <div className="absolute inset-0 bg-stone-950/80 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-1.5 p-1">
+                          {idx !== 0 && (
+                            <button
+                              type="button"
+                              onClick={() => handleSetAsCover(idx)}
+                              className="p-1.5 rounded-lg bg-stone-800 hover:bg-stone-700 text-stone-200 text-[10px] font-bold cursor-pointer"
+                              title="Setează ca primă imagine / copertă"
+                            >
+                              <Star className="w-3.5 h-3.5 text-bronze" />
+                            </button>
+                          )}
+
+                          <button
+                            type="button"
+                            onClick={() => handleRemoveImage(idx)}
+                            className="p-1.5 rounded-lg bg-red-950 hover:bg-red-900 text-red-300 cursor-pointer"
+                            title="Șterge imaginea"
+                          >
+                            <Trash2 className="w-3.5 h-3.5" />
+                          </button>
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 )}
               </div>
