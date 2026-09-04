@@ -2,7 +2,7 @@ import { CustomImages, GalleryItem, PricingPackage, StatItem, VirtualTourItem } 
 
 export const initialImages: CustomImages = {
   hero3dTour: '/images/hero_3d_tour.jpg',
-  aboutGear: '/images/insta_camera_gear.jpg',
+  aboutGear: '/images/insta_camera_gear.jpg?v=2',
   aboutDollhouse: '/images/dollhouse_view.jpg?v=2',
   aboutInterior: '/images/about_interior.jpg',
   retreatCourtyard: '/images/retreat_courtyard.jpg',

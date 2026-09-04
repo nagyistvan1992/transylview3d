@@ -34,18 +34,18 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ images }) => {
           {/* Left Column: Full Uncropped Camera Gear Photo */}
           <div className="lg:col-span-5 space-y-8 sm:space-y-12">
             
-            {/* Insta X5 Camera Gear Card - Complete uncropped portrait display showing full height from lens to tripod base */}
+            {/* Insta X5 Camera Gear Card - Complete uncropped landscape display showing full height from lens to tripod base */}
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true, margin: '-80px' }}
               transition={{ duration: 0.8 }}
-              className="relative aspect-[4/5] rounded-3xl overflow-hidden shadow-luxury-card border border-stone-300/80 bg-stone-950 flex items-center justify-center p-3 sm:p-4 group"
+              className="relative aspect-[16/10] sm:aspect-[4/3] rounded-3xl overflow-hidden shadow-luxury-card border border-stone-300/80 bg-stone-950 flex items-center justify-center group"
             >
               <img
                 src={images.aboutGear}
                 alt="Insta X5 8K Cameră Profesională Tururi Virtuale 3D"
-                className="w-full h-full object-contain object-center transition-transform duration-700 group-hover:scale-102"
+                className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-104"
               />
               
               <div className="absolute bottom-3 left-3 right-3 sm:bottom-4 sm:left-4 sm:right-4 flex items-center justify-between text-white text-xs font-medium tracking-wider">
