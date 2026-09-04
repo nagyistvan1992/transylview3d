@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { motion, useScroll, useTransform, useSpring, AnimatePresence } from 'framer-motion';
-import { ChevronRight, ArrowDown, Menu, X } from 'lucide-react';
+import { ChevronRight, ArrowDown, ChevronDown, Menu, X } from 'lucide-react';
 import { propertyHeroData } from '../data/propertyData';
 
 interface HeroSectionProps {
@@ -332,29 +332,59 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ heroImage, onBookCall 
 
         </div>
 
-        {/* Mobile Animated Scroll Prompt Indicator */}
+        {/* Mobile Animated Scroll Prompt Indicator - Perfectly Centered & Highly Eye-Catching */}
         <motion.div
           style={{ opacity: mobileScrollPromptOpacity }}
-          className="sm:hidden absolute bottom-5 left-1/2 -translate-x-1/2 z-40 flex flex-col items-center gap-1.5 pointer-events-none select-none"
+          className="sm:hidden absolute bottom-5 left-1/2 -translate-x-1/2 z-40 flex flex-col items-center justify-center text-center pointer-events-none select-none w-max"
         >
-          <div className="flex items-center gap-1.5 bg-stone-950/85 backdrop-blur-md px-3 py-1 rounded-full border border-white/20 shadow-xl">
-            <span className="w-1.5 h-1.5 rounded-full bg-bronze animate-pulse" />
-            <span className="text-[9px] font-mono font-bold tracking-[0.22em] text-stone-200 uppercase">
+          {/* Luminous Symmetrical Text Pill */}
+          <div className="inline-flex items-center justify-center gap-2 bg-stone-950/90 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-bronze/40 shadow-[0_4px_20px_rgba(0,0,0,0.8),0_0_15px_rgba(205,162,116,0.3)]">
+            <span className="w-1.5 h-1.5 rounded-full bg-bronze animate-ping" />
+            <span className="text-[9.5px] font-mono font-bold tracking-[0.2em] text-white uppercase text-center pl-0.5">
               GLISEAZĂ PENTRU A EXPLORA
             </span>
+            <span className="w-1.5 h-1.5 rounded-full bg-bronze animate-pulse" />
           </div>
 
-          <motion.div
-            animate={{ y: [0, 5, 0] }}
-            transition={{ repeat: Infinity, duration: 1.4, ease: "easeInOut" }}
-            className="w-5 h-8 rounded-full border-2 border-white/35 bg-stone-950/60 backdrop-blur-sm flex items-start justify-center pt-1.5 shadow-lg"
-          >
+          {/* Eye-Catching Animated Mouse / Touch Capsule + Synchronized Arrow */}
+          <div className="mt-1.5 flex flex-col items-center justify-center">
             <motion.div
-              animate={{ y: [0, 10, 0], opacity: [1, 0.2, 1] }}
-              transition={{ repeat: Infinity, duration: 1.4, ease: "easeInOut" }}
-              className="w-1.5 h-2 rounded-full bg-bronze"
-            />
-          </motion.div>
+              animate={{ y: [0, 5, 0] }}
+              transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
+              className="w-5 h-9 rounded-full border-2 border-white/70 bg-stone-950/70 backdrop-blur-sm flex items-start justify-center pt-1.5 shadow-[0_4px_16px_rgba(0,0,0,0.7)] ring-1 ring-bronze/40"
+            >
+              <motion.div
+                animate={{
+                  y: [0, 14, 0],
+                  opacity: [1, 0.2, 1],
+                  scaleY: [1, 1.35, 1],
+                }}
+                transition={{
+                  repeat: Infinity,
+                  duration: 1.5,
+                  ease: "easeInOut",
+                }}
+                className="w-1.5 h-2.5 rounded-full bg-gradient-to-b from-amber-200 to-bronze shadow-[0_0_10px_rgba(205,162,116,1)]"
+              />
+            </motion.div>
+
+            {/* Cascading Synchronized Bouncing Arrow */}
+            <motion.div
+              animate={{
+                y: [0, 4, 0],
+                opacity: [0.5, 1, 0.5],
+              }}
+              transition={{
+                repeat: Infinity,
+                duration: 1.5,
+                ease: "easeInOut",
+                delay: 0.15,
+              }}
+              className="-mt-0.5"
+            >
+              <ChevronDown className="w-4 h-4 text-bronze stroke-[2.5]" />
+            </motion.div>
+          </div>
         </motion.div>
 
         {/* Bottom Scroll Progress Bar - Desktop */}
