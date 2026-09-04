@@ -224,14 +224,14 @@ export const BookCallModal: React.FC<BookCallModalProps> = ({
             )}
 
             {formData.selectedPkg && formData.selectedPkg.includes('Parteneriat B2B') && (
-              <div className="mb-4 p-3.5 rounded-xl bg-emerald-950/60 border border-emerald-500/40 text-emerald-200 text-xs flex items-start gap-2.5">
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse flex-shrink-0 mt-1" />
+              <div className="mb-4 p-3.5 rounded-xl bg-stone-900 border border-bronze/40 text-stone-200 text-xs flex items-start gap-2.5 shadow-sm">
+                <span className="w-2 h-2 rounded-full bg-bronze animate-pulse flex-shrink-0 mt-1" />
                 <div className="space-y-0.5">
-                  <span className="font-bold text-white uppercase tracking-wide block text-[11px] font-mono">
+                  <span className="font-bold text-bronze uppercase tracking-wide block text-[11px] font-mono">
                     Ofertă Activată: Parteneriat B2B (10+ Proprietăți)
                   </span>
-                  <p className="text-emerald-300/90 font-light leading-relaxed">
-                    Primul tur virtual 3D este 100% GRATUIT pentru a testa calitatea. Pentru portofoliul de proprietăți vom stabili un contract cadru cu preț negociat de volum mult mai avantajos.
+                  <p className="text-stone-300 font-light leading-relaxed">
+                    Primul tur virtual 3D este <strong className="text-white font-medium">100% GRATUIT</strong> pentru a testa calitatea. Pentru portofoliul de proprietăți vom stabili un contract cadru cu preț negociat de volum mult mai avantajos.
                   </p>
                 </div>
               </div>

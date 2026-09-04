@@ -137,121 +137,117 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ onSelectPackage 
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7 }}
-          className="mt-14 sm:mt-20 relative rounded-3xl sm:rounded-4xl overflow-hidden bg-gradient-to-br from-stone-950 via-stone-900 to-stone-950 border border-stone-800 text-stone-100 shadow-[0_30px_90px_-20px_rgba(0,0,0,0.5)]"
+          className="mt-12 sm:mt-20 relative rounded-2xl sm:rounded-3xl md:rounded-4xl overflow-hidden bg-white border-2 border-stone-900/90 shadow-[0_20px_60px_-15px_rgba(27,23,21,0.12)] -mx-3 sm:mx-0 p-3.5 sm:p-8 lg:p-12"
         >
-          {/* Subtle background ambient accents */}
-          <div className="absolute -top-32 -right-32 w-80 h-80 bg-[#556B2F]/15 rounded-full blur-3xl pointer-events-none" />
-          <div className="absolute -bottom-32 -left-32 w-80 h-80 bg-bronze/15 rounded-full blur-3xl pointer-events-none" />
+          {/* Subtle top architectural bronze accent hairline */}
+          <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-bronze via-[#556B2F] to-bronze opacity-80" />
 
-          <div className="relative p-6 sm:p-10 lg:p-14">
-            {/* Top row with badges */}
-            <div className="flex flex-wrap items-center justify-between gap-3 mb-6 sm:mb-8">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-stone-800/90 border border-stone-700 text-stone-300 text-[11px] sm:text-xs font-bold tracking-[0.2em] uppercase font-mono">
-                <Building2 className="w-3.5 h-3.5 text-bronze" />
-                <span>PARTENERIAT B2B • AGENȚII & DEZVOLTATORI</span>
+          {/* Top row with badges */}
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4 sm:mb-8 pt-0.5">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-stone-100 border border-stone-300 text-stone-800 text-[10px] sm:text-xs font-bold tracking-[0.2em] uppercase font-mono w-fit">
+              <Building2 className="w-3.5 h-3.5 text-bronze flex-shrink-0" />
+              <span>PARTENERIAT B2B • AGENȚII & DEZVOLTATORI</span>
+            </div>
+            <span className="px-3 py-1 rounded-full bg-[#556B2F]/10 border border-[#556B2F]/30 text-[#435424] text-[10px] sm:text-xs font-bold tracking-wider uppercase font-mono shadow-sm flex items-center gap-1.5 w-fit">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#556B2F] animate-pulse" />
+              <span>PRIMUL TUR 100% GRATUIT</span>
+            </span>
+          </div>
+
+          {/* Header Content */}
+          <div className="max-w-3xl space-y-2 sm:space-y-3 mb-5 sm:mb-10">
+            <h3 className="font-serif text-xl sm:text-3xl lg:text-4xl font-bold text-stone-950 tracking-tight leading-tight">
+              Ești Agent Imobiliar sau Deții Peste 10 Proprietăți?
+            </h3>
+            <p className="text-stone-600 text-xs sm:text-sm lg:text-base leading-relaxed font-light">
+              Îți oferim ocazia să testezi eficiența scanărilor noastre 3D la cele mai înalte standarde: <strong className="text-stone-900 font-semibold underline decoration-bronze underline-offset-4">primul tur virtual este 100% GRATUIT</strong>, fără niciun cost ascuns sau obligație contractuală preliminară.
+            </p>
+          </div>
+
+          {/* 3 Pillar Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-5 mb-5 sm:mb-10">
+            {/* Pillar 1 */}
+            <div className="p-3.5 sm:p-5 rounded-xl sm:rounded-2xl bg-stone-50/80 border border-stone-200/90 flex flex-col justify-between hover:border-stone-300 hover:bg-white hover:shadow-sm transition-all">
+              <div className="space-y-2.5">
+                <div className="w-9 h-9 rounded-xl bg-stone-200/80 text-stone-900 flex items-center justify-center">
+                  <Gift className="w-4 h-4 text-stone-800" />
+                </div>
+                <h4 className="font-display font-bold text-sm sm:text-base text-stone-950 tracking-wide">
+                  1. Primul Tur 3D Gratuit
+                </h4>
+                <p className="text-xs sm:text-sm text-stone-600 leading-relaxed font-light">
+                  O scanare pilot completă pentru orice apartament sau casă din portofoliul tău. Primești turul 3D interactiv 8K și fotografiile HDR gata de promovare imediată.
+                </p>
               </div>
-              <span className="px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-[11px] font-bold tracking-wider uppercase font-mono shadow-sm flex items-center gap-1.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                <span>PILOT GRATUIT • FĂRĂ RISC</span>
-              </span>
+              <div className="pt-3 mt-3 border-t border-stone-200 flex items-center gap-1.5 text-[11px] font-mono text-[#556B2F] font-semibold">
+                <Check className="w-3.5 h-3.5 stroke-[2.5]" /> Fără cost • Testezi calitatea
+              </div>
             </div>
 
-            {/* Header Content */}
-            <div className="max-w-3xl space-y-3 sm:space-y-4 mb-8 sm:mb-12">
-              <h3 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold text-white tracking-tight leading-tight">
-                Ești Agent Imobiliar sau Deții Peste 10 Proprietăți?
-              </h3>
-              <p className="text-stone-300 text-xs sm:text-sm lg:text-base leading-relaxed font-light">
-                Îți oferim ocazia să testezi eficiența scanărilor noastre 3D la cele mai înalte standarde: <strong className="text-white font-semibold underline decoration-bronze underline-offset-4">primul tur virtual este 100% GRATUIT</strong>, fără niciun cost ascuns sau obligație contractuală preliminară.
+            {/* Pillar 2 */}
+            <div className="p-3.5 sm:p-5 rounded-xl sm:rounded-2xl bg-stone-50/80 border border-stone-200/90 flex flex-col justify-between hover:border-bronze/40 hover:bg-white hover:shadow-sm transition-all">
+              <div className="space-y-2.5">
+                <div className="w-9 h-9 rounded-xl bg-bronze/15 text-bronze-dark border border-bronze/30 flex items-center justify-center">
+                  <BadgePercent className="w-4 h-4 text-bronze-dark" />
+                </div>
+                <h4 className="font-display font-bold text-sm sm:text-base text-stone-950 tracking-wide">
+                  2. Tarife Personalizate de Volum
+                </h4>
+                <p className="text-xs sm:text-sm text-stone-600 leading-relaxed font-light">
+                  La semnarea unui contract cadru pentru mai multe proprietăți, primești un tarif avantajos de volum, mult mai rentabil per unitate decât prețurile standard.
+                </p>
+              </div>
+              <div className="pt-3 mt-3 border-t border-stone-200 flex items-center gap-1.5 text-[11px] font-mono text-bronze-dark font-semibold">
+                <Check className="w-3.5 h-3.5 stroke-[2.5]" /> Cost optimizat per proprietate
+              </div>
+            </div>
+
+            {/* Pillar 3 */}
+            <div className="p-3.5 sm:p-5 rounded-xl sm:rounded-2xl bg-stone-50/80 border border-stone-200/90 flex flex-col justify-between hover:border-[#556B2F]/40 hover:bg-white hover:shadow-sm transition-all">
+              <div className="space-y-2.5">
+                <div className="w-9 h-9 rounded-xl bg-[#556B2F]/15 text-[#556B2F] border border-[#556B2F]/30 flex items-center justify-center">
+                  <Layers className="w-4 h-4 text-[#556B2F]" />
+                </div>
+                <h4 className="font-display font-bold text-sm sm:text-base text-stone-950 tracking-wide">
+                  3. Prioritate & Co-Branding
+                </h4>
+                <p className="text-xs sm:text-sm text-stone-600 leading-relaxed font-light">
+                  Integrare directă a siglei agenției, numărului de telefon și link-urilor de contact în tur. Scanare și livrare prioritară în 24h pentru listările urgente.
+                </p>
+              </div>
+              <div className="pt-3 mt-3 border-t border-stone-200 flex items-center gap-1.5 text-[11px] font-mono text-stone-700 font-semibold">
+                <Check className="w-3.5 h-3.5 stroke-[2.5]" /> Livrare 24h • Branding inclus
+              </div>
+            </div>
+          </div>
+
+          {/* Bottom Action Box */}
+          <div className="p-3.5 sm:p-6 lg:p-8 rounded-xl sm:rounded-2xl bg-stone-900 border border-stone-800 text-stone-100 flex flex-col lg:flex-row items-center justify-between gap-4 sm:gap-6 shadow-md">
+            <div className="space-y-1 text-center lg:text-left w-full lg:w-auto">
+              <h5 className="font-serif text-base sm:text-lg lg:text-xl font-bold text-white">
+                Pregătit să transformi prezentarea proprietăților tale?
+              </h5>
+              <p className="text-xs sm:text-sm text-stone-300 font-light max-w-xl">
+                Trimite-ne o solicitare rapidă pentru a programa primul tur gratuit sau contactează-ne direct pentru a discuta un pachet de volum.
               </p>
             </div>
 
-            {/* 3 Pillar Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 mb-10 sm:mb-12">
-              {/* Pillar 1 */}
-              <div className="p-5 sm:p-6 rounded-2xl bg-stone-900/90 border border-stone-800/90 flex flex-col justify-between hover:border-stone-700 transition-colors">
-                <div className="space-y-3">
-                  <div className="w-10 h-10 rounded-xl bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
-                    <Gift className="w-5 h-5" />
-                  </div>
-                  <h4 className="font-display font-bold text-sm sm:text-base text-white tracking-wide">
-                    1. Primul Tur 3D Gratuit
-                  </h4>
-                  <p className="text-xs sm:text-sm text-stone-400 leading-relaxed font-light">
-                    O scanare pilot completă pentru orice apartament sau casă din portofoliul tău. Primești turul 3D interactiv 8K și fotografiile HDR gata de promovare imediată.
-                  </p>
-                </div>
-                <div className="pt-4 mt-4 border-t border-stone-800/80 flex items-center gap-2 text-[11px] font-mono text-emerald-400">
-                  <Check className="w-3.5 h-3.5 stroke-[2.5]" /> Fără cost • Testezi calitatea
-                </div>
-              </div>
-
-              {/* Pillar 2 */}
-              <div className="p-5 sm:p-6 rounded-2xl bg-stone-900/90 border border-stone-800/90 flex flex-col justify-between hover:border-stone-700 transition-colors">
-                <div className="space-y-3">
-                  <div className="w-10 h-10 rounded-xl bg-amber-500/15 border border-amber-500/30 flex items-center justify-center text-amber-400">
-                    <BadgePercent className="w-5 h-5" />
-                  </div>
-                  <h4 className="font-display font-bold text-sm sm:text-base text-white tracking-wide">
-                    2. Tarife Personalizate de Volum
-                  </h4>
-                  <p className="text-xs sm:text-sm text-stone-400 leading-relaxed font-light">
-                    La semnarea unui contract cadru pentru mai multe proprietăți, primești un tarif avantajos de volum, mult mai rentabil per unitate decât prețurile standard.
-                  </p>
-                </div>
-                <div className="pt-4 mt-4 border-t border-stone-800/80 flex items-center gap-2 text-[11px] font-mono text-amber-300">
-                  <Check className="w-3.5 h-3.5 stroke-[2.5]" /> Cost optimizat per proprietate
-                </div>
-              </div>
-
-              {/* Pillar 3 */}
-              <div className="p-5 sm:p-6 rounded-2xl bg-stone-900/90 border border-stone-800/90 flex flex-col justify-between hover:border-stone-700 transition-colors">
-                <div className="space-y-3">
-                  <div className="w-10 h-10 rounded-xl bg-sky-500/15 border border-sky-500/30 flex items-center justify-center text-sky-400">
-                    <Layers className="w-5 h-5" />
-                  </div>
-                  <h4 className="font-display font-bold text-sm sm:text-base text-white tracking-wide">
-                    3. Prioritate & Co-Branding Agenție
-                  </h4>
-                  <p className="text-xs sm:text-sm text-stone-400 leading-relaxed font-light">
-                    Integrare directă a siglei agenției, numărului de telefon și link-urilor de contact în tur. Scanare și livrare prioritară în 24h pentru listările urgente.
-                  </p>
-                </div>
-                <div className="pt-4 mt-4 border-t border-stone-800/80 flex items-center gap-2 text-[11px] font-mono text-sky-300">
-                  <Check className="w-3.5 h-3.5 stroke-[2.5]" /> Livrare 24h • Branding integrat
-                </div>
-              </div>
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 sm:gap-3 w-full lg:w-auto">
+              <button
+                onClick={() => onSelectPackage('Parteneriat B2B (Primul Tur Gratuit - 10+ Proprietăți)')}
+                className="inline-flex items-center justify-center gap-2 px-5 sm:px-7 py-3 sm:py-3.5 rounded-xl bg-[#556B2F] hover:bg-[#435424] text-white font-bold text-xs uppercase tracking-wider transition-all duration-200 shadow-md active:scale-98"
+              >
+                <span>Solicită Turul Gratuit B2B</span>
+                <ArrowRight className="w-4 h-4" />
+              </button>
+              <a
+                href="tel:0751801025"
+                className="inline-flex items-center justify-center gap-2 px-4 sm:px-5 py-3 sm:py-3.5 rounded-xl bg-stone-800 hover:bg-stone-700 text-stone-200 font-medium text-xs tracking-wider transition-colors border border-stone-700"
+              >
+                <PhoneCall className="w-3.5 h-3.5 text-bronze" />
+                <span>0751 801 025</span>
+              </a>
             </div>
-
-            {/* CTA Box */}
-            <div className="p-6 sm:p-8 rounded-2xl bg-stone-900/95 border border-stone-800 flex flex-col lg:flex-row items-center justify-between gap-6">
-              <div className="space-y-1.5 text-center lg:text-left">
-                <h5 className="font-serif text-lg sm:text-xl font-bold text-white">
-                  Pregătit să transformi prezentarea proprietăților tale?
-                </h5>
-                <p className="text-xs sm:text-sm text-stone-400 font-light max-w-xl">
-                  Trimite-ne o solicitare rapidă pentru a programa primul tur gratuit sau contactează-ne direct pentru a discuta un pachet personalizat de volum.
-                </p>
-              </div>
-
-              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full lg:w-auto">
-                <button
-                  onClick={() => onSelectPackage('Parteneriat B2B (Primul Tur Gratuit - 10+ Proprietăți)')}
-                  className="inline-flex items-center justify-center gap-2.5 px-6 sm:px-8 py-3.5 rounded-xl bg-[#556B2F] hover:bg-[#435424] text-white font-bold text-xs uppercase tracking-widest transition-all duration-200 shadow-lg shadow-black/30 hover:scale-[1.02] active:scale-[0.98]"
-                >
-                  <span>Solicită Turul Gratuit B2B</span>
-                  <ArrowRight className="w-4 h-4" />
-                </button>
-                <a
-                  href="tel:0751801025"
-                  className="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl bg-stone-800 hover:bg-stone-700 text-stone-200 font-medium text-xs tracking-wider transition-colors border border-stone-700/60"
-                >
-                  <PhoneCall className="w-3.5 h-3.5 text-bronze" />
-                  <span>0751 801 025</span>
-                </a>
-              </div>
-            </div>
-
           </div>
         </motion.div>
 
