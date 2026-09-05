@@ -15,8 +15,18 @@ const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
     user: (process.env.SMTP_USER || 'transylview3d@gmail.com').trim(),
-    pass: (process.env.SMTP_PASS || 'uzfqetathiidwxai').replace(/\s+/g, ''),
+    pass: (process.env.SMTP_PASS || '').replace(/\s+/g, ''),
   },
+});
+
+// Verify transporter connection on startup
+transporter.verify((error, success) => {
+  if (error) {
+    console.warn('[TransylView 3D Mail Service] ⚠️ SMTP Authentication status: Invalid or expired credentials.');
+    console.warn('[TransylView 3D Mail Service] Error details:', error.message);
+  } else {
+    console.log('[TransylView 3D Mail Service] ✅ SMTP Connection verified successfully! Ready to deliver emails.');
+  }
 });
 
 // Health check route
