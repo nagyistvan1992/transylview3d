@@ -50,6 +50,13 @@ export default async function handler(req, res) {
 
     const timestamp = new Date().toLocaleString('ro-RO', { timeZone: 'Europe/Bucharest' });
     const formattedDate = preferredDate ? `${preferredDate} (${preferredTime || 'Interval de stabilit'})` : 'De stabilit de comun acord';
+    const isPlan2DIncluded = selectedPkg && (selectedPkg.includes('Premium') || selectedPkg.includes('Exclusiv'));
+    const plan2DStatusOwner = isPlan2DIncluded
+      ? '<span style="color: #4ade80; font-weight: bold;">✅ DA (Inclus în pachet)</span>'
+      : (wantsPlan2D ? '<span style="color: #4ade80; font-weight: bold;">✅ DA (+100 RON opțional)</span>' : '<span style="color: #a8a29e;">❌ Nu</span>');
+    const plan2DStatusClient = isPlan2DIncluded
+      ? 'Inclus în pachet'
+      : (wantsPlan2D ? 'Solicitat (+100 RON opțional)' : 'Nu este inclus');
 
     // 1. Email to Business Owner (transylview3d@gmail.com)
     const ownerMailOptions = {
@@ -119,8 +126,8 @@ export default async function handler(req, res) {
                   <td class="value">${formattedDate}</td>
                 </tr>
                 <tr>
-                  <td class="label">Plan 2D Cotat (Extra):</td>
-                  <td class="value">${wantsPlan2D ? '<span style="color: #4ade80; font-weight: bold;">✅ DA (Opțional – cost extra)</span>' : '<span style="color: #a8a29e;">❌ Nu (Doar tur 3D)</span>'}</td>
+                  <td class="label">Plan 2D Cotat:</td>
+                  <td class="value">${plan2DStatusOwner}</td>
                 </tr>
                 <tr>
                   <td class="label">Data Înregistrării:</td>
@@ -209,8 +216,8 @@ export default async function handler(req, res) {
                     <td style="padding: 6px 0; text-align: right; font-weight: 600; color: #1c1917;">${formattedDate}</td>
                   </tr>
                   <tr>
-                    <td style="padding: 6px 0; color: #78716c;">Plan 2D Cotat (Extra):</td>
-                    <td style="padding: 6px 0; text-align: right; font-weight: 600; color: #1c1917;">${wantsPlan2D ? 'Solicitat (Opțional – cost suplimentar)' : 'Nu este inclus'}</td>
+                    <td style="padding: 6px 0; color: #78716c;">Plan 2D Cotat:</td>
+                    <td style="padding: 6px 0; text-align: right; font-weight: 600; color: #1c1917;">${plan2DStatusClient}</td>
                   </tr>
                 </table>
               </div>

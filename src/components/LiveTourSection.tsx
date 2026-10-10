@@ -1,19 +1,31 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Eye, Compass, Maximize2, Minimize2, ExternalLink, Layers, MousePointerClick, Ruler } from 'lucide-react';
+import { Compass, Maximize2, Minimize2, ExternalLink, Layers, MousePointerClick, Ruler, ArrowRight, Loader2 } from 'lucide-react';
 
 interface LiveTourSectionProps {
   onBookCall: () => void;
 }
 
+// Technical specification rows
+const techSpecs: { label: string; value: string; note: string }[] = [
+  { label: 'Rezoluție captură', value: '8K HDR', note: 'Echipament Insta X5 8K, imagini panoramice calibrate' },
+  { label: 'Motor volumetric', value: 'Metareal Stage', note: 'Reconstrucție spațială 3D pentru interior și exterior' },
+  { label: 'Acoperire spațială', value: 'Interior & Exterior', note: 'Curți, terase și grădini în plin soare, fără limitări laser' },
+  { label: 'Model volumetric', value: 'Dollhouse 3D', note: 'Vizualizare secțională completă și perspectivă pe nivele' },
+  { label: 'Plan de etaj', value: 'Plan 2D cotat', note: 'Releveu schematic cu cote și suprafețe utile integrate' },
+  { label: 'Măsurători', value: 'Riglă digitală milimetrică', note: 'Măsurarea pereților și a mobilierului direct în browser' },
+  { label: 'Personalizare', value: 'White-Label 100%', note: 'Fără branding terț, dedicat exclusiv agenției tale' },
+  { label: 'Termen de predare', value: '24–72 ore', note: 'În funcție de suprafață · Prioritate Pachet Exclusiv' },
+];
+
 export const LiveTourSection: React.FC<LiveTourSectionProps> = ({ onBookCall }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [isIframeLoaded, setIsIframeLoaded] = useState(false);
 
-  // Exact Matterport space: https://discover.matterport.com/space/YFWgEekGLHm
-  const matterportModelId = 'YFWgEekGLHm';
-  const embedUrl = `https://my.matterport.com/show/?m=${matterportModelId}&play=1&brand=0&mls=1&wh=0`;
-  const directUrl = `https://my.matterport.com/show/?m=${matterportModelId}`;
+  // Exact Metareal Stage 3D Showcase Space
+  const metarealUrl =
+    'https://tour.metareal.com/apps/player?asset=a6eb7cb7-206c-4dce-94d7-12e71246ea2a&position=-0.72x1.62y1.51z&rotation=0.00x255.81y0.00z';
 
   // Native Fullscreen API Handler
   const toggleFullscreen = async () => {
@@ -55,9 +67,7 @@ export const LiveTourSection: React.FC<LiveTourSectionProps> = ({ onBookCall }) 
   }, []);
 
   return (
-    <section id="demo-tour" className="relative py-20 sm:py-28 bg-stone-950 text-stone-100 overflow-hidden border-t border-stone-800 select-none">
-      <div className="absolute top-0 left-1/3 w-[600px] h-[600px] bg-bronze/10 rounded-full blur-[160px] pointer-events-none" />
-
+    <section id="demo-tour" className="relative py-16 md:py-24 bg-stone-950 text-stone-100 overflow-hidden border-t border-stone-800 select-none">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Section Header */}
@@ -66,63 +76,68 @@ export const LiveTourSection: React.FC<LiveTourSectionProps> = ({ onBookCall }) 
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-          style={{ transform: 'translateZ(0)', backfaceVisibility: 'hidden' }}
-          className="gpu-smooth text-center max-w-3xl mx-auto mb-8 sm:mb-12 space-y-3 sm:space-y-4"
+          className="gpu-smooth text-center max-w-3xl mx-auto mb-8 sm:mb-10 space-y-3 px-2"
         >
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-stone-900 border border-stone-800 text-stone-300 text-xs font-mono tracking-[0.25em] uppercase">
-            <span className="w-1.5 h-1.5 rounded-full bg-bronze" />
-            <span>EXEMPLU DEMO DIGITAL TWIN 3D</span>
-          </div>
+          <span className="text-xs md:text-sm font-semibold uppercase tracking-[0.2em] text-stone-400 block">
+            Demo 3D Interactiv · Tehnologie Metareal Stage
+          </span>
 
-          <h2 className="font-serif text-2xl sm:text-4xl lg:text-5xl font-normal text-white tracking-tight leading-tight px-2">
-            Experiență Interactivă Matterport 3D
+          <h2 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-semibold tracking-tight text-stone-100 leading-tight [text-wrap:balance]">
+            Explorează proprietatea <span className="text-bronze-light">direct în pagină</span>
           </h2>
 
-          <p className="text-stone-400 text-xs sm:text-sm font-light max-w-2xl mx-auto leading-relaxed px-4">
-            Navigați liber prin fiecare încăpere la 360°, inspectați modelul secțional Dollhouse 3D și verificați măsurătorile de precizie direct în spațiu.
+          <p className="font-sans text-sm sm:text-base text-stone-300 font-normal leading-relaxed max-w-2xl mx-auto [text-wrap:balance]">
+            Navigați liber prin fiecare încăpere la 360°, inspectați modelul secțional Dollhouse 3D și verificați măsurătorile milimetrice direct pe această pagină.
           </p>
         </motion.div>
 
         {/* Dedicated Top Controls Bar */}
-        <div className="mb-3 flex flex-wrap items-center justify-between gap-3 bg-stone-900/90 backdrop-blur-md px-4 sm:px-6 py-3 rounded-2xl border border-stone-800/80 shadow-md">
-          <div className="flex items-center gap-2.5">
-            <span className="w-2 h-2 rounded-full bg-bronze" />
-            <span className="text-xs font-mono tracking-widest text-stone-300 uppercase flex items-center gap-2">
-              <Compass className="w-3.5 h-3.5 text-bronze flex-shrink-0" />
-              <span>TERMINAL VIZUALIZARE 3D MATTEPORT</span>
+        <div className="mb-3 flex items-center justify-between gap-3 bg-stone-900/70 px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl border border-stone-800 shadow-sm">
+          <div className="flex items-center gap-2.5 min-w-0">
+            <span className="relative flex h-2.5 w-2.5 flex-shrink-0">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500" />
             </span>
+            <div className="flex items-center gap-2 truncate">
+              <span className="text-xs sm:text-sm font-semibold text-white tracking-wide">
+                Tur Virtual 3D Activ
+              </span>
+              <span className="hidden sm:inline text-xs text-stone-400">
+                · Metareal Stage 8K
+              </span>
+            </div>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 flex-shrink-0">
             <a
-              href={directUrl}
+              href={metarealUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-stone-800 hover:bg-stone-700 text-stone-200 hover:text-white text-xs font-semibold flex items-center gap-1.5 transition-all border border-stone-700 shadow-sm"
-              title="Deschide în filă nouă"
+              className="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-md bg-stone-800 hover:bg-stone-700 text-stone-300 hover:text-white border border-stone-700 text-xs sm:text-sm font-medium transition-colors cursor-pointer"
+              title="Deschide turul în filă nouă"
             >
-              <ExternalLink className="w-3.5 h-3.5 text-bronze" />
-              <span>Deschide Separat</span>
+              <ExternalLink className="w-3.5 h-3.5 text-stone-400" strokeWidth={1.5} />
+              <span className="hidden sm:inline">Filă nouă</span>
             </a>
 
             <button
               onClick={toggleFullscreen}
-              className="px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-bronze hover:bg-bronze-dark text-stone-950 text-xs font-bold flex items-center gap-1.5 transition-all shadow-sm"
+              className="inline-flex items-center justify-center gap-1.5 px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-md bg-white text-stone-900 text-xs sm:text-sm font-semibold hover:bg-stone-100 transition-colors cursor-pointer active:scale-[0.98]"
               title={isFullscreen ? 'Ieși din ecran complet' : 'Ecran complet'}
             >
-              {isFullscreen ? <Minimize2 className="w-3.5 h-3.5" /> : <Maximize2 className="w-3.5 h-3.5" />}
-              <span>{isFullscreen ? 'Ieșire Ecran Complet' : 'Ecran Complet'}</span>
+              {isFullscreen ? <Minimize2 className="w-4 h-4" strokeWidth={1.5} /> : <Maximize2 className="w-4 h-4" strokeWidth={1.5} />}
+              <span>{isFullscreen ? 'Ieșire' : 'Ecran complet'}</span>
             </button>
           </div>
         </div>
 
-        {/* 3D Showcase Viewport Container */}
+        {/* 3D Showcase Viewport: Embedded Direct Player */}
         <div
           ref={containerRef}
-          className={`relative rounded-2xl sm:rounded-3xl overflow-hidden bg-black border border-stone-800 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.9)] transition-all duration-300 ${
+          className={`relative rounded-xl overflow-hidden bg-black border border-stone-800 shadow-2xl transition-all duration-300 ${
             isFullscreen
               ? 'fixed inset-0 z-[99999] rounded-none w-screen h-screen m-0 p-0 bg-black'
-              : 'aspect-[4/3] sm:aspect-[16/10] lg:aspect-[16/9] w-full min-h-[420px] max-h-[720px]'
+              : 'aspect-[4/3] sm:aspect-[16/10] lg:aspect-[16/9] w-full min-h-[460px] sm:min-h-[560px] max-h-[780px]'
           }`}
         >
           {/* In Fullscreen mode: Floating Exit button */}
@@ -130,58 +145,112 @@ export const LiveTourSection: React.FC<LiveTourSectionProps> = ({ onBookCall }) 
             <div className="absolute top-4 right-4 z-50">
               <button
                 onClick={toggleFullscreen}
-                className="px-4 py-2 rounded-full bg-stone-900/90 hover:bg-stone-800 text-white border border-white/20 backdrop-blur-md text-xs font-bold flex items-center gap-2 shadow-2xl transition-all"
+                className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-md bg-stone-900/90 hover:bg-stone-800 text-white border border-white/30 text-sm font-semibold shadow-xl transition-colors cursor-pointer"
               >
-                <Minimize2 className="w-4 h-4 text-bronze" />
-                <span>Ieși din Ecran Complet</span>
+                <Minimize2 className="w-4 h-4" strokeWidth={1.5} />
+                <span>Ieși din ecran complet</span>
               </button>
             </div>
           )}
 
-          {/* Embedded Real Matterport 3D Tour Iframe */}
+          {/* Authentic Loading Screen Overlay with Real Metareal Screenshot */}
+          {!isIframeLoaded && (
+            <div className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-stone-950 transition-opacity duration-500">
+              <img
+                src="/images/metareal_showcase_cover.jpg"
+                alt="Tur Virtual 3D Metareal Stage - Previzualizare"
+                className="absolute inset-0 w-full h-full object-cover opacity-50"
+              />
+              <div className="absolute inset-0 bg-stone-950/70 backdrop-blur-sm" />
+              <div className="relative z-20 flex flex-col items-center gap-3 text-center px-4 max-w-sm">
+                <Loader2 className="w-7 h-7 text-white animate-spin" strokeWidth={2} />
+                <div className="space-y-1">
+                  <span className="font-serif text-base sm:text-lg font-semibold text-white block">
+                    Încărcare Tur Virtual 3D...
+                  </span>
+                  <p className="font-sans text-xs text-stone-300">
+                    Pregătim motorul volumetric Metareal Stage
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* The Live Interactive Metareal Stage Player Iframe */}
           <iframe
-            key={matterportModelId}
-            src={embedUrl}
-            title="TransylView 3D Matterport Virtual Tour"
-            className="w-full h-full border-0 block bg-black"
-            allowFullScreen
-            allow="autoplay; fullscreen; web-share; xr-spatial-tracking; accelerometer; gyroscope; magnetometer"
-            loading="lazy"
+            src={metarealUrl}
+            className="w-full h-full border-0 absolute inset-0"
+            allow="fullscreen; accelerometer; gyroscope; vr; xr; xr-spatial-tracking"
+            loading="eager"
+            title="TransylView 3D — Tur Virtual Interactiv Metareal Stage"
+            onLoad={() => setIsIframeLoaded(true)}
           />
         </div>
 
-        {/* Interactive Feature Hints */}
+        {/* Interactive Usage Hints: Balanced 3-column cards */}
         <div className="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-3">
-          <div className="bg-stone-900/70 backdrop-blur-md px-4 py-2.5 rounded-xl border border-stone-800/80 text-stone-300 text-xs flex items-center gap-2.5">
-            <MousePointerClick className="w-4 h-4 text-bronze flex-shrink-0 animate-bounce" />
-            <span>Faceți clic pe cercurile de pe podea pentru a naviga pas cu pas</span>
+          <div className="flex items-center gap-3 p-3 bg-stone-900/50 rounded-lg border border-stone-800/80">
+            <MousePointerClick className="w-4 h-4 text-bronze-light flex-shrink-0" strokeWidth={1.5} />
+            <span className="font-sans text-xs text-stone-300 leading-snug">
+              Clic și trage pentru a roti perspectiva la 360° în orice direcție
+            </span>
           </div>
 
-          <div className="bg-stone-900/70 backdrop-blur-md px-4 py-2.5 rounded-xl border border-stone-800/80 text-stone-300 text-xs flex items-center gap-2.5">
-            <Layers className="w-4 h-4 text-bronze flex-shrink-0" />
-            <span>Apăsați pictograma Dollhouse din stânga-jos pentru modelul 3D</span>
+          <div className="flex items-center gap-3 p-3 bg-stone-900/50 rounded-lg border border-stone-800/80">
+            <Layers className="w-4 h-4 text-bronze-light flex-shrink-0" strokeWidth={1.5} />
+            <span className="font-sans text-xs text-stone-300 leading-snug">
+              Comută între perspectiva Dollhouse 3D și navigarea pas cu pas
+            </span>
           </div>
 
-          <div className="bg-stone-900/70 backdrop-blur-md px-4 py-2.5 rounded-xl border border-stone-800/80 text-stone-300 text-xs flex items-center gap-2.5">
-            <Ruler className="w-4 h-4 text-bronze flex-shrink-0" />
-            <span>Măsurați pereții și spațiile cu rigla integrată Matterport</span>
+          <div className="flex items-center gap-3 p-3 bg-stone-900/50 rounded-lg border border-stone-800/80">
+            <Ruler className="w-4 h-4 text-bronze-light flex-shrink-0" strokeWidth={1.5} />
+            <span className="font-sans text-xs text-stone-300 leading-snug">
+              Măsoară pereții și mobilierul cu rigla digitală integrată
+            </span>
           </div>
         </div>
 
-        {/* Action bar below tour */}
-        <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row items-center justify-between gap-4 p-5 sm:p-6 rounded-2xl bg-stone-900/70 border border-stone-800 shadow-lg">
-          <div className="text-center sm:text-left">
-            <h4 className="text-sm font-bold text-white">Vrei o scanare 3D la acest standard pentru proprietatea ta?</h4>
-            <p className="text-xs text-stone-400">Ne deplasăm în Satu Mare și în toată Transilvania cu echipamentul Insta X5 8K. Predare în 24-48h.</p>
+        {/* Technical Specifications + CTA */}
+        <div className="mt-12 sm:mt-16 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
+          <div className="lg:col-span-7">
+            <span className="text-xs md:text-sm font-semibold uppercase tracking-[0.2em] text-stone-400 block mb-4">
+              Specificații tehnice
+            </span>
+            <dl className="divide-y divide-stone-800 border-t border-b border-stone-800">
+              {techSpecs.map((spec) => (
+                <div key={spec.label} className="grid grid-cols-1 sm:grid-cols-12 gap-1 sm:gap-6 py-4">
+                  <dt className="sm:col-span-4 text-xs font-medium uppercase tracking-wider text-stone-400 sm:pt-1">
+                    {spec.label}
+                  </dt>
+                  <dd className="sm:col-span-8 space-y-0.5">
+                    <span className="block font-sans text-base sm:text-lg font-semibold text-stone-100 tracking-tight">
+                      {spec.value}
+                    </span>
+                    <span className="block font-sans text-xs text-stone-500 leading-normal tracking-wide">
+                      {spec.note}
+                    </span>
+                  </dd>
+                </div>
+              ))}
+            </dl>
           </div>
 
-          <button
-            onClick={onBookCall}
-            className="w-full sm:w-auto px-6 py-3.5 rounded-full bg-bronze hover:bg-bronze-dark text-stone-950 font-bold text-xs tracking-wider uppercase transition-all shadow-md flex items-center justify-center gap-2 flex-shrink-0"
-          >
-            <Eye className="w-4 h-4" />
-            <span>SOLICITĂ OFERTĂ & SCANARE 3D</span>
-          </button>
+          <div className="lg:col-span-5 bg-stone-900/60 border border-stone-800 rounded-xl p-6 sm:p-8 space-y-4">
+            <h3 className="font-sans text-lg sm:text-xl font-semibold text-stone-100 tracking-tight leading-snug">
+              Scanare 3D la acest standard pentru proprietatea dumneavoastră
+            </h3>
+            <p className="font-sans text-sm sm:text-base text-stone-400 leading-relaxed font-normal">
+              Ne deplasăm în Satu Mare și în toată Transilvania cu echipamentul Insta X5 8K. Predare în 24–72h în funcție de suprafață (prioritate la procesare pentru Pachetul Exclusiv).
+            </p>
+            <button
+              onClick={onBookCall}
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-md bg-white text-stone-900 text-sm font-semibold hover:bg-stone-100 transition-colors active:scale-[0.98] cursor-pointer"
+            >
+              <span>Solicită ofertă și scanare 3D</span>
+              <ArrowRight className="w-4 h-4" strokeWidth={1.5} />
+            </button>
+          </div>
         </div>
 
       </div>

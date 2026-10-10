@@ -1,5 +1,5 @@
 import React from 'react';
-import { Mail, Phone, MapPin, Shield, FileText, Cookie } from 'lucide-react';
+import { Mail, Phone, MapPin, Shield, FileText, Cookie, Scale, ShieldCheck, ArrowRight, ExternalLink } from 'lucide-react';
 import { LegalDocType } from './LegalModal';
 import { contactData } from '../data/propertyData';
 
@@ -22,198 +22,253 @@ export const Footer: React.FC<FooterProps> = ({ onBookCall, onSecretOpenImageMan
   };
 
   return (
-    <footer className="bg-stone-950 text-stone-300 pt-20 pb-12 border-t border-stone-800 relative overflow-hidden select-none">
-      {/* Background Glow */}
-      <div className="absolute top-0 right-1/4 w-[500px] h-[500px] bg-bronze/10 rounded-full blur-[140px] pointer-events-none" />
-      <div className="absolute bottom-0 left-1/6 w-[400px] h-[400px] bg-stone-500/5 rounded-full blur-[160px] pointer-events-none" />
-
+    <footer className="bg-stone-950 text-stone-300 pt-16 sm:pt-20 pb-12 border-t border-stone-800/80 relative select-none">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Main Footer Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-12 pb-16 border-b border-stone-800/80">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-12 pb-12 border-b border-stone-800/80">
           
           {/* Column 1: Brand Logo & Mission (4 cols) */}
-          <div className="lg:col-span-4 space-y-6">
-            
-            {/* Seamless Embedded Logo */}
+          <div className="lg:col-span-4 space-y-5">
             <div
               onClick={handleLogoClick}
               className="relative inline-block cursor-pointer group"
-              title="TransylView 3D"
+              title="TransylView 3D · Digitalizare Imobiliară"
             >
-              {/* Subtle ambient warm radiance that blends the logo with the dark canvas */}
-              <div className="absolute -inset-3 bg-gradient-to-r from-bronze/20 via-stone-400/10 to-transparent rounded-3xl blur-2xl opacity-60 group-hover:opacity-90 transition-opacity duration-500 pointer-events-none" />
-
-              <div className="relative space-y-2">
+              <div className="space-y-2">
                 <img
                   src="/images/logo_clean_gold.png"
                   alt="TransylView 3D Logo Satu Mare"
                   loading="lazy"
                   decoding="async"
-                  className="h-20 sm:h-28 w-auto max-w-[240px] sm:max-w-[300px] object-contain drop-shadow-[0_10px_30px_rgba(0,0,0,0.5)] group-hover:scale-102 transition-transform duration-300"
+                  className="h-14 sm:h-16 w-auto max-w-[200px] sm:max-w-[240px] object-contain group-hover:opacity-90 transition-opacity"
                 />
                 
-                <div className="flex items-center gap-2 pl-1">
-                  <span className="w-1.5 h-1.5 rounded-full bg-bronze" />
-                  <span className="text-[10px] sm:text-[11px] font-bold tracking-[0.26em] text-bronze uppercase">
-                    TURURI VIRTUALE 8K & DIGITAL TWINS
-                  </span>
-                </div>
+                <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-stone-400 block">
+                  Scanare 8K · Digital Twins · Tururi 3D
+                </span>
               </div>
             </div>
 
-            <p className="text-xs sm:text-sm text-stone-400 leading-relaxed max-w-sm">
-              Standardul de excelență în digitalizarea proprietăților imobiliare din Satu Mare și Transilvania. Tehnologie Insta X5 8K, tururi virtuale imersive 360° și modele secționale Dollhouse 3D.
+            <p className="font-sans text-xs sm:text-sm text-stone-400 leading-relaxed max-w-sm">
+              Standardul de precizie în digitalizarea proprietăților imobiliare din Satu Mare și Transilvania. Tehnologie volumetrică Insta X5 8K, tururi virtuale 360° fluide și planuri 2D cotate pentru tranzacții sigure și rapide.
             </p>
 
-            <div className="pt-1">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-1">
               <button
                 onClick={onBookCall}
-                className="px-5 py-2.5 rounded-full bg-stone-100 hover:bg-white text-stone-950 font-bold text-xs tracking-wider uppercase transition-all shadow-md"
+                className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-md bg-white text-stone-900 font-sans text-xs sm:text-sm font-semibold hover:bg-stone-100 active:scale-[0.98] transition-all cursor-pointer"
               >
-                SOLICITĂ OFERTĂ & PROGRAMARE
+                <span>Solicită Ofertă</span>
+                <ArrowRight className="w-3.5 h-3.5" strokeWidth={1.5} />
               </button>
+              <a
+                href={contactData.phoneHref}
+                className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-md border border-stone-800 text-stone-300 hover:text-white hover:border-stone-700 text-xs sm:text-sm font-medium transition-colors"
+              >
+                <Phone className="w-3.5 h-3.5 text-stone-400" strokeWidth={1.5} />
+                <span className="tabular-nums">{contactData.phone}</span>
+              </a>
             </div>
           </div>
 
           {/* Column 2: Navigation Links (2 cols) */}
           <div className="lg:col-span-2 space-y-4">
-            <h4 className="font-display text-xs font-bold tracking-[0.22em] text-white uppercase border-b border-stone-800 pb-2">
-              Navigare Rapidă
-            </h4>
-            <ul className="space-y-2.5 text-xs text-stone-400 font-medium">
-              <li><a href="#home" className="hover:text-bronze transition-colors">Acasă</a></li>
-              <li><a href="#about" className="hover:text-bronze transition-colors">Despre Noi & Tehnologie</a></li>
-              <li><a href="#demo-tour" className="hover:text-bronze transition-colors">Demo 3D Interactiv</a></li>
-              <li><a href="#virtual-tours" className="hover:text-bronze transition-colors">Portofoliu Tururi 3D</a></li>
-              <li><a href="#pricing" className="hover:text-bronze transition-colors">Pachete & Prețuri</a></li>
-              <li><a href="#location" className="hover:text-bronze transition-colors">Zonă de Acoperire</a></li>
+            <h3 className="text-xs font-semibold uppercase tracking-[0.2em] text-stone-300 border-b border-stone-800/80 pb-2">
+              Navigare
+            </h3>
+            <ul className="space-y-2.5 font-sans text-xs sm:text-sm text-stone-400 font-medium">
+              <li><a href="#home" className="hover:text-white transition-colors block">Acasă</a></li>
+              <li><a href="#about" className="hover:text-white transition-colors block">Despre Noi & Tehnologie</a></li>
+              <li><a href="#demo-tour" className="hover:text-white transition-colors block">Demo 3D Interactiv</a></li>
+              <li><a href="#virtual-tours" className="hover:text-white transition-colors block">Portofoliu Tururi 3D</a></li>
+              <li><a href="#pricing" className="hover:text-white transition-colors block">Pachete & Prețuri</a></li>
+              <li><a href="#location" className="hover:text-white transition-colors block">Zonă de Acoperire</a></li>
             </ul>
           </div>
 
-          {/* Column 3: Contact Details (3 cols) */}
+          {/* Column 3: Contact & Legal Identity Details (3 cols) */}
           <div className="lg:col-span-3 space-y-4">
-            <h4 className="font-display text-xs font-bold tracking-[0.22em] text-white uppercase border-b border-stone-800 pb-2">
+            <h3 className="text-xs font-semibold uppercase tracking-[0.2em] text-stone-300 border-b border-stone-800/80 pb-2">
               Contact & Sediu
-            </h4>
-            <ul className="space-y-3 text-xs text-stone-400">
+            </h3>
+            <ul className="space-y-3 font-sans text-xs sm:text-sm text-stone-400">
               <li className="flex items-start gap-2.5">
-                <MapPin className="w-4 h-4 text-bronze flex-shrink-0 mt-0.5" />
-                <span>{contactData.address} (Deplasare pe 100 km)</span>
+                <MapPin className="w-4 h-4 text-stone-400 flex-shrink-0 mt-0.5" strokeWidth={1.5} />
+                <div>
+                  <span className="text-stone-300 block">{contactData.address}</span>
+                  <span className="text-[11px] text-stone-500">Deplasare în Satu Mare & 100 km în Transilvania</span>
+                </div>
               </li>
               <li className="flex items-center gap-2.5">
-                <Phone className="w-4 h-4 text-bronze flex-shrink-0" />
+                <Phone className="w-4 h-4 text-stone-400 flex-shrink-0" strokeWidth={1.5} />
                 <a
                   href={contactData.phoneHref}
-                  className="font-mono text-stone-200 hover:text-bronze transition-colors font-semibold text-sm"
+                  className="font-sans text-stone-200 hover:text-white transition-colors font-medium tabular-nums"
                 >
                   {contactData.phone}
                 </a>
               </li>
               <li className="flex items-center gap-2.5">
-                <Mail className="w-4 h-4 text-bronze flex-shrink-0" />
+                <Mail className="w-4 h-4 text-stone-400 flex-shrink-0" strokeWidth={1.5} />
                 <a
                   href={contactData.emailHref}
-                  className="font-mono text-stone-200 hover:text-bronze transition-colors font-semibold text-xs sm:text-sm"
+                  className="font-sans text-stone-200 hover:text-white transition-colors font-medium"
                 >
                   {contactData.email}
                 </a>
               </li>
-              <li className="pt-1 text-[11px] text-stone-400 font-mono">
-                {contactData.schedule}
+              <li className="pt-1 text-xs text-stone-500 font-sans border-t border-stone-900">
+                Program: {contactData.schedule}
+              </li>
+              <li className="text-[11px] text-stone-500 font-sans leading-tight">
+                Operator economic: <strong className="text-stone-400 font-medium">TransylView 3D</strong>
+                <span className="block mt-0.5">Facturare în RON · Conform Legii nr. 227/2015</span>
               </li>
             </ul>
           </div>
 
-          {/* Column 4: Legal Disclosures & Official ANPC / Comisia Europeana Badges (3 cols) */}
+          {/* Column 4: Official ANPC Badges & Romanian Consumer Compliance (3 cols) */}
           <div className="lg:col-span-3 space-y-4">
-            <h4 className="font-display text-xs font-bold tracking-[0.22em] text-white uppercase border-b border-stone-800 pb-2">
+            <h3 className="text-xs font-semibold uppercase tracking-[0.2em] text-stone-300 border-b border-stone-800/80 pb-2">
               Conformitate Legală & ANPC
-            </h4>
+            </h3>
             
-            <p className="text-[11px] text-stone-400 leading-snug">
+            <p className="font-sans text-xs text-stone-400 leading-relaxed">
               Conform legislației din România privind protecția consumatorilor (Ordinul ANPC nr. 449/2022):
             </p>
 
-            {/* Official ANPC SAL & Comisia Europeana SOL Badges */}
-            <div className="space-y-2.5 pt-1">
-              {/* SAL (Soluționarea Alternativă a Litigiilor - ANPC) */}
+            {/* Official ANPC SAL & Comisia Europeana SOL Visual Badges */}
+            <div className="space-y-2 pt-0.5">
               <a
-                href="https://anpc.ro/ce-este-sal/"
+                href={contactData.salUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block rounded-xl overflow-hidden hover:opacity-90 transition-opacity border border-stone-700/60 shadow-md"
-                title="ANPC — Soluționarea Alternativă a Litigiilor"
+                className="group block rounded-lg overflow-hidden border border-stone-800 bg-stone-900/60 hover:border-stone-700 hover:bg-stone-900 transition-all p-1 shadow-xs"
+                title="ANPC — Soluționarea Alternativă a Litigiilor (SAL)"
               >
                 <img
                   src="/images/anpc-sal.svg"
                   alt="ANPC SAL - Soluționarea Alternativă a Litigiilor"
                   loading="lazy"
                   decoding="async"
-                  className="w-full h-auto block"
+                  className="w-full h-auto block rounded"
                 />
               </a>
 
-              {/* SOL (Soluționarea Online a Litigiilor - Comisia Europeană) */}
               <a
-                href="https://ec.europa.eu/consumers/odr/"
+                href={contactData.solUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block rounded-xl overflow-hidden hover:opacity-90 transition-opacity border border-stone-700/60 shadow-md"
-                title="Comisia Europeană — Soluționarea Online a Litigiilor"
+                className="group block rounded-lg overflow-hidden border border-stone-800 bg-stone-900/60 hover:border-stone-700 hover:bg-stone-900 transition-all p-1 shadow-xs"
+                title="Comisia Europeană — Soluționarea Online a Litigiilor (SOL)"
               >
                 <img
                   src="/images/anpc-sol.svg"
                   alt="Comisia Europeană SOL - Soluționarea Online a Litigiilor"
                   loading="lazy"
                   decoding="async"
-                  className="w-full h-auto block"
+                  className="w-full h-auto block rounded"
                 />
               </a>
+            </div>
 
-              {/* ANPC Official Link */}
-              <a
-                href="https://anpc.ro/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-block text-[10px] text-stone-400 hover:text-bronze transition-colors pt-1 font-mono"
-              >
-                Autoritatea Națională pentru Protecția Consumatorilor (ANPC) • Tel: 021 9551
-              </a>
+            {/* Quick ANPC & Authority Links */}
+            <div className="pt-1 flex flex-col gap-1 text-[11px] text-stone-500 font-sans">
+              <div className="flex items-center justify-between">
+                <a
+                  href={contactData.anpcUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-stone-300 transition-colors inline-flex items-center gap-1"
+                >
+                  <span>Portal ANPC România</span>
+                  <ExternalLink className="w-3 h-3 text-stone-500" strokeWidth={1.5} />
+                </a>
+                <a
+                  href={contactData.anpcPhoneHref}
+                  className="hover:text-stone-300 transition-colors font-mono"
+                  title="Telefonul Consumatorului"
+                >
+                  Tel: {contactData.anpcPhone}
+                </a>
+              </div>
+              
+              <div className="flex items-center justify-between pt-0.5">
+                <a
+                  href={contactData.anspdcpUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-stone-300 transition-colors inline-flex items-center gap-1"
+                >
+                  <span>ANSPDCP (Date Personale)</span>
+                  <ExternalLink className="w-3 h-3 text-stone-500" strokeWidth={1.5} />
+                </a>
+                <button
+                  type="button"
+                  onClick={() => onOpenLegal?.('anpc')}
+                  className="text-stone-400 hover:text-stone-200 transition-colors underline cursor-pointer"
+                >
+                  Ghid SAL/SOL
+                </button>
+              </div>
             </div>
           </div>
 
         </div>
 
+        {/* Romanian Fiscal & Legal Transparency Reassurance Strip */}
+        <div className="my-8 p-4 sm:p-5 rounded-lg bg-stone-900/50 border border-stone-800/80 flex flex-col md:flex-row items-start md:items-center justify-between gap-3 text-xs text-stone-400 font-sans">
+          <div className="flex items-start gap-3">
+            <ShieldCheck className="w-4 h-4 text-stone-300 flex-shrink-0 mt-0.5" strokeWidth={1.5} />
+            <p className="leading-relaxed">
+              <strong className="text-stone-200 font-semibold">Transparență și Conformitate Legală în România:</strong> Prețurile afișate sunt în RON. Livrare în 24–72h în funcție de suprafață (cu prioritate la procesare și predare pentru Pachetul Exclusiv). Serviciile de scanare 3D, tururi virtuale și planuri 2D sunt furnizate cu contract și factură fiscală conform Codului Fiscal (Legea 227/2015). Datele personale sunt prelucrate în deplină conformitate cu GDPR (Regulamentul UE 2016/679).
+            </p>
+          </div>
+          <div className="flex items-center gap-2 flex-shrink-0 text-[11px] text-stone-400 font-medium">
+            <span className="px-2 py-0.5 rounded bg-stone-800 border border-stone-700/80">Livrare 24–72h</span>
+            <span className="px-2 py-0.5 rounded bg-stone-800 border border-stone-700/80">Prioritate Exclusiv</span>
+            <span className="px-2 py-0.5 rounded bg-stone-800 border border-stone-700/80">ANPC 449/2022</span>
+          </div>
+        </div>
+
         {/* Bottom Legal Sub-Footer */}
-        <div className="pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-stone-400">
-          <div className="text-center md:text-left">
-            <span>© {new Date().getFullYear()} TransylView 3D. Toate drepturile rezervate. Conform GDPR & Legislației din România.</span>
+        <div className="flex flex-col lg:flex-row items-center justify-between gap-4 font-sans text-xs text-stone-500">
+          <div className="text-center lg:text-left">
+            <span>© {new Date().getFullYear()} TransylView 3D. Toate drepturile rezervate. Conform Legislației din România & GDPR.</span>
           </div>
 
-          <div className="flex items-center gap-4 sm:gap-6 flex-wrap justify-center text-stone-400">
+          <div className="flex items-center gap-3 sm:gap-6 flex-wrap justify-center text-stone-400">
             <button
               onClick={() => onOpenLegal?.('terms')}
-              className="hover:text-bronze underline transition-colors flex items-center gap-1.5"
+              className="hover:text-stone-200 transition-colors flex items-center gap-1.5 cursor-pointer py-1"
             >
-              <FileText className="w-3.5 h-3.5" />
+              <FileText className="w-3.5 h-3.5 text-stone-400" strokeWidth={1.5} />
               <span>Termeni și Condiții</span>
             </button>
 
             <button
               onClick={() => onOpenLegal?.('privacy')}
-              className="hover:text-bronze underline transition-colors flex items-center gap-1.5"
+              className="hover:text-stone-200 transition-colors flex items-center gap-1.5 cursor-pointer py-1"
             >
-              <Shield className="w-3.5 h-3.5" />
+              <Shield className="w-3.5 h-3.5 text-stone-400" strokeWidth={1.5} />
               <span>Politica GDPR & Confidențialitate</span>
             </button>
 
             <button
               onClick={() => onOpenLegal?.('cookies')}
-              className="hover:text-bronze underline transition-colors flex items-center gap-1.5"
+              className="hover:text-stone-200 transition-colors flex items-center gap-1.5 cursor-pointer py-1"
             >
-              <Cookie className="w-3.5 h-3.5" />
+              <Cookie className="w-3.5 h-3.5 text-stone-400" strokeWidth={1.5} />
               <span>Politica de Cookies</span>
+            </button>
+
+            <button
+              onClick={() => onOpenLegal?.('anpc')}
+              className="hover:text-stone-200 transition-colors flex items-center gap-1.5 cursor-pointer py-1"
+            >
+              <Scale className="w-3.5 h-3.5 text-stone-400" strokeWidth={1.5} />
+              <span>Protecția Consumatorilor (SAL/SOL)</span>
             </button>
           </div>
         </div>

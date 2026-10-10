@@ -60,7 +60,7 @@ export const TourManagerModal: React.FC<TourManagerModalProps> = ({
     city: 'Satu Mare',
     surface: '150 m²',
     rooms: '4 Camere • 2 Băi',
-    embedUrl: 'https://my.matterport.com/show/?m=YFWgEekGLHm',
+    embedUrl: 'https://tour.metareal.com/apps/player?asset=a6eb7cb7-206c-4dce-94d7-12e71246ea2a&position=-0.72x1.62y1.51z&rotation=0.00x255.81y0.00z',
     coverImage: '/images/retreat_courtyard.jpg',
     images: ['/images/retreat_courtyard.jpg'],
     description: '',
@@ -115,7 +115,7 @@ export const TourManagerModal: React.FC<TourManagerModalProps> = ({
       city: 'Satu Mare',
       surface: '150 m²',
       rooms: '4 Camere • 2 Băi',
-      embedUrl: 'https://my.matterport.com/show/?m=YFWgEekGLHm',
+      embedUrl: 'https://tour.metareal.com/apps/player?asset=a6eb7cb7-206c-4dce-94d7-12e71246ea2a&position=-0.72x1.62y1.51z&rotation=0.00x255.81y0.00z',
       coverImage: '/images/retreat_courtyard.jpg',
       images: ['/images/retreat_courtyard.jpg'],
       description: '',
@@ -243,7 +243,7 @@ export const TourManagerModal: React.FC<TourManagerModalProps> = ({
         city: formData.city || 'Satu Mare',
         surface: formData.surface || '100 m²',
         rooms: formData.rooms || '3 Camere',
-        embedUrl: formData.embedUrl || 'https://my.matterport.com/show/?m=YFWgEekGLHm',
+        embedUrl: formData.embedUrl || 'https://tour.metareal.com/apps/player?asset=a6eb7cb7-206c-4dce-94d7-12e71246ea2a&position=-0.72x1.62y1.51z&rotation=0.00x255.81y0.00z',
         coverImage: currentImages[0],
         images: currentImages,
         description: formData.description || 'Tur virtual 3D realizat cu tehnologie Insta X5 8K.',
@@ -484,8 +484,8 @@ export const TourManagerModal: React.FC<TourManagerModalProps> = ({
                 className="bg-emerald-950/95 border-b border-emerald-500/50 px-5 sm:px-8 py-3 flex items-center justify-between text-xs text-emerald-200 font-medium"
               >
                 <div className="flex items-center gap-2.5">
-                  <span className="w-5 h-5 rounded-full bg-emerald-500 text-stone-950 flex items-center justify-center font-bold flex-shrink-0 text-xs">
-                    ✓
+                  <span className="w-5 h-5 rounded-full bg-emerald-500 text-stone-950 flex items-center justify-center flex-shrink-0">
+                    <Check className="w-3 h-3 stroke-[2.5]" />
                   </span>
                   <span>{saveNotice}</span>
                 </div>
@@ -738,18 +738,18 @@ export const TourManagerModal: React.FC<TourManagerModalProps> = ({
 
               <div>
                 <label className="block text-[11px] font-bold tracking-widest text-stone-300 uppercase mb-1">
-                  Link Embed Tur Virtual 3D (Matterport / Kuula / iStaging) *
+                  Link Embed Tur Virtual 3D (Metareal Stage / Kuula / Matterport) *
                 </label>
                 <input
                   type="url"
                   required
                   value={formData.embedUrl || ''}
                   onChange={(e) => setFormData({ ...formData, embedUrl: e.target.value })}
-                  placeholder="https://my.matterport.com/show/?m=..."
+                  placeholder="https://my.metareal.com/show/?m=... sau alt link embed"
                   className="w-full bg-stone-950 border border-stone-800 focus:border-bronze rounded-xl px-3 py-2.5 text-xs sm:text-sm text-white focus:outline-none font-mono"
                 />
                 <p className="mt-1 text-[10px] text-stone-500">
-                  Lipiți link-ul direct Matterport sau Kuula 360 generat după scanare.
+                  Lipiți link-ul direct Metareal Stage, Kuula 360 sau alt player 3D generat după scanare.
                 </p>
               </div>
 

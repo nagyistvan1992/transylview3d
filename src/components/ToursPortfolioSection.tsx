@@ -8,6 +8,8 @@ import {
   ChevronLeft,
   ChevronRight,
   Camera,
+  Maximize,
+  LayoutGrid,
 } from 'lucide-react';
 import { VirtualTourItem } from '../types';
 
@@ -60,10 +62,10 @@ const ProjectCard: React.FC<{
       className="gpu-smooth group flex flex-col justify-between space-y-4"
     >
       {/* Image Frame with Multi-Image Slider */}
-      <div className="space-y-3">
+      <div className="space-y-4">
         <div
           onClick={() => onOpenTourViewer(tour)}
-          className="relative aspect-[16/10] w-full overflow-hidden rounded-2xl bg-stone-950 border border-stone-800/80 cursor-pointer select-none"
+          className="relative aspect-[16/10] w-full overflow-hidden rounded-xl bg-stone-950 border border-stone-800 cursor-pointer select-none"
         >
           {/* Active Image */}
           <AnimatePresence mode="wait">
@@ -75,22 +77,21 @@ const ProjectCard: React.FC<{
               animate={{ opacity: 1 }}
               exit={{ opacity: 0.8 }}
               transition={{ duration: 0.25 }}
-              className="w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-104"
+              className="w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-[1.03]"
             />
           </AnimatePresence>
 
           {/* Quiet Vignette */}
-          <div className="absolute inset-0 bg-gradient-to-t from-[#11100F]/80 via-transparent to-[#11100F]/20 opacity-60 pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#11100F]/70 via-transparent to-transparent opacity-70 pointer-events-none" />
 
-          {/* Top Minimalist Data Pill */}
+          {/* Top: Project index & photo counter */}
           <div className="absolute top-3 left-3 right-3 flex items-center justify-between pointer-events-none">
-            <span className="font-mono text-[10px] tracking-widest text-stone-300 bg-stone-950/80 backdrop-blur-md px-2.5 py-1 rounded-md border border-white/10 uppercase">
-              {projectIndex} • {tour.city}
+            <span className="text-[11px] font-medium uppercase tracking-wider text-stone-200 bg-stone-950/80 px-2 py-0.5 rounded-sm border border-white/10 tabular-nums">
+              Nr. {projectIndex}
             </span>
 
-            {/* Photo Counter Pill (e.g. 1 / 4 FOTO) */}
-            <span className="font-mono text-[10px] tracking-widest text-stone-300 bg-stone-950/80 backdrop-blur-md px-2.5 py-1 rounded-md border border-white/10 uppercase flex items-center gap-1.5">
-              <Camera className="w-3 h-3 text-bronze" />
+            <span className="text-[11px] font-medium tracking-wider text-stone-200 bg-stone-950/80 px-2 py-0.5 rounded-sm border border-white/10 flex items-center gap-1.5 tabular-nums">
+              <Camera className="w-3.5 h-3.5 text-stone-400" strokeWidth={1.5} />
               <span>
                 {currentImgIndex + 1} / {images.length}
               </span>
@@ -103,34 +104,34 @@ const ProjectCard: React.FC<{
               <button
                 type="button"
                 onClick={handlePrev}
-                className="w-8 h-8 rounded-full bg-stone-950/80 hover:bg-stone-900 text-stone-200 hover:text-white border border-white/15 flex items-center justify-center pointer-events-auto transition-all duration-200 opacity-80 sm:opacity-0 sm:group-hover:opacity-100 hover:scale-110 active:scale-95 cursor-pointer shadow-lg"
+                className="w-8 h-8 rounded-full bg-stone-950/80 hover:bg-stone-900 text-stone-200 hover:text-white border border-white/15 flex items-center justify-center pointer-events-auto transition-colors duration-200 opacity-80 sm:opacity-0 sm:group-hover:opacity-100 active:scale-95 cursor-pointer"
                 aria-label="Imaginea anterioară"
                 title="Imaginea anterioară"
               >
-                <ChevronLeft className="w-4 h-4" />
+                <ChevronLeft className="w-4 h-4" strokeWidth={1.5} />
               </button>
 
               <button
                 type="button"
                 onClick={handleNext}
-                className="w-8 h-8 rounded-full bg-stone-950/80 hover:bg-stone-900 text-stone-200 hover:text-white border border-white/15 flex items-center justify-center pointer-events-auto transition-all duration-200 opacity-80 sm:opacity-0 sm:group-hover:opacity-100 hover:scale-110 active:scale-95 cursor-pointer shadow-lg"
+                className="w-8 h-8 rounded-full bg-stone-950/80 hover:bg-stone-900 text-stone-200 hover:text-white border border-white/15 flex items-center justify-center pointer-events-auto transition-colors duration-200 opacity-80 sm:opacity-0 sm:group-hover:opacity-100 active:scale-95 cursor-pointer"
                 aria-label="Imaginea următoare"
                 title="Imaginea următoare"
               >
-                <ChevronRight className="w-4 h-4" />
+                <ChevronRight className="w-4 h-4" strokeWidth={1.5} />
               </button>
             </div>
           )}
 
           {/* Bottom Pagination Dots */}
           {images.length > 1 && (
-            <div className="absolute bottom-3 left-3 flex items-center gap-1.5 bg-stone-950/70 backdrop-blur-md px-2 py-1 rounded-full border border-white/10">
+            <div className="absolute bottom-3 left-3 flex items-center gap-1.5 bg-stone-950/70 px-2 py-1.5 rounded-sm border border-white/10">
               {images.map((_, i) => (
                 <button
                   key={i}
                   type="button"
                   onClick={(e) => handleSelectDot(e, i)}
-                  className={`h-1.5 rounded-full transition-all cursor-pointer ${
+                  className={`h-1 rounded-full transition-all cursor-pointer ${
                     i === currentImgIndex
                       ? 'w-4 bg-white'
                       : 'w-1.5 bg-white/40 hover:bg-white/70'
@@ -141,60 +142,303 @@ const ProjectCard: React.FC<{
             </div>
           )}
 
-          {/* Bottom Right Floating Badge */}
+          {/* Bottom Right: interactive tour label */}
           <div className="absolute bottom-3 right-3 pointer-events-none">
-            <div className="px-3 py-1.5 rounded-full bg-stone-950/85 backdrop-blur-md border border-white/15 text-[10px] font-mono tracking-wider text-stone-200 uppercase flex items-center gap-1.5 shadow-lg group-hover:border-stone-400 transition-colors">
-              <Eye className="w-3 h-3 text-bronze" />
-              <span>TUR INTERACTIV</span>
+            <div className="px-2 py-0.5 rounded-sm bg-stone-950/80 border border-white/15 text-[11px] font-medium tracking-wider text-stone-200 uppercase flex items-center gap-1.5 group-hover:border-stone-400 transition-colors">
+              <Eye className="w-3.5 h-3.5 text-stone-400" strokeWidth={1.5} />
+              <span>Tur interactiv</span>
             </div>
           </div>
         </div>
 
-        {/* Metadata & Title */}
-        <div className="space-y-2 pt-1">
-          <div className="flex items-center gap-2 font-mono text-[11px] text-stone-400">
-            {tour.surface && <span>{tour.surface}</span>}
-            {tour.surface && tour.rooms && <span>•</span>}
-            {tour.rooms && <span>{tour.rooms}</span>}
+        {/* Tags, Title & Metadata */}
+        <div className="space-y-3">
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="text-[11px] uppercase tracking-wider font-medium px-2 py-0.5 rounded-sm border border-stone-700 text-stone-300">
+              Proiect Finalizat
+            </span>
             {tour.category && (
-              <>
-                <span>•</span>
-                <span className="text-stone-300">{tour.category}</span>
-              </>
+              <span className="text-[11px] uppercase tracking-wider font-medium px-2 py-0.5 rounded-sm border border-stone-800 text-stone-400">
+                {tour.category}
+              </span>
             )}
           </div>
 
           <h3
             onClick={() => onOpenTourViewer(tour)}
-            className="font-serif text-xl sm:text-2xl text-stone-100 font-normal leading-snug cursor-pointer group-hover:text-bronze transition-colors"
+            className="font-sans text-lg sm:text-xl font-semibold text-stone-100 tracking-tight leading-snug cursor-pointer group-hover:text-bronze-light transition-colors [text-wrap:balance]"
           >
             {tour.title}
           </h3>
 
-          <p className="text-xs text-stone-400 font-light leading-relaxed line-clamp-2">
+          <p className="font-sans text-sm text-stone-400 leading-relaxed font-normal line-clamp-2">
             {tour.description}
           </p>
+
+          {/* Architectural Metadata */}
+          <dl className="grid grid-cols-3 gap-3 pt-3 border-t border-stone-800">
+            <div className="space-y-1 min-w-0">
+              <dt className="flex items-center gap-1.5 text-[11px] font-medium uppercase tracking-wider text-stone-500">
+                <Maximize className="w-3.5 h-3.5 text-stone-500 flex-shrink-0" strokeWidth={1.5} />
+                <span>Suprafață</span>
+              </dt>
+              <dd className="text-sm text-stone-200 tabular-nums truncate">{tour.surface || '—'}</dd>
+            </div>
+            <div className="space-y-1 min-w-0">
+              <dt className="flex items-center gap-1.5 text-[11px] font-medium uppercase tracking-wider text-stone-500">
+                <LayoutGrid className="w-3.5 h-3.5 text-stone-500 flex-shrink-0" strokeWidth={1.5} />
+                <span>Camere</span>
+              </dt>
+              <dd className="text-sm text-stone-200 truncate">{tour.rooms || '—'}</dd>
+            </div>
+            <div className="space-y-1 min-w-0">
+              <dt className="flex items-center gap-1.5 text-[11px] font-medium uppercase tracking-wider text-stone-500">
+                <MapPin className="w-3.5 h-3.5 text-stone-500 flex-shrink-0" strokeWidth={1.5} />
+                <span>Locație</span>
+              </dt>
+              <dd className="text-sm text-stone-200 truncate">{tour.city || '—'}</dd>
+            </div>
+          </dl>
         </div>
       </div>
 
-      {/* Editorial Actions */}
-      <div className="pt-3 border-t border-stone-850 flex items-center justify-between">
+      {/* Actions */}
+      <div className="pt-4 border-t border-stone-800 flex items-center justify-between gap-3">
         <button
           onClick={() => onOpenTourViewer(tour)}
-          className="inline-flex items-center gap-2 text-xs font-semibold tracking-wider uppercase text-stone-200 hover:text-white transition-colors cursor-pointer group/btn"
+          className="inline-flex items-center gap-2 text-sm font-semibold text-stone-100 hover:text-white transition-colors cursor-pointer"
         >
-          <span>Vizionează Turul 3D</span>
-          <ArrowRight className="w-3.5 h-3.5 text-bronze group-hover/btn:translate-x-1 transition-transform" />
+          <span>Vizionează turul 3D</span>
+          <ArrowRight className="w-4 h-4 text-stone-400" strokeWidth={1.5} />
         </button>
 
         <button
           onClick={() => onRequestQuote(tour.category)}
-          className="text-xs text-stone-400 hover:text-stone-200 transition-colors cursor-pointer font-light"
+          className="text-sm text-stone-400 hover:text-stone-200 transition-colors cursor-pointer"
         >
           Cotație similară
         </button>
       </div>
     </motion.article>
+  );
+};
+
+// Featured High-Impact Architectural Case Study Layout
+const FeaturedCaseStudy: React.FC<{
+  tour: VirtualTourItem;
+  onOpenTourViewer: (tour: VirtualTourItem) => void;
+  onRequestQuote: (propertyType?: string) => void;
+}> = ({ tour, onOpenTourViewer, onRequestQuote }) => {
+  const images = useMemo(() => {
+    if (tour.images && tour.images.length > 0) {
+      return tour.images.slice(0, 10);
+    }
+    return tour.coverImage ? [tour.coverImage] : ['/images/retreat_terrace.jpg'];
+  }, [tour.images, tour.coverImage]);
+
+  const [currentImgIndex, setCurrentImgIndex] = useState(0);
+
+  const deliverables = [
+    'Scanare 8K',
+    'Model Dollhouse 3D',
+    'Riglă Digitală Activă',
+    'Fațadă & Terasă Exterioară',
+  ];
+
+  return (
+    <div className="rounded-2xl bg-stone-900/60 border border-stone-800 p-5 sm:p-8 lg:p-10 overflow-hidden shadow-2xl">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+        {/* Left Column (Desktop: 7 cols): Multi-Image Interactive Preview */}
+        <div className="lg:col-span-7 space-y-4">
+          <div
+            onClick={() => onOpenTourViewer(tour)}
+            className="relative aspect-[16/10] w-full overflow-hidden rounded-xl bg-stone-950 border border-stone-800 cursor-pointer select-none group"
+          >
+            <AnimatePresence mode="wait">
+              <motion.img
+                key={images[currentImgIndex]}
+                src={images[currentImgIndex]}
+                alt={`${tour.title} - Foto ${currentImgIndex + 1}`}
+                initial={{ opacity: 0.8 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0.8 }}
+                transition={{ duration: 0.25 }}
+                className="w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-[1.02]"
+              />
+            </AnimatePresence>
+
+            <div className="absolute inset-0 bg-gradient-to-t from-stone-950/80 via-transparent to-transparent opacity-80 pointer-events-none" />
+
+            {/* Overline Badge */}
+            <div className="absolute top-4 left-4 right-4 flex items-center justify-between pointer-events-none">
+              <span className="text-xs uppercase tracking-wider font-semibold text-stone-200 bg-stone-950/90 px-3 py-1 rounded-md border border-white/15 backdrop-blur-sm">
+                Studiu de caz de referință
+              </span>
+
+              <span className="text-xs font-medium tracking-wider text-stone-200 bg-stone-950/90 px-2.5 py-1 rounded-md border border-white/15 backdrop-blur-sm flex items-center gap-1.5 tabular-nums">
+                <Camera className="w-3.5 h-3.5 text-stone-400" strokeWidth={1.5} />
+                <span>
+                  {currentImgIndex + 1} / {images.length}
+                </span>
+              </span>
+            </div>
+
+            {/* Slider Controls */}
+            {images.length > 1 && (
+              <div className="absolute inset-y-0 inset-x-3 flex items-center justify-between pointer-events-none">
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setCurrentImgIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
+                  }}
+                  className="w-9 h-9 rounded-full bg-stone-950/80 hover:bg-stone-900 text-stone-200 hover:text-white border border-white/15 flex items-center justify-center pointer-events-auto transition-colors duration-200 opacity-90 sm:opacity-0 sm:group-hover:opacity-100 active:scale-95 cursor-pointer"
+                  aria-label="Imaginea anterioară"
+                >
+                  <ChevronLeft className="w-4 h-4" strokeWidth={1.5} />
+                </button>
+
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setCurrentImgIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
+                  }}
+                  className="w-9 h-9 rounded-full bg-stone-950/80 hover:bg-stone-900 text-stone-200 hover:text-white border border-white/15 flex items-center justify-center pointer-events-auto transition-colors duration-200 opacity-90 sm:opacity-0 sm:group-hover:opacity-100 active:scale-95 cursor-pointer"
+                  aria-label="Imaginea următoare"
+                >
+                  <ChevronRight className="w-4 h-4" strokeWidth={1.5} />
+                </button>
+              </div>
+            )}
+
+            {/* Center Quick Launch Action */}
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              <span className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-stone-900/90 text-white border border-white/20 text-xs font-semibold backdrop-blur-md shadow-2xl">
+                <Eye className="w-4 h-4 text-stone-300" strokeWidth={1.5} />
+                Deschide Turul 3D
+              </span>
+            </div>
+
+            {/* Bottom Dots */}
+            {images.length > 1 && (
+              <div className="absolute bottom-4 left-4 flex items-center gap-1.5 bg-stone-950/80 px-2.5 py-1.5 rounded-md border border-white/10">
+                {images.map((_, i) => (
+                  <button
+                    key={i}
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setCurrentImgIndex(i);
+                    }}
+                    className={`h-1.5 rounded-full transition-all cursor-pointer ${
+                      i === currentImgIndex ? 'w-5 bg-white' : 'w-2 bg-white/40 hover:bg-white/70'
+                    }`}
+                    aria-label={`Fotografia ${i + 1}`}
+                  />
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* Thumbnail preview strip */}
+          {images.length > 1 && (
+            <div className="grid grid-cols-4 gap-2.5">
+              {images.slice(0, 4).map((img, idx) => (
+                <button
+                  key={idx}
+                  type="button"
+                  onClick={() => setCurrentImgIndex(idx)}
+                  className={`relative aspect-[16/10] rounded-lg overflow-hidden border transition-all cursor-pointer ${
+                    currentImgIndex === idx
+                      ? 'border-white ring-1 ring-white/50'
+                      : 'border-stone-800 opacity-60 hover:opacity-100'
+                  }`}
+                >
+                  <img src={img} alt={`Miniatură ${idx + 1}`} className="w-full h-full object-cover" />
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* Right Column (Desktop: 5 cols): Editorial Specifications & CTAs */}
+        <div className="lg:col-span-5 space-y-6">
+          <div className="space-y-2">
+            <span className="text-xs uppercase tracking-[0.2em] font-semibold text-stone-400 block">
+              STUDIU DE CAZ ARHITECTURAL · SATU MARE
+            </span>
+            <h3 className="font-serif text-2xl sm:text-3xl font-semibold tracking-tight text-white leading-tight">
+              {tour.title}
+            </h3>
+            <p className="font-sans text-sm sm:text-base text-stone-300 leading-relaxed font-normal pt-1">
+              {tour.description}
+            </p>
+          </div>
+
+          {/* Key Architectural Metrics */}
+          <dl className="grid grid-cols-3 gap-3 py-4 border-t border-b border-stone-800">
+            <div className="space-y-1">
+              <dt className="flex items-center gap-1.5 text-xs font-medium uppercase tracking-wider text-stone-400">
+                <Maximize className="w-3.5 h-3.5 text-stone-500" strokeWidth={1.5} />
+                <span>Suprafață</span>
+              </dt>
+              <dd className="text-base sm:text-lg font-bold text-white tabular-nums">{tour.surface || '86 m²'}</dd>
+            </div>
+            <div className="space-y-1">
+              <dt className="flex items-center gap-1.5 text-xs font-medium uppercase tracking-wider text-stone-400">
+                <LayoutGrid className="w-3.5 h-3.5 text-stone-500" strokeWidth={1.5} />
+                <span>Camere</span>
+              </dt>
+              <dd className="text-base sm:text-lg font-bold text-white truncate">{tour.rooms || '3 Camere'}</dd>
+            </div>
+            <div className="space-y-1">
+              <dt className="flex items-center gap-1.5 text-xs font-medium uppercase tracking-wider text-stone-400">
+                <MapPin className="w-3.5 h-3.5 text-stone-500" strokeWidth={1.5} />
+                <span>Locație</span>
+              </dt>
+              <dd className="text-base sm:text-lg font-bold text-white truncate">{tour.city || 'Satu Mare'}</dd>
+            </div>
+          </dl>
+
+          {/* Deliverables Chips */}
+          <div className="space-y-2">
+            <span className="text-xs font-medium uppercase tracking-wider text-stone-400 block">
+              Livrabile tehnice integrate:
+            </span>
+            <div className="flex flex-wrap gap-2">
+              {deliverables.map((item, idx) => (
+                <span
+                  key={idx}
+                  className="px-2.5 py-1 rounded-md bg-stone-950 border border-stone-800 text-xs font-medium text-stone-300"
+                >
+                  {item}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          {/* Action CTAs */}
+          <div className="pt-2 flex flex-col sm:flex-row gap-3">
+            <button
+              onClick={() => onRequestQuote('Apartament Premium')}
+              className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-lg bg-white text-stone-900 text-sm font-semibold hover:bg-stone-100 transition-colors cursor-pointer active:scale-[0.98] min-h-[48px]"
+            >
+              <span>Solicită Ofertă pentru o Proprietate Similară</span>
+              <ArrowRight className="w-4 h-4" strokeWidth={1.5} />
+            </button>
+
+            <button
+              onClick={() => onOpenTourViewer(tour)}
+              className="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-lg border border-stone-700 hover:border-stone-500 text-stone-200 hover:text-white text-sm font-semibold transition-colors cursor-pointer active:scale-[0.98] min-h-[48px]"
+            >
+              <Eye className="w-4 h-4 text-stone-400" strokeWidth={1.5} />
+              <span>Explorează Modelul 3D</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };
 
@@ -226,26 +470,30 @@ export const ToursPortfolioSection: React.FC<ToursPortfolioSectionProps> = ({
     }
   };
 
-  // Extract unique categories and cities
+  // Primary featured case study
+  const featuredTour = tours[0] || null;
+  const additionalTours = tours.length > 1 ? tours.slice(1) : [];
+
+  // Extract unique categories and cities for additional projects if present
   const categories = useMemo(() => {
     const set = new Set<string>();
-    tours.forEach((t) => {
+    additionalTours.forEach((t) => {
       if (t.category) set.add(t.category);
     });
     return ['Toate', ...Array.from(set)];
-  }, [tours]);
+  }, [additionalTours]);
 
   const cities = useMemo(() => {
     const set = new Set<string>();
-    tours.forEach((t) => {
+    additionalTours.forEach((t) => {
       if (t.city) set.add(t.city);
     });
     return ['Toate', ...Array.from(set)];
-  }, [tours]);
+  }, [additionalTours]);
 
-  // Filtered tours
-  const filteredTours = useMemo(() => {
-    return tours.filter((tour) => {
+  // Filtered additional tours
+  const filteredAdditionalTours = useMemo(() => {
+    return additionalTours.filter((tour) => {
       const matchCat = selectedCategory === 'Toate' || tour.category === selectedCategory;
       const matchCity = selectedCity === 'Toate' || tour.city === selectedCity;
       const matchSearch =
@@ -255,143 +503,115 @@ export const ToursPortfolioSection: React.FC<ToursPortfolioSectionProps> = ({
         tour.description.toLowerCase().includes(searchQuery.toLowerCase());
       return matchCat && matchCity && matchSearch;
     });
-  }, [tours, selectedCategory, selectedCity, searchQuery]);
+  }, [additionalTours, selectedCategory, selectedCity, searchQuery]);
 
   return (
-    <section id="virtual-tours" className="relative py-24 sm:py-36 bg-[#11100F] text-stone-100 overflow-hidden border-t border-stone-850">
+    <section id="virtual-tours" className="relative py-16 md:py-24 bg-[#11100F] text-stone-100 overflow-hidden border-t border-stone-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Editorial Section Header */}
-        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 mb-16 sm:mb-20 pb-8 border-b border-stone-800/60">
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 mb-12 sm:mb-16 pb-8 border-b border-stone-800">
           <div className="space-y-4 max-w-3xl">
             
-            {/* Subtle Badge with Hidden Owner Trigger */}
+            {/* Eyebrow with Hidden Owner Trigger (3 rapid clicks) */}
             <div className="flex items-center gap-3">
               <span
                 onClick={handleSecretTrigger}
-                className="w-2 h-2 rounded-full bg-bronze/80 cursor-pointer hover:scale-150 transition-transform"
+                className="w-1.5 h-1.5 rounded-full bg-stone-600 cursor-pointer"
                 title="TransylView 3D"
               />
-              <span className="text-[11px] font-mono tracking-[0.3em] text-stone-400 uppercase">
-                01 / ARHIVĂ DIGITALĂ & TURURI 3D
+              <span className="text-xs md:text-sm font-semibold uppercase tracking-[0.2em] text-stone-400 block">
+                Portofoliu · Tururi virtuale 3D
               </span>
             </div>
 
             <h2
               onDoubleClick={handleSecretTrigger}
-              className="font-serif text-3xl sm:text-5xl lg:text-6xl font-normal text-stone-100 tracking-tight leading-[1.1]"
+              className="font-serif text-2xl sm:text-3xl lg:text-4xl font-semibold tracking-tight text-stone-100 leading-tight [text-wrap:balance]"
             >
-              Colecție de Spații & Proprietăți 8K
+              Proprietăți digitalizate în rezoluție 8K
             </h2>
 
-            <p className="text-stone-400 text-sm sm:text-base font-light leading-relaxed max-w-2xl">
-              Fiecare proiect include tur 3D interactiv complet și o galerie foto de înaltă rezoluție. Răsfoiți fotografiile sau lansați turul virtual la 360° pentru a păși direct în spațiu.
+            <p className="font-sans text-base sm:text-lg text-stone-300 font-normal leading-relaxed max-w-2xl">
+              Fiecare proiect include un tur volumetric 3D interactiv Metareal Stage complet și fotografii de catalog la rezoluție 8K. Explorați studiul nostru de caz de referință din Satu Mare.
             </p>
           </div>
 
-          {/* Architectural Project Counter */}
-          <div className="flex items-baseline gap-2 font-mono text-stone-500">
-            <span className="text-2xl sm:text-3xl text-stone-200 font-serif">
-              {String(filteredTours.length).padStart(2, '0')}
+          {/* Project Counter */}
+          <div className="flex items-baseline gap-2">
+            <span className="font-sans text-3xl sm:text-4xl font-bold tracking-tight text-white tabular-nums">
+              {String(tours.length).padStart(2, '0')}
             </span>
-            <span className="text-xs uppercase tracking-widest text-stone-400">
-              / {String(tours.length).padStart(2, '0')} PROIECTE DISPONIBILE
+            <span className="font-sans text-xs text-stone-500 leading-normal tracking-wide tabular-nums">
+              {tours.length === 1 ? 'proiect de referință' : `din ${tours.length} proiecte`}
             </span>
           </div>
         </div>
 
-        {/* Minimalist Editorial Filter Bar */}
-        <div className="mb-14 space-y-5">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-4 border-b border-stone-850">
-            
-            {/* Horizontal Text Filter Tabs */}
-            <div className="flex items-center gap-2 sm:gap-6 overflow-x-auto pb-2 md:pb-0 scrollbar-none">
-              {categories.map((cat) => {
-                const isActive = selectedCategory === cat;
-                return (
-                  <button
-                    key={cat}
-                    onClick={() => setSelectedCategory(cat)}
-                    className={`relative py-2 text-xs sm:text-sm tracking-wider uppercase font-medium transition-colors cursor-pointer whitespace-nowrap ${
-                      isActive ? 'text-stone-100' : 'text-stone-400 hover:text-stone-200'
-                    }`}
+        {/* Featured Case Study Hero Showcase */}
+        {featuredTour && (
+          <FeaturedCaseStudy
+            tour={featuredTour}
+            onOpenTourViewer={onOpenTourViewer}
+            onRequestQuote={onRequestQuote}
+          />
+        )}
+
+        {/* Additional Projects (if more tours are added by Admin) */}
+        {additionalTours.length > 0 && (
+          <div className="mt-16 sm:mt-20 space-y-8">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-4 border-b border-stone-800">
+              <h3 className="font-serif text-xl sm:text-2xl font-semibold text-white tracking-tight">
+                Alte proiecte din portofoliu
+              </h3>
+
+              {/* City & Search Controls */}
+              <div className="flex items-center gap-2.5 sm:gap-3 w-full md:w-auto">
+                <div className="relative flex-1 md:flex-initial md:min-w-[150px]">
+                  <MapPin className="w-4 h-4 text-stone-500 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" strokeWidth={1.5} />
+                  <select
+                    value={selectedCity}
+                    onChange={(e) => setSelectedCity(e.target.value)}
+                    aria-label="Filtrează după oraș"
+                    className="w-full bg-stone-900/60 border border-stone-800 text-stone-300 focus:border-stone-600 rounded-md pl-9 pr-3 py-2 text-sm focus:outline-none transition-colors cursor-pointer"
                   >
-                    <span>{cat}</span>
-                    {isActive && (
-                      <motion.div
-                        layoutId="activeCategoryIndicator"
-                        className="absolute bottom-0 left-0 right-0 h-[1.5px] bg-stone-300"
-                        transition={{ type: 'spring', stiffness: 380, damping: 30 }}
-                      />
-                    )}
-                  </button>
+                    {cities.map((city) => (
+                      <option key={city} value={city}>
+                        {city === 'Toate' ? 'Toate orașele' : city}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <div className="relative flex-1 md:flex-initial md:w-56">
+                  <Search className="w-4 h-4 text-stone-500 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" strokeWidth={1.5} />
+                  <input
+                    type="text"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    placeholder="Caută în portofoliu..."
+                    aria-label="Caută în portofoliu"
+                    className="w-full bg-stone-900/60 border border-stone-800 text-stone-200 placeholder-stone-500 focus:border-stone-600 rounded-md pl-9 pr-3 py-2 text-sm focus:outline-none transition-colors"
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Additional Projects Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10">
+              {filteredAdditionalTours.map((tour, idx) => {
+                const projectIndex = String(idx + 2).padStart(2, '0');
+                return (
+                  <ProjectCard
+                    key={tour.id}
+                    tour={tour}
+                    projectIndex={projectIndex}
+                    onOpenTourViewer={onOpenTourViewer}
+                    onRequestQuote={onRequestQuote}
+                  />
                 );
               })}
             </div>
-
-            {/* City & Search Controls */}
-            <div className="flex items-center gap-2.5 sm:gap-3 w-full md:w-auto">
-              <div className="relative flex-1 md:flex-initial md:min-w-[140px]">
-                <MapPin className="w-3.5 h-3.5 text-stone-500 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
-                <select
-                  value={selectedCity}
-                  onChange={(e) => setSelectedCity(e.target.value)}
-                  className="w-full bg-stone-900/90 border border-stone-800 text-stone-300 focus:border-stone-600 rounded-xl pl-8 pr-3 py-2 text-xs focus:outline-none transition-colors cursor-pointer"
-                >
-                  {cities.map((city) => (
-                    <option key={city} value={city}>
-                      {city === 'Toate' ? 'Toate Orașele' : city}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              <div className="relative flex-1 md:flex-initial md:w-56">
-                <Search className="w-3.5 h-3.5 text-stone-500 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
-                <input
-                  type="text"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Caută în arhivă..."
-                  className="w-full bg-stone-900/90 border border-stone-800 text-stone-200 placeholder-stone-500 focus:border-stone-600 rounded-xl pl-8 pr-3 py-2 text-xs focus:outline-none transition-colors"
-                />
-              </div>
-            </div>
-
-          </div>
-        </div>
-
-        {/* Exhibition Case Studies Grid */}
-        {filteredTours.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10">
-            {filteredTours.map((tour, idx) => {
-              const projectIndex = String(idx + 1).padStart(2, '0');
-              return (
-                <ProjectCard
-                  key={tour.id}
-                  tour={tour}
-                  projectIndex={projectIndex}
-                  onOpenTourViewer={onOpenTourViewer}
-                  onRequestQuote={onRequestQuote}
-                />
-              );
-            })}
-          </div>
-        ) : (
-          <div className="py-20 text-center space-y-4 border border-stone-800/80 rounded-2xl bg-stone-900/30">
-            <p className="text-stone-400 text-sm font-light">
-              Nu am găsit niciun proiect care să corespundă criteriilor selectate.
-            </p>
-            <button
-              onClick={() => {
-                setSelectedCategory('Toate');
-                setSelectedCity('Toate');
-                setSearchQuery('');
-              }}
-              className="px-5 py-2 rounded-full bg-stone-800 hover:bg-stone-700 text-stone-200 text-xs font-mono tracking-wider uppercase transition-colors"
-            >
-              Resetează Căutarea
-            </button>
           </div>
         )}
 

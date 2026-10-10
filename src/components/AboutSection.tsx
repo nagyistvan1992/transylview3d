@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Camera } from 'lucide-react';
+import { Camera, Layers, Ruler, Sun, ShieldCheck } from 'lucide-react';
 import { propertyAboutData } from '../data/propertyData';
 import { CustomImages } from '../types';
 
@@ -10,74 +10,68 @@ interface AboutSectionProps {
 
 export const AboutSection: React.FC<AboutSectionProps> = ({ images }) => {
   return (
-    <section id="about" className="relative py-20 sm:py-32 bg-canvas overflow-hidden">
-      <div className="absolute top-0 right-0 w-96 h-96 bg-bronze/5 rounded-full blur-3xl pointer-events-none" />
-
+    <section id="about" className="relative py-16 md:py-24 bg-canvas overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* Section Badge */}
+        {/* Section Eyebrow */}
         <motion.div
           initial={{ opacity: 0, y: 8 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-          style={{ transform: 'translateZ(0)', backfaceVisibility: 'hidden' }}
-          className="gpu-smooth flex items-center gap-2 mb-10 sm:mb-16"
+          className="gpu-smooth mb-10 sm:mb-12"
         >
-          <span className="w-1.5 h-1.5 rounded-full bg-bronze" />
-          <span className="text-xs sm:text-sm font-bold tracking-[0.28em] text-stone-800 uppercase">
+          <span className="text-xs md:text-sm font-semibold uppercase tracking-[0.2em] text-stone-500 block">
             {propertyAboutData.sectionBadge}
           </span>
         </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
           
-          {/* Left Column: Full Uncropped Camera Gear Photo */}
-          <div className="lg:col-span-5 space-y-8 sm:space-y-12">
+          {/* Left Column: Full Uncropped Camera Gear Photo & Technical Specifications */}
+          <div className="lg:col-span-5 space-y-6 sm:space-y-8">
             
-            {/* Insta X5 Camera Gear Card - Complete uncropped landscape display showing full height from lens to tripod base */}
+            {/* Insta X5 Camera Gear Card */}
             <motion.div
               initial={{ opacity: 0, scale: 0.98 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true, amount: 0.2 }}
               transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-              style={{ transform: 'translateZ(0)', backfaceVisibility: 'hidden' }}
-              className="gpu-smooth relative aspect-[16/10] sm:aspect-[4/3] rounded-3xl overflow-hidden shadow-luxury-card border border-stone-300/80 bg-stone-950 flex items-center justify-center group"
+              className="gpu-smooth relative aspect-[16/10] sm:aspect-[4/3] rounded-xl overflow-hidden shadow-sm border border-stone-200/80 bg-stone-950 flex items-center justify-center group"
             >
               <img
                 src={images.aboutGear}
                 alt="Insta X5 8K Cameră Profesională Tururi Virtuale 3D"
                 loading="lazy"
                 decoding="async"
-                className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-104"
+                className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-[1.02]"
               />
               
-              <div className="absolute bottom-3 left-3 right-3 sm:bottom-4 sm:left-4 sm:right-4 flex items-center justify-between text-white text-xs font-medium tracking-wider">
-                <span className="bg-stone-900/90 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/15 flex items-center gap-1.5 shadow-lg text-[11px] sm:text-xs">
-                  <Camera className="w-3.5 h-3.5 text-bronze" />
-                  <span>INSTA X5 8K GEAR</span>
+              <div className="absolute bottom-3 left-3 right-3 sm:bottom-4 sm:left-4 sm:right-4 flex items-center justify-between text-white text-xs font-medium">
+                <span className="bg-stone-900/90 backdrop-blur-md px-3 py-1.5 rounded-md border border-white/15 flex items-center gap-1.5 shadow-sm text-xs font-medium">
+                  <Camera className="w-3.5 h-3.5 text-stone-300" strokeWidth={1.5} />
+                  <span>Insta X5 8K</span>
                 </span>
-                <span className="bg-stone-900/90 backdrop-blur-md px-2.5 py-1.5 rounded-full border border-white/15 font-mono text-[9px] sm:text-[10px] text-stone-300">
-                  CALITATE DE STUDIO
+                <span className="bg-stone-900/90 backdrop-blur-md px-2.5 py-1.5 rounded-md border border-white/15 text-xs text-stone-300 font-medium">
+                  Calitate de studio
                 </span>
               </div>
             </motion.div>
 
-            {/* Key Metric Numbers */}
+            {/* Key Metric Numbers - Definition List Style */}
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.2 }}
               transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-              style={{ transform: 'translateZ(0)', backfaceVisibility: 'hidden' }}
-              className="gpu-smooth grid grid-cols-3 gap-2 sm:gap-6 pt-4 border-t border-stone-300/80"
+              className="gpu-smooth grid grid-cols-3 gap-3 sm:gap-6 pt-4 border-t border-stone-200"
             >
               {propertyAboutData.stats.map((stat, idx) => (
-                <div key={idx} className="space-y-1 group">
-                  <div className="font-display font-black text-2xl sm:text-3xl lg:text-4xl text-stone-900 tracking-tight group-hover:text-bronze transition-colors">
+                <div key={idx} className="space-y-1">
+                  <div className="font-sans text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-stone-900 tabular-nums">
                     {stat.value}
                   </div>
-                  <div className="text-[8px] sm:text-[10px] font-bold tracking-[0.1em] sm:tracking-[0.18em] text-stone-600 uppercase leading-tight">
+                  <div className="font-sans text-xs text-stone-500 leading-normal tracking-wide">
                     {stat.label}
                   </div>
                 </div>
@@ -85,20 +79,19 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ images }) => {
             </motion.div>
           </div>
 
-          {/* Right Column: Editorial Narrative */}
-          <div className="lg:col-span-7 space-y-8 sm:space-y-12">
+          {/* Right Column: Editorial Narrative & Specifications */}
+          <div className="lg:col-span-7 space-y-6 sm:space-y-8">
             <motion.div
               initial={{ opacity: 0, y: 12 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.2 }}
               transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-              style={{ transform: 'translateZ(0)', backfaceVisibility: 'hidden' }}
-              className="gpu-smooth space-y-4 sm:space-y-6"
+              className="gpu-smooth space-y-4"
             >
-              <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-normal text-stone-950 leading-[1.12] tracking-tight">
+              <h2 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-semibold tracking-tight text-stone-900 leading-tight">
                 Digitalizare Imobiliară de Precizie la Rezoluție 8K
               </h2>
-              <p className="text-base sm:text-lg text-stone-700 leading-relaxed font-light">
+              <p className="font-sans text-base sm:text-lg text-stone-600 font-normal leading-relaxed">
                 {propertyAboutData.paragraph1}
               </p>
             </motion.div>
@@ -109,32 +102,59 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ images }) => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.2 }}
               transition={{ duration: 0.5, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-              style={{ transform: 'translateZ(0)', backfaceVisibility: 'hidden' }}
-              className="gpu-smooth space-y-6 pt-6 border-t border-stone-300/80"
+              className="gpu-smooth space-y-6 pt-6 border-t border-stone-200"
             >
-              <p className="text-stone-600 text-xs sm:text-sm leading-relaxed">
+              <p className="font-sans text-sm sm:text-base text-stone-700 leading-relaxed font-normal">
                 {propertyAboutData.paragraph2}
               </p>
 
-              {/* 2 Feature Showcase Cards */}
+              {/* 4 Feature Showcase Cards */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 pt-2">
-                <div className="p-4 sm:p-5 rounded-2xl bg-white border border-stone-200 shadow-sm space-y-2">
-                  <div className="w-2 h-2 rounded-full bg-bronze" />
-                  <h4 className="font-display text-sm font-bold text-stone-900">
-                    Model 3D Dollhouse Secțional
-                  </h4>
-                  <p className="text-xs text-stone-600 leading-relaxed">
-                    Vedere tridimensională completă care permite cumpărătorilor să înțeleagă fluxul spațiului și etajele.
+                <div className="p-5 rounded-xl bg-white border border-stone-200/80 shadow-sm space-y-2">
+                  <div className="flex items-center gap-2 text-stone-700 mb-1">
+                    <Sun className="w-4 h-4 text-stone-700" strokeWidth={1.5} />
+                    <h3 className="font-sans text-base sm:text-lg font-semibold text-stone-900 tracking-tight leading-snug">
+                      Scanare Interior & Exterior
+                    </h3>
+                  </div>
+                  <p className="font-sans text-xs sm:text-sm text-stone-600 leading-relaxed font-normal">
+                    Curți, grădini, terase și fațade captate impecabil în lumina soarelui, fără erori de reflexie sau limitări infraroșu.
                   </p>
                 </div>
 
-                <div className="p-4 sm:p-5 rounded-2xl bg-white border border-stone-200 shadow-sm space-y-2">
-                  <div className="w-2 h-2 rounded-full bg-bronze" />
-                  <h4 className="font-display text-sm font-bold text-stone-900">
-                    Măsurători Interactive Direct în 3D
-                  </h4>
-                  <p className="text-xs text-stone-600 leading-relaxed">
-                    Cumpărătorii pot măsura pereții și spațiile direct în turul 3D interactiv (planurile 2D cotate sunt disponibile opțional, ca serviciu extra).
+                <div className="p-5 rounded-xl bg-white border border-stone-200/80 shadow-sm space-y-2">
+                  <div className="flex items-center gap-2 text-stone-700 mb-1">
+                    <Ruler className="w-4 h-4 text-stone-700" strokeWidth={1.5} />
+                    <h3 className="font-sans text-base sm:text-lg font-semibold text-stone-900 tracking-tight leading-snug">
+                      Riglă Digitală de Măsurare
+                    </h3>
+                  </div>
+                  <p className="font-sans text-xs sm:text-sm text-stone-600 leading-relaxed font-normal">
+                    Cumpărătorii pot măsura pereții, tocurile ușilor și spațiul de mobilier direct din browser cu precizie milimetrică.
+                  </p>
+                </div>
+
+                <div className="p-5 rounded-xl bg-white border border-stone-200/80 shadow-sm space-y-2">
+                  <div className="flex items-center gap-2 text-stone-700 mb-1">
+                    <ShieldCheck className="w-4 h-4 text-stone-700" strokeWidth={1.5} />
+                    <h3 className="font-sans text-base sm:text-lg font-semibold text-stone-900 tracking-tight leading-snug">
+                      Player White-Label 100%
+                    </h3>
+                  </div>
+                  <p className="font-sans text-xs sm:text-sm text-stone-600 leading-relaxed font-normal">
+                    Fără sigle sau branding terț. Playerul 3D este personalizat exclusiv cu identitatea vizuală a agenției partenere.
+                  </p>
+                </div>
+
+                <div className="p-5 rounded-xl bg-white border border-stone-200/80 shadow-sm space-y-2">
+                  <div className="flex items-center gap-2 text-stone-700 mb-1">
+                    <Layers className="w-4 h-4 text-stone-700" strokeWidth={1.5} />
+                    <h3 className="font-sans text-base sm:text-lg font-semibold text-stone-900 tracking-tight leading-snug">
+                      Model Dollhouse & Planuri 2D
+                    </h3>
+                  </div>
+                  <p className="font-sans text-xs sm:text-sm text-stone-600 leading-relaxed font-normal">
+                    Vedere volumetrică 3D secțională pe niveluri și planuri 2D cotate schematice cu suprafețele utile ale fiecărei camere.
                   </p>
                 </div>
               </div>

@@ -45,7 +45,17 @@ export function App() {
       try {
         const parsed = JSON.parse(saved);
         if (Array.isArray(parsed)) {
-          return parsed;
+          return parsed.map((t) => {
+            if (t.id === 'apartament-premium-satu-mare') {
+              return {
+                ...t,
+                embedUrl: initialVirtualTours[0].embedUrl,
+                coverImage: initialVirtualTours[0].coverImage,
+                images: initialVirtualTours[0].images,
+              };
+            }
+            return t;
+          });
         }
       } catch (e) {
         console.error('Failed to parse cached virtual tours', e);
@@ -157,7 +167,7 @@ export function App() {
   };
 
   return (
-    <div className="min-h-screen bg-canvas text-stone-900 selection:bg-bronze selection:text-white">
+    <div className="min-h-screen bg-canvas text-stone-900 selection:bg-bronze selection:text-white overflow-x-hidden">
       {/* Sticky Navigation Header */}
       <Navbar
         onBookCall={() => handleOpenBookCall()}
@@ -174,7 +184,7 @@ export function App() {
         {/* Section 2: About & Camera Technology (Insta X5 8K, Dollhouse 3D) */}
         <AboutSection images={images} />
 
-        {/* Section 3: Live Real Matterport 3D Tour Embed */}
+        {/* Section 3: Live Real Metareal Stage 3D Tour Embed */}
         <LiveTourSection
           onBookCall={() => handleOpenBookCall()}
         />

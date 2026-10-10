@@ -49,3 +49,21 @@
   transform: translateZ(0);
   backface-visibility: hidden;
 }
+
+/* Balanced headline wrapping */
+.text-balance {
+  text-wrap: balance;
+}
+
+/* Touch and mobile scrolling optimization */
+.touch-smooth {
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
+  overscroll-behavior: contain;
+}
+
+/* Eliminate tap highlight flickering on mobile touch */
+button, a, select, input {
+  -webkit-tap-highlight-color: transparent;
+}
+

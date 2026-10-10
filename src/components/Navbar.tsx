@@ -38,44 +38,46 @@ export const Navbar: React.FC<NavbarProps> = ({ onBookCall }) => {
   };
 
   const navLinks = [
-    { name: 'ACASĂ', href: '#home', onClick: handleScrollToTop },
-    { name: 'DESPRE NOI', href: '#about' },
-    { name: 'DEMO 3D', href: '#demo-tour' },
-    { name: 'PORTOFOLIU 3D', href: '#virtual-tours' },
-    { name: 'PREȚURI', href: '#pricing' },
-    { name: 'LOCAȚIE', href: '#location' },
+    { name: 'Acasă', href: '#home', onClick: handleScrollToTop },
+    { name: 'Despre noi', href: '#about' },
+    { name: 'Demo 3D', href: '#demo-tour' },
+    { name: 'Portofoliu', href: '#virtual-tours' },
+    { name: 'Prețuri', href: '#pricing' },
+    { name: 'Locație', href: '#location' },
   ];
 
   return (
     <header
       className={`gpu-smooth fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         scrolled
-          ? 'translate-y-0 opacity-100 py-3.5 bg-canvas-light/95 backdrop-blur-md shadow-luxury-soft border-b border-stone-300/50'
+          ? 'translate-y-0 opacity-100 py-3 bg-canvas-light/95 backdrop-blur-md shadow-sm border-b border-stone-200'
           : '-translate-y-full opacity-0 pointer-events-none'
       }`}
     >
-      <div className="max-w-7xl mx-auto px-6 sm:px-8 flex items-center justify-between pointer-events-auto">
-        {/* Brand Name with smooth scroll to top on click */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between pointer-events-auto">
         <a
           href="#home"
           onClick={handleScrollToTop}
-          className="group flex items-center gap-2 transition-transform hover:scale-102 cursor-pointer"
+          className="group flex items-baseline gap-1.5 sm:gap-2 cursor-pointer transition-transform hover:scale-102"
           title="Mergi la începutul paginii"
         >
-          <span className="font-display text-xl sm:text-2xl font-bold tracking-[0.22em] text-stone-900">
-            TRANSYLVIEW <span className="text-bronze font-medium text-sm sm:text-base">3D</span>
+          <span className="font-display text-base sm:text-lg font-bold tracking-[0.14em] sm:tracking-[0.18em] text-stone-900 uppercase inline-flex items-baseline">
+            TRANSYLVIEW
+            <span className="-ml-0.5 sm:-ml-1 font-sans font-extrabold text-[1.22em] sm:text-[1.28em] tracking-tight text-bronze-dark group-hover:text-stone-950 transition-colors">
+              3D
+            </span>
           </span>
-          <span className="w-1.5 h-1.5 rounded-full bg-bronze" />
+          <span className="w-1.5 h-1.5 rounded-full bg-bronze self-center group-hover:scale-125 transition-transform" />
         </a>
 
         {/* Center Desktop Navigation */}
-        <nav className="hidden md:flex items-center space-x-5 lg:space-x-7">
+        <nav aria-label="Navigare principală" className="hidden md:flex items-center gap-6 lg:gap-8">
           {navLinks.map((link) => (
             <a
               key={link.name}
               href={link.href}
               onClick={link.onClick}
-              className="text-xs font-semibold tracking-[0.2em] text-stone-700 hover:text-bronze transition-all duration-300 relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1.5px] after:bg-bronze hover:after:w-full after:transition-all after:duration-300"
+              className="font-sans text-sm font-medium text-stone-700 hover:text-stone-900 transition-colors py-1"
             >
               {link.name}
             </a>
@@ -86,33 +88,34 @@ export const Navbar: React.FC<NavbarProps> = ({ onBookCall }) => {
         <div className="flex items-center gap-2 sm:gap-3">
           <button
             onClick={onBookCall}
-            className="sm:hidden px-3 py-1.5 rounded-full text-[10px] font-bold tracking-wider uppercase bg-stone-900 text-stone-50 active:scale-95 shadow-sm cursor-pointer"
+            className="sm:hidden inline-flex items-center justify-center px-3 py-1.5 rounded-md font-sans text-xs font-semibold bg-stone-900 text-white hover:bg-stone-800 transition-colors active:scale-[0.98] cursor-pointer"
           >
-            SOLICITĂ TUR
+            Solicită tur
           </button>
 
           <button
             onClick={onBookCall}
-            className="hidden sm:inline-flex px-5 py-2.5 rounded-full text-xs font-bold tracking-[0.2em] uppercase transition-all duration-300 bg-stone-900 text-stone-50 hover:bg-bronze hover:text-stone-950 shadow-sm cursor-pointer"
+            className="hidden sm:inline-flex items-center justify-center px-5 py-2 rounded-md font-sans text-sm font-semibold bg-stone-900 text-white hover:bg-stone-800 transition-colors active:scale-[0.98] cursor-pointer"
           >
-            SOLICITĂ OFERTĂ
+            Solicită Ofertă
           </button>
 
           {/* Mobile Menu Toggle */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden min-w-[38px] min-h-[38px] p-2 rounded-xl text-stone-900 flex items-center justify-center hover:bg-stone-200/60 transition-colors active:scale-95 cursor-pointer"
+            className="md:hidden min-w-[38px] min-h-[38px] p-2 rounded-md text-stone-900 flex items-center justify-center hover:bg-stone-200/60 transition-colors cursor-pointer"
             aria-label={mobileMenuOpen ? "Închide meniul" : "Deschide meniul"}
+            aria-expanded={mobileMenuOpen}
           >
-            {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            {mobileMenuOpen ? <X className="w-5 h-5" strokeWidth={1.5} /> : <Menu className="w-5 h-5" strokeWidth={1.5} />}
           </button>
         </div>
       </div>
 
       {/* Mobile Dropdown Menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden mt-3 mx-4 p-6 bg-canvas-light/98 backdrop-blur-xl rounded-2xl shadow-luxury-floating border border-stone-300/60 space-y-4">
-          <div className="flex flex-col space-y-3">
+        <div className="md:hidden mt-3 mx-4 p-5 bg-canvas-light/98 backdrop-blur-xl rounded-xl shadow-lg border border-stone-200 space-y-4">
+          <div className="flex flex-col">
             {navLinks.map((link) => (
               <a
                 key={link.name}
@@ -124,22 +127,22 @@ export const Navbar: React.FC<NavbarProps> = ({ onBookCall }) => {
                     setMobileMenuOpen(false);
                   }
                 }}
-                className="text-xs font-semibold tracking-[0.24em] text-stone-800 hover:text-bronze py-2 border-b border-stone-200/60"
+                className="font-sans text-sm font-medium text-stone-700 hover:text-stone-900 py-2.5 border-b border-stone-200 last:border-b-0 transition-colors"
               >
                 {link.name}
               </a>
             ))}
           </div>
 
-          <div className="pt-2">
+          <div className="pt-1">
             <button
               onClick={() => {
                 setMobileMenuOpen(false);
                 onBookCall();
               }}
-              className="w-full py-3 bg-stone-900 text-stone-50 rounded-full text-xs font-bold tracking-[0.2em] uppercase flex items-center justify-center"
+              className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 rounded-md bg-stone-900 text-white font-sans text-sm font-semibold hover:bg-stone-800 transition-colors"
             >
-              SOLICITĂ SCANARE 3D
+              Solicită scanare 3D
             </button>
           </div>
         </div>

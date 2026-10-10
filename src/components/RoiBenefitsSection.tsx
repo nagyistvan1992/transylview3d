@@ -1,77 +1,69 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { TrendingUp, Clock, Eye, Filter, Globe2, DollarSign, ShieldCheck } from 'lucide-react';
+import { CheckCircle2, Clock, TrendingUp, Maximize2, ArrowRight } from 'lucide-react';
 
 export const RoiBenefitsSection: React.FC = () => {
   const stats = [
     {
+      metric: '-45%',
+      title: 'Vizionări Neconcludente',
+      description: 'Eficiență maximă: eliminarea vizionărilor necalificate. La fața locului ajung doar cumpărători care cunosc deja compartimentarea și dimensiunile reale.',
+      icon: CheckCircle2,
+    },
+    {
+      metric: '24-72h',
+      title: 'Timp de Livrare',
+      description: 'Predare în 24–72h în funcție de suprafața imobilului. Pachetul Exclusiv beneficiază de prioritate maximă la procesare și predare accelerată.',
+      icon: Clock,
+    },
+    {
       metric: '+300%',
       title: 'Timp Petrecut pe Anunț',
-      description: 'Cumpărătorii și chiriașii petrec în medie de 3 ori mai mult timp explorând o proprietate care dispune de un tur virtual 3D.',
-      icon: Clock,
-      highlight: 'Atenție maximă a clienților',
-    },
-    {
-      metric: '+87%',
-      title: 'Mai Multe Vizualizări',
-      description: 'Algoritmii portalurilor imobiliare și rețelelor sociale favorizează anunțurile cu conținut media 3D imersiv.',
-      icon: Eye,
-      highlight: 'Prioritate în căutări',
-    },
-    {
-      metric: '-50%',
-      title: 'Vizionări Inutile Eliminate',
-      description: 'Filtrează clienții nehotărâți. La fața locului ajung doar cumpărători calificați, care știu exact cum arată fiecare cameră.',
-      icon: Filter,
-      highlight: 'Economie majoră de timp',
-    },
-    {
-      metric: '+31%',
-      title: 'Vânzare sau Închiriere mai Rapidă',
-      description: 'Transparența totală oferită de turul 3D elimină dubiile și accelerează luarea deciziei de cumpărare.',
+      description: 'Cumpărătorii și chiriașii petrec în medie de trei ori mai mult timp explorând un anunț care include un tur volumetric 3D.',
       icon: TrendingUp,
-      highlight: 'Cicluri scurte de vânzare',
+    },
+  ];
+
+  const benefits = [
+    {
+      title: 'Filtrare tehnică zero: Încărcare instantanee pe mobil',
+      description: 'Turul rulează direct în browserul oricărui smartphone, optimizat pentru cumpărătorii care accesează linkul din Storia, OLX sau Facebook fără aplicații dedicate.',
     },
     {
-      metric: '24/7',
-      title: 'Deschis pentru Clienții din Diasporă',
-      description: 'Persoanele din alte orașe sau din străinătate pot viziona proprietatea la scară reală fără a fi nevoie de deplasare fizică.',
-      icon: Globe2,
-      highlight: 'Acces global nelimitat',
+      title: 'Avantaj decisiv pentru contracte de reprezentare exclusivă',
+      description: 'Agențiile partenere obțin mai ușor mandate exclusive demonstrând vânzătorilor o prezentare premium cu scanare volumetrică, exterior și planuri cotate.',
     },
     {
-      metric: '100x',
-      title: 'Rentabilitate Imediată a Investiției (ROI)',
-      description: 'Un pachet de 499 – 899 lei reprezintă sub 0.2% dintr-o tranzacție și se amortizează instantaneu la prima semnare.',
-      icon: DollarSign,
-      highlight: 'Investiție minimă, impact maxim',
+      title: 'Acces direct pentru cumpărătorii din diasporă',
+      description: 'Persoanele din alte orașe sau din străinătate pot evalua proprietatea la scară reală și măsura pereții cu rigla digitală fără deplasare.',
+    },
+    {
+      title: 'Investiție amortizată din prima tranzacție',
+      description: 'Un pachet de 499 – 899 RON reprezintă sub 0,2% din valoarea unei tranzacții obișnuite, accelerând considerabil semnarea contractului.',
     },
   ];
 
   return (
-    <section className="py-24 sm:py-32 bg-canvas-light overflow-hidden border-t border-stone-300/60">
-      <div className="max-w-7xl mx-auto px-6 sm:px-8">
-        
-        {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16 sm:mb-20 space-y-4">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-stone-200/90 border border-stone-300/80 text-stone-800 text-xs font-bold tracking-[0.22em] uppercase">
-            <span className="w-1.5 h-1.5 rounded-full bg-bronze" />
-            <span>RENTABILITATE & STATISTICI IMOBILIARE</span>
-          </div>
+    <section className="py-16 md:py-24 bg-canvas-light overflow-hidden border-t border-stone-300/60">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-          <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-stone-950 tracking-tight">
-            De ce un Tur Virtual 3D?
-            <br />
-            <span className="text-bronze-dark font-normal">Impact Real & Rezultate Dovedite</span>
+        {/* Section Header */}
+        <div className="max-w-3xl mb-12 sm:mb-16 space-y-4">
+          <span className="text-xs md:text-sm font-semibold uppercase tracking-[0.2em] text-stone-500 block">
+            Rentabilitate și rezultate
+          </span>
+
+          <h2 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-semibold tracking-tight text-stone-900 leading-tight [text-wrap:balance]">
+            De ce un tur virtual 3D? <span className="text-bronze-dark">Rezultate măsurabile.</span>
           </h2>
 
-          <p className="text-stone-600 text-xs sm:text-sm max-w-2xl mx-auto leading-relaxed">
-            Un tur virtual 3D nu este un simplu element decorativ, ci cel mai eficient instrument de marketing imobiliar pentru proprietari, agenții și dezvoltatori.
+          <p className="font-sans text-base sm:text-lg text-stone-600 font-normal leading-relaxed max-w-2xl">
+            Un tur virtual 3D nu este un element decorativ, ci un instrument de marketing imobiliar care reduce timpul de vânzare pentru proprietari, agenții și dezvoltatori.
           </p>
         </div>
 
-        {/* 6 Benefits Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+        {/* Headline Metrics */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
           {stats.map((item, idx) => {
             const Icon = item.icon;
             return (
@@ -82,51 +74,60 @@ export const RoiBenefitsSection: React.FC = () => {
                 viewport={{ once: true, amount: 0.15 }}
                 transition={{ duration: 0.45, delay: idx * 0.05, ease: [0.22, 1, 0.36, 1] }}
                 style={{ transform: 'translateZ(0)', backfaceVisibility: 'hidden' }}
-                className="gpu-smooth p-7 sm:p-8 rounded-3xl bg-white border border-stone-200/90 shadow-luxury-soft hover:shadow-luxury-card hover:border-bronze/40 transition-all duration-300 flex flex-col justify-between group"
+                className="gpu-smooth p-6 sm:p-8 bg-white border border-stone-200/80 rounded-xl shadow-sm flex flex-col"
               >
-                <div>
-                  <div className="flex items-center justify-between mb-6">
-                    <div className="font-display font-black text-3xl sm:text-4xl text-stone-950 tracking-tight group-hover:text-bronze transition-colors">
-                      {item.metric}
-                    </div>
-                    <div className="p-3 rounded-2xl bg-stone-100 text-stone-700 group-hover:bg-bronze group-hover:text-stone-950 transition-colors">
-                      <Icon className="w-5 h-5" />
-                    </div>
-                  </div>
-
-                  <h3 className="font-display text-lg font-bold text-stone-900 mb-2">
-                    {item.title}
-                  </h3>
-
-                  <p className="text-stone-600 text-xs sm:text-sm leading-relaxed mb-6">
-                    {item.description}
-                  </p>
+                <div className="flex items-center justify-between mb-5">
+                  <span className="font-sans text-3xl sm:text-4xl font-bold tracking-tight text-stone-900 tabular-nums">
+                    {item.metric}
+                  </span>
+                  <Icon className="w-5 h-5 text-bronze" strokeWidth={1.5} aria-hidden="true" />
                 </div>
 
-                <div className="pt-4 border-t border-stone-100 flex items-center gap-2 text-[11px] font-bold text-stone-500 uppercase tracking-wider">
-                  <ShieldCheck className="w-3.5 h-3.5 text-bronze" />
-                  <span>{item.highlight}</span>
-                </div>
+                <h3 className="font-sans text-lg sm:text-xl font-semibold text-stone-900 tracking-tight leading-snug mb-2">
+                  {item.title}
+                </h3>
+
+                <p className="font-sans text-sm sm:text-base text-stone-700 leading-relaxed font-normal">
+                  {item.description}
+                </p>
               </motion.div>
             );
           })}
         </div>
 
-        {/* Bottom Guarantee Banner */}
-        <div className="mt-14 p-6 sm:p-8 rounded-3xl bg-stone-900 text-white flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl">
-          <div className="space-y-1 text-center md:text-left">
-            <h4 className="font-display text-base sm:text-lg font-bold">
+        {/* Secondary Benefits — definition-style list */}
+        <div className="mt-10 sm:mt-14 grid grid-cols-1 md:grid-cols-2 gap-x-10 lg:gap-x-16 border-t border-stone-200">
+          {benefits.map((item) => (
+            <div key={item.title} className="flex items-start gap-3 py-5 border-b border-stone-200">
+              <Maximize2 className="w-4 h-4 text-stone-500 flex-shrink-0 mt-1" strokeWidth={1.5} aria-hidden="true" />
+              <div className="space-y-1">
+                <h4 className="font-sans text-base font-semibold text-stone-900 tracking-tight">
+                  {item.title}
+                </h4>
+                <p className="font-sans text-sm sm:text-base text-stone-700 leading-relaxed font-normal">
+                  {item.description}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Bottom Banner */}
+        <div className="mt-12 sm:mt-16 p-6 sm:p-8 rounded-xl bg-stone-900 border border-stone-800 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+          <div className="space-y-1">
+            <h4 className="font-sans text-lg sm:text-xl font-semibold text-stone-100 tracking-tight leading-snug">
               Pregătit să îți prezinți proprietatea la standarde 8K?
             </h4>
-            <p className="text-xs sm:text-sm text-stone-400">
+            <p className="font-sans text-sm sm:text-base text-stone-400 leading-relaxed">
               Programăm deplasarea în Satu Mare și pe o rază de 100 km în Transilvania în cel mai scurt timp.
             </p>
           </div>
           <a
             href="#pricing"
-            className="px-6 py-3 rounded-full bg-white text-stone-950 font-bold text-xs tracking-wider uppercase hover:bg-stone-100 transition-all flex-shrink-0 shadow-md"
+            className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-md bg-white text-stone-900 text-sm font-semibold hover:bg-stone-100 transition-colors flex-shrink-0"
           >
-            Vezi Pachetele de Preț →
+            Vezi pachetele de preț
+            <ArrowRight className="w-4 h-4" strokeWidth={1.5} />
           </a>
         </div>
 

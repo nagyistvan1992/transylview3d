@@ -477,7 +477,7 @@ export const NativeVirtualTourViewer: React.FC<NativeVirtualTourViewerProps> = (
             </div>
             <div>
               <h4 className="text-sm font-bold text-white">Vrei un tur virtual 3D la acest standard pentru imobilul tău?</h4>
-              <p className="text-xs text-stone-400">Scanare 8K cu camera profesională Insta X5 în Satu Mare și Transilvania. Predare în 24-48h.</p>
+              <p className="text-xs text-stone-400">Scanare 8K cu camera profesională Insta X5 în Satu Mare și Transilvania. Predare în 24–72h în funcție de suprafață (prioritate Pachet Exclusiv).</p>
             </div>
           </div>
 

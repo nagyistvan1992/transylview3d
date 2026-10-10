@@ -39,6 +39,8 @@ export interface PricingPackage {
   isPopular?: boolean;
   features: string[];
   ctaLabel: string;
+  hostingDuration?: string;
+  hostingAfterPrice?: string;
 }
 
 export interface CustomImages {
