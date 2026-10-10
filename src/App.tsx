@@ -13,8 +13,6 @@ import { CookieBanner } from './components/CookieBanner';
 import { LegalDocType } from './components/LegalModal';
 import { CustomImages, VirtualTourItem } from './types';
 import { initialImages, initialVirtualTours } from './data/propertyData';
-import Lenis from 'lenis';
-import 'lenis/dist/lenis.css';
 
 // Lazy-loaded modal components for fast initial mobile rendering
 const BookCallModal = lazy(() => import('./components/BookCallModal').then((m) => ({ default: m.BookCallModal })));
@@ -72,68 +70,6 @@ export function App() {
   const [tourManagerOpen, setTourManagerOpen] = useState(false);
   const [imageManagerOpen, setImageManagerOpen] = useState(false);
   const [legalDocOpen, setLegalDocOpen] = useState<LegalDocType>(null);
-
-  // 3. Calm, Butter-Smooth Luxury Lenis Scrolling
-  useEffect(() => {
-    const lenis = new Lenis({
-      duration: 1.25,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      smoothWheel: true,
-      wheelMultiplier: 0.8, // Calmed down to avoid fast racing or jarring jumps
-      touchMultiplier: 1.1,
-      infinite: false,
-    });
-
-    (window as any).lenis = lenis;
-
-    let rafId: number;
-    function raf(time: number) {
-      lenis.raf(time);
-      rafId = requestAnimationFrame(raf);
-    }
-    rafId = requestAnimationFrame(raf);
-
-    // Global smooth scroll interceptor for hash / anchor links
-    const handleAnchorClick = (e: MouseEvent) => {
-      const target = (e.target as HTMLElement).closest('a');
-      if (!target) return;
-      const href = target.getAttribute('href');
-      if (href && href.startsWith('#') && href.length > 1) {
-        const el = document.querySelector(href);
-        if (el) {
-          e.preventDefault();
-          lenis.scrollTo(el as HTMLElement, { offset: -20, duration: 1.2 });
-        }
-      }
-    };
-    document.addEventListener('click', handleAnchorClick);
-
-    return () => {
-      document.removeEventListener('click', handleAnchorClick);
-      cancelAnimationFrame(rafId);
-      lenis.destroy();
-      delete (window as any).lenis;
-    };
-  }, []);
-
-  // Pause Lenis when any fullscreen modal is open to keep modal internal scrolling isolated
-  const isAnyModalOpen = Boolean(
-    bookCallOpen ||
-    activeTourViewer ||
-    tourManagerOpen ||
-    imageManagerOpen ||
-    legalDocOpen
-  );
-
-  useEffect(() => {
-    const lenis = (window as any).lenis as Lenis | undefined;
-    if (!lenis) return;
-    if (isAnyModalOpen) {
-      lenis.stop();
-    } else {
-      lenis.start();
-    }
-  }, [isAnyModalOpen]);
 
   // Secret admin triggers (Keyboard shortcut + URL hash listener)
   useEffect(() => {

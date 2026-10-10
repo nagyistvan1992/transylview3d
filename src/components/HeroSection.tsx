@@ -17,8 +17,6 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ heroImage, onBookCall 
   const progress = useMotionValue(0);
   const progressRef = useRef(0);
   const isCompletedRef = useRef(false);
-  const unlockTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const cooldownRef = useRef(false);
 
   // Ultra-smooth, deliberate spring for a calm, luxurious architectural progression
   const smoothProgress = useSpring(progress, {
@@ -34,8 +32,6 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ heroImage, onBookCall 
 
   // Unlock hero immediately when user triggers an explicit navigation or action
   const handleUnlock = () => {
-    if (unlockTimeoutRef.current) clearTimeout(unlockTimeoutRef.current);
-    cooldownRef.current = false;
     progress.set(1);
     progressRef.current = 1;
     setIsCompleted(true);
@@ -118,43 +114,31 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ heroImage, onBookCall 
     let touchStartY = 0;
 
     const handleWheel = (e: WheelEvent) => {
-      // If hero animation is fully completed and cooldown has passed, allow smooth native scroll
+      // If hero animation is fully completed or page is scrolled down, allow native scroll
       if (isCompletedRef.current || window.scrollY > 10) return;
 
-      if (cooldownRef.current) {
-        // Prevent residual velocity of the revealing wheel stroke from jerking the page
-        if (e.cancelable) e.preventDefault();
-        return;
-      }
-
       if (e.deltaY > 0) {
-        // Scrolling downwards: block page scroll and advance hero animation smoothly
+        // Scrolling downwards: block page scroll and advance hero animation slowly
         if (progressRef.current < 1) {
           if (e.cancelable) e.preventDefault();
-          // Calibrated calm step: ~1.2% to 1.8% per notch
-          const rawStep = Math.abs(e.deltaY) / 5800;
-          const step = Math.min(0.018, Math.max(0.005, rawStep));
+          // Calibrated deliberate step: ~1.5% to 2.4% per notch, requiring ~45-50 notches
+          const rawStep = Math.abs(e.deltaY) / 5400;
+          const step = Math.min(0.024, Math.max(0.006, rawStep));
           const next = Math.min(1, progressRef.current + step);
           progress.set(next);
           progressRef.current = next;
 
           if (next >= 1) {
             setIsCompleted(true);
-            if (e.cancelable) e.preventDefault();
-            cooldownRef.current = true;
-            if (unlockTimeoutRef.current) clearTimeout(unlockTimeoutRef.current);
-            unlockTimeoutRef.current = setTimeout(() => {
-              isCompletedRef.current = true;
-              cooldownRef.current = false;
-            }, 380);
+            isCompletedRef.current = true;
           }
         }
       } else if (e.deltaY < 0) {
         // Scrolling upwards before completion: smoothly reverse hero animation
         if (progressRef.current > 0 && progressRef.current < 1) {
           if (e.cancelable) e.preventDefault();
-          const rawStep = Math.abs(e.deltaY) / 5800;
-          const step = Math.min(0.018, Math.max(0.005, rawStep));
+          const rawStep = Math.abs(e.deltaY) / 5400;
+          const step = Math.min(0.024, Math.max(0.006, rawStep));
           const next = Math.max(0, progressRef.current - step);
           progress.set(next);
           progressRef.current = next;
@@ -169,11 +153,6 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ heroImage, onBookCall 
     const handleTouchMove = (e: TouchEvent) => {
       if (isCompletedRef.current || window.scrollY > 10) return;
 
-      if (cooldownRef.current) {
-        if (e.cancelable) e.preventDefault();
-        return;
-      }
-
       const currentY = e.touches[0].clientY;
       const deltaY = touchStartY - currentY; // positive = swiping up (scrolling down)
 
@@ -181,7 +160,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ heroImage, onBookCall 
         // User swiping to scroll down: block page scroll and advance animation slowly
         if (progressRef.current < 1) {
           if (e.cancelable) e.preventDefault();
-          const step = Math.min(0.025, Math.max(0.006, deltaY / (window.innerHeight * 4.2)));
+          const step = Math.min(0.03, Math.max(0.008, deltaY / (window.innerHeight * 4.0)));
           const next = Math.min(1, progressRef.current + step);
           progress.set(next);
           progressRef.current = next;
@@ -189,19 +168,14 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ heroImage, onBookCall 
 
           if (next >= 1) {
             setIsCompleted(true);
-            cooldownRef.current = true;
-            if (unlockTimeoutRef.current) clearTimeout(unlockTimeoutRef.current);
-            unlockTimeoutRef.current = setTimeout(() => {
-              isCompletedRef.current = true;
-              cooldownRef.current = false;
-            }, 350);
+            isCompletedRef.current = true;
           }
         }
       } else if (deltaY < 0) {
         // User swiping down (scrolling up)
         if (progressRef.current > 0 && progressRef.current < 1) {
           if (e.cancelable) e.preventDefault();
-          const step = Math.min(0.025, Math.max(0.006, Math.abs(deltaY) / (window.innerHeight * 4.2)));
+          const step = Math.min(0.03, Math.max(0.008, Math.abs(deltaY) / (window.innerHeight * 4.0)));
           const next = Math.max(0, progressRef.current - step);
           progress.set(next);
           progressRef.current = next;
@@ -210,20 +184,12 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ heroImage, onBookCall 
       }
     };
 
-    const handleTouchEnd = () => {
-      if (progressRef.current >= 1 && cooldownRef.current) {
-        if (unlockTimeoutRef.current) clearTimeout(unlockTimeoutRef.current);
-        isCompletedRef.current = true;
-        cooldownRef.current = false;
-      }
-    };
-
     const handleKeyDown = (e: KeyboardEvent) => {
       if (isCompletedRef.current || window.scrollY > 10) return;
       if (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ') {
         if (progressRef.current < 1) {
           e.preventDefault();
-          const next = Math.min(1, progressRef.current + 0.04);
+          const next = Math.min(1, progressRef.current + 0.05);
           progress.set(next);
           progressRef.current = next;
           if (next >= 1) {
@@ -234,7 +200,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ heroImage, onBookCall 
       } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
         if (progressRef.current > 0 && progressRef.current < 1) {
           e.preventDefault();
-          const next = Math.max(0, progressRef.current - 0.04);
+          const next = Math.max(0, progressRef.current - 0.05);
           progress.set(next);
           progressRef.current = next;
         }
@@ -248,30 +214,22 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ heroImage, onBookCall 
     window.addEventListener('wheel', handleWheel, { passive: false });
     window.addEventListener('touchstart', handleTouchStart, { passive: true });
     window.addEventListener('touchmove', handleTouchMove, { passive: false });
-    window.addEventListener('touchend', handleTouchEnd, { passive: true });
     window.addEventListener('keydown', handleKeyDown);
 
     return () => {
-      if (unlockTimeoutRef.current) clearTimeout(unlockTimeoutRef.current);
       if (containerEl) {
         containerEl.removeEventListener('wheel', handleWheel);
       }
       window.removeEventListener('wheel', handleWheel);
       window.removeEventListener('touchstart', handleTouchStart);
       window.removeEventListener('touchmove', handleTouchMove);
-      window.removeEventListener('touchend', handleTouchEnd);
       window.removeEventListener('keydown', handleKeyDown);
     };
   }, [progress]);
 
   const handleScrollToTop = (e: React.MouseEvent) => {
     e.preventDefault();
-    const lenis = (window as any).lenis;
-    if (lenis) {
-      lenis.scrollTo(0, { duration: 1.25 });
-    } else {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
