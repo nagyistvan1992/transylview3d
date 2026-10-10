@@ -96,11 +96,11 @@ export const VirtualTourViewerModal: React.FC<VirtualTourViewerModalProps> = ({
               href={tour.embedUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-stone-800 hover:bg-stone-700 text-stone-300 hover:text-white text-xs font-semibold border border-stone-700 transition-colors"
+              className="inline-flex items-center gap-1.5 p-2 sm:px-3 sm:py-1.5 rounded-md bg-stone-800 hover:bg-stone-700 text-stone-300 hover:text-white text-xs font-semibold border border-stone-700 transition-colors"
               title="Deschide în filă nouă"
             >
               <ExternalLink className="w-3.5 h-3.5 text-stone-400" strokeWidth={1.5} />
-              <span>Fereastră nouă</span>
+              <span className="hidden sm:inline">Fereastră nouă</span>
             </a>
 
             <button

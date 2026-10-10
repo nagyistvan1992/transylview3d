@@ -157,10 +157,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ heroImage, onBookCall 
       const deltaY = touchStartY - currentY; // positive = swiping up (scrolling down)
 
       if (deltaY > 0) {
-        // User swiping to scroll down: block page scroll and advance animation slowly
+        // User swiping to scroll down: advance hero animation responsively
         if (progressRef.current < 1) {
           if (e.cancelable) e.preventDefault();
-          const step = Math.min(0.03, Math.max(0.008, deltaY / (window.innerHeight * 4.0)));
+          const step = Math.min(0.08, Math.max(0.02, deltaY / (window.innerHeight * 1.5)));
           const next = Math.min(1, progressRef.current + step);
           progress.set(next);
           progressRef.current = next;
@@ -175,7 +175,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ heroImage, onBookCall 
         // User swiping down (scrolling up)
         if (progressRef.current > 0 && progressRef.current < 1) {
           if (e.cancelable) e.preventDefault();
-          const step = Math.min(0.03, Math.max(0.008, Math.abs(deltaY) / (window.innerHeight * 4.0)));
+          const step = Math.min(0.08, Math.max(0.02, Math.abs(deltaY) / (window.innerHeight * 1.5)));
           const next = Math.max(0, progressRef.current - step);
           progress.set(next);
           progressRef.current = next;
@@ -282,23 +282,16 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ heroImage, onBookCall 
           <a
             href="#home"
             onClick={handleScrollToTop}
-            className="group flex items-center gap-2.5 sm:gap-3 transition-transform hover:scale-102 cursor-pointer"
+            className="group flex items-baseline gap-1.5 sm:gap-2 transition-transform hover:scale-102 cursor-pointer"
             title="Mergi la începutul paginii"
           >
-            <img
-              src="/images/transylview_icon.png"
-              alt="TransylView 3D Icon"
-              className="w-7 h-7 sm:w-9 sm:h-9 rounded-xl shadow-lg border border-white/20 object-contain group-hover:border-bronze transition-colors flex-shrink-0"
-            />
-            <div className="flex items-baseline gap-1.5 sm:gap-2">
-              <span className="font-display text-base sm:text-2xl font-bold tracking-[0.16em] sm:tracking-[0.22em] text-white uppercase drop-shadow-md inline-flex items-baseline">
-                TRANSYLVIEW
-                <span className="-ml-0.5 sm:-ml-1 font-sans font-extrabold text-[1.22em] sm:text-[1.28em] tracking-tight text-bronze-light group-hover:text-white transition-colors">
-                  3D
-                </span>
+            <span className="font-display text-base sm:text-2xl font-bold tracking-[0.16em] sm:tracking-[0.22em] text-white uppercase drop-shadow-md inline-flex items-baseline">
+              TRANSYLVIEW
+              <span className="-ml-0.5 sm:-ml-1 font-sans font-extrabold text-[1.22em] sm:text-[1.28em] tracking-tight text-bronze-light group-hover:text-white transition-colors">
+                3D
               </span>
-              <span className="w-1.5 h-1.5 rounded-full bg-bronze self-center group-hover:scale-125 transition-transform" />
-            </div>
+            </span>
+            <span className="w-1.5 h-1.5 rounded-full bg-bronze self-center group-hover:scale-125 transition-transform" />
           </a>
 
           <nav className="hidden md:flex items-center space-x-6 lg:space-x-8 text-xs font-bold tracking-[0.22em] text-stone-200 uppercase drop-shadow">
@@ -421,8 +414,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ heroImage, onBookCall 
           </AnimatePresence>
         </header>
 
-        {/* Layer 4: Upper-Left Stats Card (Loads first in micro-steps with individual reveal effects) */}
-        <div className="relative z-30 px-4 sm:px-8 lg:px-16 pt-2 pb-2 my-auto flex items-start">
+        {/* Layer 4: Stats Card (Symmetrical 3-Column on Mobile, Architectural Vertical on Desktop) */}
+        <div className="relative z-30 px-4 sm:px-8 lg:px-16 pt-2 pb-2 my-auto flex justify-center sm:justify-start">
           <motion.div
             style={{
               opacity: statsOpacity,
@@ -430,88 +423,144 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ heroImage, onBookCall 
               scale: statsScale,
               filter: statsFilter,
             }}
-            className="gpu-smooth space-y-1.5 sm:space-y-3 max-w-[150px] sm:max-w-[240px] pointer-events-auto bg-stone-950/80 backdrop-blur-md p-2.5 sm:p-4 rounded-xl sm:rounded-2xl border border-white/15 shadow-2xl"
+            className="gpu-smooth w-full max-w-[360px] sm:max-w-[240px] pointer-events-auto bg-stone-950/85 backdrop-blur-md p-3 sm:p-4 rounded-2xl border border-white/15 shadow-2xl"
           >
-            {/* Stat 1: 8K Ultra-HD with scale & optical focus pop */}
-            <motion.div
-              style={{
-                scale: stat1Scale,
-                opacity: stat1Opacity,
-                filter: stat1Filter,
-              }}
-              className="group cursor-default gpu-smooth origin-left"
-            >
-              <div className="font-display font-bold text-xs sm:text-xl text-white tracking-tight leading-tight">
-                8K ULTRA-HD
-              </div>
-              <div className="text-[7px] sm:text-[9px] font-bold tracking-[0.14em] sm:tracking-[0.18em] text-stone-300 uppercase mt-0.5">
-                CLARITATE INSTA X5
-              </div>
-            </motion.div>
+            {/* Mobile View: Symmetrical 3-Column Stats Grid */}
+            <div className="grid grid-cols-3 divide-x divide-white/15 text-center items-center sm:hidden">
+              <motion.div
+                style={{
+                  scale: stat1Scale,
+                  opacity: stat1Opacity,
+                  filter: stat1Filter,
+                }}
+                className="px-1 space-y-0.5"
+              >
+                <div className="font-display font-bold text-[11px] text-white leading-tight">
+                  8K ULTRA-HD
+                </div>
+                <div className="text-[7.5px] font-bold tracking-[0.14em] text-stone-300 uppercase">
+                  CLARITATE INSTA X5
+                </div>
+              </motion.div>
 
-            {/* Divider 1 with smooth scaleX draw */}
-            <motion.div
-              style={{
-                scaleX: divider1Scale,
-                opacity: divider1Opacity,
-              }}
-              className="w-6 sm:w-10 h-[1px] bg-white/30 origin-left gpu-smooth"
-            />
+              <motion.div
+                style={{
+                  opacity: stat2Opacity,
+                  y: stat2Y,
+                  scale: stat2Scale,
+                  filter: stat2Filter,
+                }}
+                className="px-1 space-y-0.5"
+              >
+                <div className="font-display font-bold text-[11px] text-white leading-tight">
+                  100 KM
+                </div>
+                <div className="text-[7.5px] font-bold tracking-[0.14em] text-stone-300 uppercase">
+                  TRANSILVANIA
+                </div>
+              </motion.div>
 
-            {/* Stat 2: 100 km with slide, scale & blur reveal */}
-            <motion.div
-              style={{
-                opacity: stat2Opacity,
-                y: stat2Y,
-                scale: stat2Scale,
-                filter: stat2Filter,
-              }}
-              className="group cursor-default gpu-smooth origin-left"
-            >
-              <div className="font-display font-bold text-xs sm:text-xl text-white tracking-tight leading-tight">
-                100 KM
-              </div>
-              <div className="text-[7px] sm:text-[9px] font-bold tracking-[0.14em] sm:tracking-[0.18em] text-stone-300 uppercase mt-0.5">
-                RAZĂ DEPLASARE TRANSILVANIA
-              </div>
-            </motion.div>
+              <motion.div
+                style={{
+                  opacity: stat3Opacity,
+                  y: stat3Y,
+                  scale: stat3Scale,
+                  filter: stat3Filter,
+                }}
+                className="px-1 space-y-0.5"
+              >
+                <div className="font-display font-bold text-[11px] text-white leading-tight">
+                  24 - 72 ORE
+                </div>
+                <div className="text-[7.5px] font-bold tracking-[0.14em] text-stone-300 uppercase">
+                  PREDARE RAPIDĂ
+                </div>
+              </motion.div>
+            </div>
 
-            {/* Divider 2 with smooth scaleX draw */}
-            <motion.div
-              style={{
-                scaleX: divider2Scale,
-                opacity: divider2Opacity,
-              }}
-              className="w-6 sm:w-10 h-[1px] bg-white/30 origin-left gpu-smooth"
-            />
+            {/* Desktop View: Architectural Vertical Stack */}
+            <div className="hidden sm:block space-y-3">
+              {/* Stat 1: 8K Ultra-HD with scale & optical focus pop */}
+              <motion.div
+                style={{
+                  scale: stat1Scale,
+                  opacity: stat1Opacity,
+                  filter: stat1Filter,
+                }}
+                className="group cursor-default gpu-smooth origin-left"
+              >
+                <div className="font-display font-bold text-base sm:text-xl text-white tracking-tight leading-tight">
+                  8K ULTRA-HD
+                </div>
+                <div className="text-[8px] sm:text-[9px] font-bold tracking-[0.16em] sm:tracking-[0.18em] text-stone-300 uppercase mt-0.5">
+                  CLARITATE INSTA X5
+                </div>
+              </motion.div>
 
-            {/* Stat 3: 24-72h with slide, scale & blur reveal */}
-            <motion.div
-              style={{
-                opacity: stat3Opacity,
-                y: stat3Y,
-                scale: stat3Scale,
-                filter: stat3Filter,
-              }}
-              className="group cursor-default gpu-smooth origin-left"
-            >
-              <div className="font-display font-bold text-xs sm:text-xl text-white tracking-tight leading-tight">
-                24 - 72 ORE
-              </div>
-              <div className="text-[7px] sm:text-[9px] font-bold tracking-[0.14em] sm:tracking-[0.18em] text-stone-300 uppercase mt-0.5">
-                PREDARE ÎN FUNCȚIE DE SUPRAFAȚĂ
-              </div>
-            </motion.div>
+              {/* Divider 1 with smooth scaleX draw */}
+              <motion.div
+                style={{
+                  scaleX: divider1Scale,
+                  opacity: divider1Opacity,
+                }}
+                className="w-10 h-[1px] bg-white/30 origin-left gpu-smooth"
+              />
+
+              {/* Stat 2: 100 km with slide, scale & blur reveal */}
+              <motion.div
+                style={{
+                  opacity: stat2Opacity,
+                  y: stat2Y,
+                  scale: stat2Scale,
+                  filter: stat2Filter,
+                }}
+                className="group cursor-default gpu-smooth origin-left"
+              >
+                <div className="font-display font-bold text-base sm:text-xl text-white tracking-tight leading-tight">
+                  100 KM
+                </div>
+                <div className="text-[8px] sm:text-[9px] font-bold tracking-[0.16em] sm:tracking-[0.18em] text-stone-300 uppercase mt-0.5">
+                  RAZĂ DEPLASARE TRANSILVANIA
+                </div>
+              </motion.div>
+
+              {/* Divider 2 with smooth scaleX draw */}
+              <motion.div
+                style={{
+                  scaleX: divider2Scale,
+                  opacity: divider2Opacity,
+                }}
+                className="w-10 h-[1px] bg-white/30 origin-left gpu-smooth"
+              />
+
+              {/* Stat 3: 24-72h with slide, scale & blur reveal */}
+              <motion.div
+                style={{
+                  opacity: stat3Opacity,
+                  y: stat3Y,
+                  scale: stat3Scale,
+                  filter: stat3Filter,
+                }}
+                className="group cursor-default gpu-smooth origin-left"
+              >
+                <div className="font-display font-bold text-base sm:text-xl text-white tracking-tight leading-tight">
+                  24 - 72 ORE
+                </div>
+                <div className="text-[8px] sm:text-[9px] font-bold tracking-[0.16em] sm:tracking-[0.18em] text-stone-300 uppercase mt-0.5">
+                  PREDARE ÎN FUNCȚIE DE SUPRAFAȚĂ
+                </div>
+              </motion.div>
+            </div>
           </motion.div>
         </div>
 
-        {/* Layer 5: Bottom Left Title & Right Narrative (Loads second and third) */}
-        <div className="relative z-30 px-4 sm:px-8 lg:px-16 pb-4 sm:pb-12 pt-1 sm:pt-2 flex flex-col md:flex-row items-start md:items-end justify-between gap-3 sm:gap-6 pointer-events-auto">
+        {/* Layer 5: Bottom Title, Tagline & Action Buttons */}
+        <div className="relative z-30 px-4 sm:px-8 lg:px-16 pb-4 sm:pb-12 pt-1 sm:pt-2 flex flex-col md:flex-row items-center sm:items-start md:items-end justify-between gap-3 sm:gap-6 pointer-events-auto">
           
-          <div className="space-y-2 sm:space-y-4 max-w-xl lg:max-w-2xl w-full sm:w-auto">
-            {/* Title with staggered line emergence & optical focus reveal */}
+          <div className="space-y-2.5 sm:space-y-4 max-w-xl lg:max-w-2xl w-full text-center sm:text-left">
+            {/* Title with staggered line emergence */}
             <div className="overflow-hidden">
-              <h2 className="gpu-smooth font-display font-extrabold text-base sm:text-3xl md:text-4xl lg:text-[2.5rem] text-white uppercase leading-[1.18] sm:leading-[1.08] tracking-[0.03em] sm:tracking-[0.05em] drop-shadow-[0_15px_30px_rgba(0,0,0,0.9)]">
+              <h2 className="gpu-smooth font-display font-extrabold text-lg sm:text-3xl md:text-4xl lg:text-[2.5rem] text-white uppercase leading-[1.15] sm:leading-[1.08] tracking-[0.03em] sm:tracking-[0.05em] drop-shadow-[0_15px_30px_rgba(0,0,0,0.9)]">
                 <motion.span
                   style={{
                     y: title1Y,
@@ -529,14 +578,28 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ heroImage, onBookCall 
                     scale: title2Scale,
                     filter: title2Filter,
                   }}
-                  className="block text-bronze-light gpu-smooth origin-left"
+                  className="block text-bronze-light gpu-smooth origin-center sm:origin-left"
                 >
                   ORICÂND. DE ORIUNDE.
                 </motion.span>
               </h2>
             </div>
 
-            {/* Responsive Action Buttons with scale pop & blur reveal */}
+            {/* Mobile Tagline: Symmetrically centered on mobile so no information is lost */}
+            <motion.div
+              style={{
+                opacity: subtitleOpacity,
+                y: subtitleY,
+                filter: subtitleFilter,
+              }}
+              className="gpu-smooth block md:hidden text-center mx-auto max-w-sm pt-0.5"
+            >
+              <p className="text-[9.5px] font-medium tracking-[0.16em] text-stone-300 uppercase leading-relaxed drop-shadow-[0_10px_20px_rgba(0,0,0,0.9)]">
+                {propertyHeroData.tagline}
+              </p>
+            </motion.div>
+
+            {/* Responsive Action Buttons */}
             <motion.div
               style={{
                 y: btnY,
@@ -544,7 +607,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ heroImage, onBookCall 
                 scale: btnScale,
                 filter: btnFilter,
               }}
-              className="gpu-smooth flex items-center gap-2 sm:gap-3 pt-0.5 sm:pt-1 flex-wrap sm:flex-nowrap origin-left"
+              className="gpu-smooth flex items-center justify-center sm:justify-start gap-2 sm:gap-3 pt-0.5 sm:pt-1 flex-wrap sm:flex-nowrap origin-center sm:origin-left"
             >
               <button
                 onClick={() => {
@@ -570,13 +633,14 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ heroImage, onBookCall 
             </motion.div>
           </div>
 
+          {/* Desktop Tagline: Right aligned on wide screens */}
           <motion.div
             style={{
               opacity: subtitleOpacity,
               y: subtitleY,
               filter: subtitleFilter,
             }}
-            className="gpu-smooth max-w-xs sm:max-w-md md:text-right hidden sm:block"
+            className="gpu-smooth max-w-xs sm:max-w-md md:text-right hidden md:block"
           >
             <p className="text-xs sm:text-[13px] font-medium tracking-wider text-stone-200 uppercase leading-relaxed drop-shadow-[0_10px_20px_rgba(0,0,0,0.9)]">
               {propertyHeroData.tagline}

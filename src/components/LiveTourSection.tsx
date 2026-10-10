@@ -102,7 +102,7 @@ export const LiveTourSection: React.FC<LiveTourSectionProps> = ({ onBookCall }) 
               <span className="text-xs sm:text-sm font-semibold text-white tracking-wide">
                 Tur Virtual 3D Activ
               </span>
-              <span className="hidden sm:inline text-xs text-stone-400">
+              <span className="text-[11px] sm:text-xs text-stone-400 truncate">
                 · Metareal Stage 8K
               </span>
             </div>

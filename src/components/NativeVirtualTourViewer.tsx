@@ -460,10 +460,10 @@ export const NativeVirtualTourViewer: React.FC<NativeVirtualTourViewerProps> = (
               </button>
             </div>
 
-            {/* Mobile Touch Hint */}
-            <div className="hidden sm:flex items-center gap-2 text-[10px] text-stone-400 font-medium bg-stone-950/60 backdrop-blur-sm px-3 py-1 rounded-full border border-white/10">
-              <Compass className="w-3 h-3 text-bronze" />
-              <span>Unghi de Vizualizare: {viewHeading}° • Trageți pentru explorare liberă la 360°</span>
+            {/* Touch Hint & Compass Angle */}
+            <div className="flex items-center gap-1.5 sm:gap-2 text-[9px] sm:text-[10px] text-stone-300 font-medium bg-stone-950/70 backdrop-blur-sm px-2.5 sm:px-3 py-1 rounded-full border border-white/10">
+              <Compass className="w-3 h-3 text-bronze flex-shrink-0" />
+              <span>Unghi: {viewHeading}° • Trageți pentru rotire 360°</span>
             </div>
           </div>
 
@@ -471,9 +471,9 @@ export const NativeVirtualTourViewer: React.FC<NativeVirtualTourViewerProps> = (
 
         {/* Action bar below tour */}
         <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row items-center justify-between gap-4 p-5 sm:p-6 rounded-2xl bg-stone-900/70 border border-stone-800 shadow-lg">
-          <div className="flex items-center gap-3 text-center sm:text-left">
-            <div className="p-3 rounded-xl bg-bronze/10 text-bronze hidden sm:block flex-shrink-0">
-              <Sparkles className="w-5 h-5" />
+          <div className="flex items-center gap-3 text-left w-full sm:w-auto">
+            <div className="p-2.5 sm:p-3 rounded-xl bg-bronze/10 text-bronze flex-shrink-0">
+              <Sparkles className="w-4 h-4 sm:w-5 sm:h-5" />
             </div>
             <div>
               <h4 className="text-sm font-bold text-white">Vrei un tur virtual 3D la acest standard pentru imobilul tău?</h4>
