@@ -58,16 +58,23 @@ export const Navbar: React.FC<NavbarProps> = ({ onBookCall }) => {
         <a
           href="#home"
           onClick={handleScrollToTop}
-          className="group flex items-baseline gap-1.5 sm:gap-2 cursor-pointer transition-transform hover:scale-102"
+          className="group flex items-center gap-2 sm:gap-2.5 cursor-pointer transition-transform hover:scale-102"
           title="Mergi la începutul paginii"
         >
-          <span className="font-display text-base sm:text-lg font-bold tracking-[0.14em] sm:tracking-[0.18em] text-stone-900 uppercase inline-flex items-baseline">
-            TRANSYLVIEW
-            <span className="-ml-0.5 sm:-ml-1 font-sans font-extrabold text-[1.22em] sm:text-[1.28em] tracking-tight text-bronze-dark group-hover:text-stone-950 transition-colors">
-              3D
+          <img
+            src="/images/transylview_icon.png"
+            alt="TransylView 3D Icon"
+            className="w-6 h-6 sm:w-7 sm:h-7 rounded-lg shadow-xs border border-stone-800/10 object-contain flex-shrink-0"
+          />
+          <div className="flex items-baseline gap-1.5 sm:gap-2">
+            <span className="font-display text-base sm:text-lg font-bold tracking-[0.14em] sm:tracking-[0.18em] text-stone-900 uppercase inline-flex items-baseline">
+              TRANSYLVIEW
+              <span className="-ml-0.5 sm:-ml-1 font-sans font-extrabold text-[1.22em] sm:text-[1.28em] tracking-tight text-bronze-dark group-hover:text-stone-950 transition-colors">
+                3D
+              </span>
             </span>
-          </span>
-          <span className="w-1.5 h-1.5 rounded-full bg-bronze self-center group-hover:scale-125 transition-transform" />
+            <span className="w-1.5 h-1.5 rounded-full bg-bronze self-center group-hover:scale-125 transition-transform" />
+          </div>
         </a>
 
         {/* Center Desktop Navigation */}

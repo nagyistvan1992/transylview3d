@@ -84,17 +84,24 @@ export const ImageManagerModal: React.FC<ImageManagerModalProps> = ({
         className="relative w-full max-w-4xl bg-stone-900 text-stone-100 rounded-3xl p-6 sm:p-8 shadow-luxury-floating border border-stone-700/60 overflow-hidden my-8 max-h-[90vh] flex flex-col"
       >
         <div className="flex items-start justify-between border-b border-stone-800 pb-5">
-          <div>
-            <div className="flex items-center gap-2 text-bronze text-xs font-bold tracking-[0.2em] uppercase">
-              <Camera className="w-3.5 h-3.5" />
-              <span>PERSONALIZARE IMAGINI PORTOFOLIU</span>
+          <div className="flex items-start gap-3.5">
+            <img
+              src="/images/transylview_icon.png"
+              alt="TransylView 3D"
+              className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl border border-stone-700/80 object-contain flex-shrink-0 mt-0.5 shadow-md"
+            />
+            <div>
+              <div className="flex items-center gap-2 text-bronze text-xs font-bold tracking-[0.2em] uppercase">
+                <Camera className="w-3.5 h-3.5" />
+                <span>PERSONALIZARE IMAGINI PORTOFOLIU</span>
+              </div>
+              <h3 className="font-serif text-2xl sm:text-3xl text-white font-normal mt-1">
+                Schimbă Imaginile Site-ului
+              </h3>
+              <p className="text-stone-400 text-xs sm:text-sm mt-1">
+                Înlocuiți cu ușurință randările implicite cu propriile fotografii de proiect sau link-uri directe.
+              </p>
             </div>
-            <h3 className="font-serif text-2xl sm:text-3xl text-white font-normal mt-1">
-              Schimbă Imaginile Site-ului
-            </h3>
-            <p className="text-stone-400 text-xs sm:text-sm mt-1">
-              Înlocuiți cu ușurință randările implicite cu propriile fotografii de proiect sau link-uri directe.
-            </p>
           </div>
           <button
             onClick={onClose}

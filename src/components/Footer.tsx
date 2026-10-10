@@ -37,11 +37,11 @@ export const Footer: React.FC<FooterProps> = ({ onBookCall, onSecretOpenImageMan
             >
               <div className="space-y-2">
                 <img
-                  src="/images/logo_clean_gold.png"
+                  src="/images/transylview_logo_clean.png"
                   alt="TransylView 3D Logo Satu Mare"
                   loading="lazy"
                   decoding="async"
-                  className="h-14 sm:h-16 w-auto max-w-[200px] sm:max-w-[240px] object-contain group-hover:opacity-90 transition-opacity"
+                  className="h-16 sm:h-20 w-auto max-w-[220px] sm:max-w-[260px] object-contain group-hover:opacity-90 transition-opacity"
                 />
                 
                 <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-stone-400 block">

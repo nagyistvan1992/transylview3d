@@ -333,8 +333,8 @@ export const TourManagerModal: React.FC<TourManagerModalProps> = ({
             <X className="w-5 h-5 stroke-[2.5]" />
           </button>
 
-          <div className="w-13 h-13 rounded-2xl bg-stone-800/90 text-bronze border border-stone-700/80 mx-auto flex items-center justify-center shadow-inner">
-            <Lock className="w-6 h-6 stroke-[2]" />
+          <div className="w-14 h-14 rounded-2xl bg-stone-900 border border-stone-700/80 mx-auto flex items-center justify-center shadow-lg overflow-hidden p-1.5">
+            <img src="/images/transylview_icon.png" alt="TransylView 3D" className="w-full h-full object-contain rounded-xl" />
           </div>
 
           <div className="space-y-1">
@@ -389,7 +389,11 @@ export const TourManagerModal: React.FC<TourManagerModalProps> = ({
           {/* Modal Top Header */}
           <div className="px-3.5 sm:px-8 py-3 sm:py-5 bg-stone-950 border-b border-stone-800 flex items-center justify-between gap-2">
             <div className="flex items-center gap-2.5 min-w-0">
-              <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 flex-shrink-0" />
+              <img
+                src="/images/transylview_icon.png"
+                alt="TransylView 3D"
+                className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg border border-stone-700/80 object-contain flex-shrink-0"
+              />
               <div className="min-w-0">
                 <div className="text-[9px] sm:text-[10px] font-bold tracking-[0.2em] text-bronze uppercase flex items-center gap-1 truncate">
                   <ShieldCheck className="w-3 h-3 text-emerald-400 flex-shrink-0" />

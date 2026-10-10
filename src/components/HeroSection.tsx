@@ -282,16 +282,23 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ heroImage, onBookCall 
           <a
             href="#home"
             onClick={handleScrollToTop}
-            className="group flex items-baseline gap-1.5 sm:gap-2 transition-transform hover:scale-102 cursor-pointer"
+            className="group flex items-center gap-2.5 sm:gap-3 transition-transform hover:scale-102 cursor-pointer"
             title="Mergi la începutul paginii"
           >
-            <span className="font-display text-base sm:text-2xl font-bold tracking-[0.16em] sm:tracking-[0.22em] text-white uppercase drop-shadow-md inline-flex items-baseline">
-              TRANSYLVIEW
-              <span className="-ml-0.5 sm:-ml-1 font-sans font-extrabold text-[1.22em] sm:text-[1.28em] tracking-tight text-bronze-light group-hover:text-white transition-colors">
-                3D
+            <img
+              src="/images/transylview_icon.png"
+              alt="TransylView 3D Icon"
+              className="w-7 h-7 sm:w-9 sm:h-9 rounded-xl shadow-lg border border-white/20 object-contain group-hover:border-bronze transition-colors flex-shrink-0"
+            />
+            <div className="flex items-baseline gap-1.5 sm:gap-2">
+              <span className="font-display text-base sm:text-2xl font-bold tracking-[0.16em] sm:tracking-[0.22em] text-white uppercase drop-shadow-md inline-flex items-baseline">
+                TRANSYLVIEW
+                <span className="-ml-0.5 sm:-ml-1 font-sans font-extrabold text-[1.22em] sm:text-[1.28em] tracking-tight text-bronze-light group-hover:text-white transition-colors">
+                  3D
+                </span>
               </span>
-            </span>
-            <span className="w-1.5 h-1.5 rounded-full bg-bronze self-center group-hover:scale-125 transition-transform" />
+              <span className="w-1.5 h-1.5 rounded-full bg-bronze self-center group-hover:scale-125 transition-transform" />
+            </div>
           </a>
 
           <nav className="hidden md:flex items-center space-x-6 lg:space-x-8 text-xs font-bold tracking-[0.22em] text-stone-200 uppercase drop-shadow">
