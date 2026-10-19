@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Check, ArrowRight, Info, Building2, Gift, BadgePercent, Layers, PhoneCall, Cloud } from 'lucide-react';
+import { Check, ArrowRight, PhoneCall } from 'lucide-react';
 import { pricingPackages } from '../data/propertyData';
 
 interface PricingSectionProps {
@@ -39,11 +39,10 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ onSelectPackage 
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.15 }}
                 transition={{ duration: 0.45, delay: idx * 0.08, ease: [0.22, 1, 0.36, 1] }}
-                style={{ transform: 'translateZ(0)', backfaceVisibility: 'hidden' }}
                 className={`gpu-smooth relative rounded-xl bg-white p-5 sm:p-7 md:p-8 transition-colors flex flex-col justify-between ${
                   isPopular
                     ? 'border-2 border-stone-900 shadow-md ring-1 ring-stone-900/5'
-                    : 'border border-stone-200/80 shadow-sm'
+                    : 'border border-stone-200/80 shadow-xs'
                 }`}
               >
                 {/* Popular Overline Tag — POSITIONED OUTSIDE THE CARD BORDER FOR PERFECT SYMMETRY */}
@@ -81,18 +80,15 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ onSelectPackage 
                     </span>
                   </div>
 
-                  {/* Standardized Cloud Hosting Row (Same layout across all 3 cards) */}
-                  <div className="mb-5 sm:mb-6 p-2.5 rounded-lg bg-stone-50 border border-stone-200/70 flex items-center justify-between text-xs gap-2">
-                    <div className="flex items-center gap-2 min-w-0">
-                      <Cloud className="w-4 h-4 text-stone-700 flex-shrink-0" strokeWidth={1.5} />
-                      <div className="min-w-0">
-                        <span className="font-semibold text-stone-900 block leading-tight truncate">
-                          {pkg.hostingDuration}
-                        </span>
-                        <span className="text-[10px] text-stone-500 block leading-tight truncate">
-                          Găzduire Cloud Metareal
-                        </span>
-                      </div>
+                  {/* Standardized Cloud Hosting Row (Clean typographic layout) */}
+                  <div className="mb-5 sm:mb-6 p-3 rounded-lg bg-stone-50 border border-stone-200/70 flex items-center justify-between text-xs gap-2">
+                    <div className="min-w-0">
+                      <span className="font-semibold text-stone-900 block leading-tight truncate">
+                        {pkg.hostingDuration}
+                      </span>
+                      <span className="text-[11px] text-stone-500 block leading-tight truncate mt-0.5">
+                        Găzduire Cloud Metareal
+                      </span>
                     </div>
                     <span className="text-[11px] font-medium text-stone-700 bg-white px-2 py-0.5 rounded border border-stone-200 tabular-nums flex-shrink-0 whitespace-nowrap">
                       {pkg.hostingAfterPrice}
@@ -130,16 +126,13 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ onSelectPackage 
         </div>
 
         {/* Technical Note for 2D Floor Plans & Cloud Hosting Policy */}
-        <div className="mt-8 sm:mt-10 p-5 sm:p-6 rounded-xl bg-stone-50 border border-stone-200/80 max-w-3xl mx-auto flex items-start gap-3.5 text-stone-800">
-          <Info className="w-4 h-4 text-stone-600 flex-shrink-0 mt-0.5" strokeWidth={1.5} />
-          <div className="space-y-1 text-xs sm:text-sm">
-            <span className="text-xs font-medium uppercase tracking-wider text-stone-700 block">
-              Găzduire Cloud Metareal & Transparență Totală
-            </span>
-            <p className="font-sans text-stone-600 leading-relaxed font-normal">
-              Fiecare tur 3D include găzduire de mare viteză fără costuri lunare pe perioada optimă de tranzacționare a proprietății: <strong className="font-semibold text-stone-900">2 luni gratuite</strong> (Esențial), <strong className="font-semibold text-stone-900">3 luni gratuite</strong> (Premium) și <strong className="font-semibold text-stone-900">6 luni gratuite</strong> (Exclusiv). Predarea se realizează în <strong className="font-semibold text-stone-900">24–72 de ore</strong> în funcție de suprafața imobilului, <strong className="font-semibold text-stone-900">Pachetul Exclusiv beneficiind de prioritate garantată</strong> la procesare și livrare. Planul 2D cotat este inclus direct în pachetele Premium și Exclusiv. Prelungirea opțională ulterioară este de doar 29 RON/lună.
-            </p>
-          </div>
+        <div className="mt-8 sm:mt-10 p-5 sm:p-6 rounded-xl bg-stone-50 border border-stone-200/80 max-w-3xl mx-auto text-stone-800 space-y-1.5 text-xs sm:text-sm">
+          <span className="text-xs font-semibold uppercase tracking-wider text-stone-700 block">
+            Găzduire Cloud Metareal & Transparență Totală
+          </span>
+          <p className="font-sans text-stone-600 leading-relaxed font-normal">
+            Fiecare tur 3D include găzduire de mare viteză fără costuri lunare pe perioada optimă de tranzacționare a proprietății: <strong className="font-semibold text-stone-900">2 luni gratuite</strong> (Esențial), <strong className="font-semibold text-stone-900">3 luni gratuite</strong> (Premium) și <strong className="font-semibold text-stone-900">6 luni gratuite</strong> (Exclusiv). Predarea se realizează în <strong className="font-semibold text-stone-900">24–72 de ore</strong> în funcție de suprafața imobilului, <strong className="font-semibold text-stone-900">Pachetul Exclusiv beneficiind de prioritate garantată</strong> la procesare și livrare. Planul 2D cotat este inclus direct în pachetele Premium și Exclusiv. Prelungirea opțională ulterioară este de doar 29 RON/lună.
+          </p>
         </div>
 
         {/* Dedicated B2B Section for Real Estate Agents & 10+ Property Portfolios */}
@@ -148,16 +141,13 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ onSelectPackage 
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.15 }}
           transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-          className="gpu-smooth mt-12 sm:mt-20 rounded-xl overflow-hidden bg-white border border-stone-200/80 shadow-sm p-6 sm:p-10 lg:p-12"
+          className="gpu-smooth mt-12 sm:mt-20 rounded-xl overflow-hidden bg-white border border-stone-200/80 shadow-xs p-6 sm:p-10 lg:p-12"
         >
           {/* Top row with badges */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
-            <div className="flex items-center gap-2">
-              <Building2 className="w-4 h-4 text-stone-600 flex-shrink-0" strokeWidth={1.5} />
-              <span className="text-xs font-semibold uppercase tracking-[0.2em] text-stone-500">
-                Parteneriat B2B · Agenții & Dezvoltatori
-              </span>
-            </div>
+            <span className="text-xs font-semibold uppercase tracking-[0.2em] text-stone-500">
+              Parteneriat B2B · Agenții & Dezvoltatori
+            </span>
             <span className="px-2.5 py-1 rounded-sm bg-stone-100 border border-stone-300 text-stone-900 text-xs font-semibold tracking-wider uppercase w-fit">
               Primul tur 100% gratuit
             </span>
@@ -173,59 +163,65 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ onSelectPackage 
             </p>
           </div>
 
-          {/* 3 Pillar Cards */}
+          {/* 3 Pillar Cards — Clean Editorial Numbered Style */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 mb-8">
             {/* Pillar 1 */}
-            <div className="p-5 rounded-lg bg-stone-50 border border-stone-200 flex flex-col justify-between">
-              <div className="space-y-2">
-                <div className="w-8 h-8 rounded-md bg-stone-200 text-stone-900 flex items-center justify-center">
-                  <Gift className="w-4 h-4 text-stone-800" strokeWidth={1.5} />
+            <div className="p-5 sm:p-6 rounded-xl bg-stone-50 border border-stone-200/80 flex flex-col justify-between">
+              <div className="space-y-2.5">
+                <div className="flex items-baseline justify-between pb-2 border-b border-stone-200/80">
+                  <span className="font-sans text-xs font-bold tracking-widest text-bronze-dark tabular-nums">
+                    01
+                  </span>
+                  <span className="text-[11px] font-medium text-stone-500">
+                    Fără cost · Testezi calitatea
+                  </span>
                 </div>
-                <h4 className="font-sans text-sm sm:text-base font-semibold text-stone-900 tracking-tight">
-                  1. Primul Tur 3D Gratuit
+                <h4 className="font-sans text-sm sm:text-base font-semibold text-stone-900 tracking-tight pt-0.5">
+                  Primul Tur 3D Gratuit
                 </h4>
                 <p className="font-sans text-xs sm:text-sm text-stone-600 leading-relaxed font-normal">
                   O scanare pilot completă pentru orice proprietate din portofoliu. Primești turul 3D interactiv 8K și fotografiile HDR gata de promovare.
                 </p>
               </div>
-              <div className="pt-3 mt-3 border-t border-stone-200 flex items-center gap-1.5 text-xs text-stone-700 font-medium">
-                <Check className="w-3.5 h-3.5 text-stone-700" strokeWidth={1.5} /> Fără cost · Testezi calitatea
-              </div>
             </div>
 
             {/* Pillar 2 */}
-            <div className="p-5 rounded-lg bg-stone-50 border border-stone-200 flex flex-col justify-between">
-              <div className="space-y-2">
-                <div className="w-8 h-8 rounded-md bg-stone-200 text-stone-900 flex items-center justify-center">
-                  <BadgePercent className="w-4 h-4 text-stone-800" strokeWidth={1.5} />
+            <div className="p-5 sm:p-6 rounded-xl bg-stone-50 border border-stone-200/80 flex flex-col justify-between">
+              <div className="space-y-2.5">
+                <div className="flex items-baseline justify-between pb-2 border-b border-stone-200/80">
+                  <span className="font-sans text-xs font-bold tracking-widest text-bronze-dark tabular-nums">
+                    02
+                  </span>
+                  <span className="text-[11px] font-medium text-stone-500">
+                    Cost optimizat per unitate
+                  </span>
                 </div>
-                <h4 className="font-sans text-sm sm:text-base font-semibold text-stone-900 tracking-tight">
-                  2. Reducere 15–25% de Volum
+                <h4 className="font-sans text-sm sm:text-base font-semibold text-stone-900 tracking-tight pt-0.5">
+                  Reducere 15–25% de Volum
                 </h4>
                 <p className="font-sans text-xs sm:text-sm text-stone-600 leading-relaxed font-normal">
                   Pentru colaborări recurente sau portofolii mari, oferim tarife negociate de volum cu economii între 15% și 25% per proprietate.
                 </p>
               </div>
-              <div className="pt-3 mt-3 border-t border-stone-200 flex items-center gap-1.5 text-xs text-stone-700 font-medium">
-                <Check className="w-3.5 h-3.5 text-stone-700" strokeWidth={1.5} /> Cost optimizat per unitate
-              </div>
             </div>
 
             {/* Pillar 3 */}
-            <div className="p-5 rounded-lg bg-stone-50 border border-stone-200 flex flex-col justify-between">
-              <div className="space-y-2">
-                <div className="w-8 h-8 rounded-md bg-stone-200 text-stone-900 flex items-center justify-center">
-                  <Layers className="w-4 h-4 text-stone-800" strokeWidth={1.5} />
+            <div className="p-5 sm:p-6 rounded-xl bg-stone-50 border border-stone-200/80 flex flex-col justify-between">
+              <div className="space-y-2.5">
+                <div className="flex items-baseline justify-between pb-2 border-b border-stone-200/80">
+                  <span className="font-sans text-xs font-bold tracking-widest text-bronze-dark tabular-nums">
+                    03
+                  </span>
+                  <span className="text-[11px] font-medium text-stone-500">
+                    Livrare 24–48h · White-Label
+                  </span>
                 </div>
-                <h4 className="font-sans text-sm sm:text-base font-semibold text-stone-900 tracking-tight">
-                  3. White-Label 100% & Prioritate
+                <h4 className="font-sans text-sm sm:text-base font-semibold text-stone-900 tracking-tight pt-0.5">
+                  White-Label 100% & Prioritate
                 </h4>
                 <p className="font-sans text-xs sm:text-sm text-stone-600 leading-relaxed font-normal">
                   Player personalizat fără branding terț, cu datele de contact și logo-ul agenției tale. Livrare prioritară în 24–48 de ore.
                 </p>
-              </div>
-              <div className="pt-3 mt-3 border-t border-stone-200 flex items-center gap-1.5 text-xs text-stone-700 font-medium">
-                <Check className="w-3.5 h-3.5 text-stone-700" strokeWidth={1.5} /> Livrare 24–48h · White-Label inclus
               </div>
             </div>
           </div>
@@ -264,3 +260,4 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ onSelectPackage 
     </section>
   );
 };
+

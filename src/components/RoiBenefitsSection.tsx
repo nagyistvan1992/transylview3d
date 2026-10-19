@@ -1,43 +1,47 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { CheckCircle2, Clock, TrendingUp, Maximize2, ArrowRight } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 
 export const RoiBenefitsSection: React.FC = () => {
   const stats = [
     {
+      index: '01',
       metric: '-45%',
       title: 'Vizionări Neconcludente',
       description: 'Eficiență maximă: eliminarea vizionărilor necalificate. La fața locului ajung doar cumpărători care cunosc deja compartimentarea și dimensiunile reale.',
-      icon: CheckCircle2,
     },
     {
+      index: '02',
       metric: '24-72h',
       title: 'Timp de Livrare',
       description: 'Predare în 24–72h în funcție de suprafața imobilului. Pachetul Exclusiv beneficiază de prioritate maximă la procesare și predare accelerată.',
-      icon: Clock,
     },
     {
+      index: '03',
       metric: '+300%',
       title: 'Timp Petrecut pe Anunț',
       description: 'Cumpărătorii și chiriașii petrec în medie de trei ori mai mult timp explorând un anunț care include un tur volumetric 3D.',
-      icon: TrendingUp,
     },
   ];
 
   const benefits = [
     {
+      index: '01',
       title: 'Filtrare tehnică zero: Încărcare instantanee pe mobil',
       description: 'Turul rulează direct în browserul oricărui smartphone, optimizat pentru cumpărătorii care accesează linkul din Storia, OLX sau Facebook fără aplicații dedicate.',
     },
     {
+      index: '02',
       title: 'Avantaj decisiv pentru contracte de reprezentare exclusivă',
       description: 'Agențiile partenere obțin mai ușor mandate exclusive demonstrând vânzătorilor o prezentare premium cu scanare volumetrică, exterior și planuri cotate.',
     },
     {
+      index: '03',
       title: 'Acces direct pentru cumpărătorii din diasporă',
       description: 'Persoanele din alte orașe sau din străinătate pot evalua proprietatea la scară reală și măsura pereții cu rigla digitală fără deplasare.',
     },
     {
+      index: '04',
       title: 'Investiție amortizată din prima tranzacție',
       description: 'Un pachet de 499 – 899 RON reprezintă sub 0,2% din valoarea unei tranzacții obișnuite, accelerând considerabil semnarea contractului.',
     },
@@ -64,42 +68,42 @@ export const RoiBenefitsSection: React.FC = () => {
 
         {/* Headline Metrics */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
-          {stats.map((item, idx) => {
-            const Icon = item.icon;
-            return (
-              <motion.div
-                key={item.title}
-                initial={{ opacity: 0, y: 12 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.15 }}
-                transition={{ duration: 0.45, delay: idx * 0.05, ease: [0.22, 1, 0.36, 1] }}
-                style={{ transform: 'translateZ(0)', backfaceVisibility: 'hidden' }}
-                className="gpu-smooth p-6 sm:p-8 bg-white border border-stone-200/80 rounded-xl shadow-sm flex flex-col"
-              >
-                <div className="flex items-center justify-between mb-5">
-                  <span className="font-sans text-3xl sm:text-4xl font-bold tracking-tight text-stone-900 tabular-nums">
-                    {item.metric}
-                  </span>
-                  <Icon className="w-5 h-5 text-bronze" strokeWidth={1.5} aria-hidden="true" />
-                </div>
+          {stats.map((item, idx) => (
+            <motion.div
+              key={item.title}
+              initial={{ opacity: 0, y: 12 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.15 }}
+              transition={{ duration: 0.45, delay: idx * 0.05, ease: [0.22, 1, 0.36, 1] }}
+              className="gpu-smooth p-6 sm:p-8 bg-white border border-stone-200/80 rounded-xl shadow-xs flex flex-col"
+            >
+              <div className="flex items-baseline justify-between mb-4 pb-3 border-b border-stone-100">
+                <span className="font-sans text-3xl sm:text-4xl font-bold tracking-tight text-stone-900 tabular-nums">
+                  {item.metric}
+                </span>
+                <span className="font-sans text-xs font-bold tracking-widest text-bronze-dark tabular-nums">
+                  {item.index}
+                </span>
+              </div>
 
-                <h3 className="font-sans text-lg sm:text-xl font-semibold text-stone-900 tracking-tight leading-snug mb-2">
-                  {item.title}
-                </h3>
+              <h3 className="font-sans text-lg sm:text-xl font-semibold text-stone-900 tracking-tight leading-snug mb-2">
+                {item.title}
+              </h3>
 
-                <p className="font-sans text-sm sm:text-base text-stone-700 leading-relaxed font-normal">
-                  {item.description}
-                </p>
-              </motion.div>
-            );
-          })}
+              <p className="font-sans text-sm sm:text-base text-stone-700 leading-relaxed font-normal">
+                {item.description}
+              </p>
+            </motion.div>
+          ))}
         </div>
 
-        {/* Secondary Benefits — definition-style list */}
+        {/* Secondary Benefits — clean numbered editorial list */}
         <div className="mt-10 sm:mt-14 grid grid-cols-1 md:grid-cols-2 gap-x-10 lg:gap-x-16 border-t border-stone-200">
           {benefits.map((item) => (
-            <div key={item.title} className="flex items-start gap-3 py-5 border-b border-stone-200">
-              <Maximize2 className="w-4 h-4 text-stone-500 flex-shrink-0 mt-1" strokeWidth={1.5} aria-hidden="true" />
+            <div key={item.title} className="flex items-baseline gap-4 py-5 border-b border-stone-200">
+              <span className="font-sans text-xs font-bold tracking-widest text-bronze-dark tabular-nums flex-shrink-0">
+                {item.index}
+              </span>
               <div className="space-y-1">
                 <h4 className="font-sans text-base font-semibold text-stone-900 tracking-tight">
                   {item.title}
@@ -135,3 +139,4 @@ export const RoiBenefitsSection: React.FC = () => {
     </section>
   );
 };
+

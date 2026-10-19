@@ -1,14 +1,13 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { MapPin } from 'lucide-react';
 
 export const LocationSection: React.FC = () => {
   const cities = [
-    { name: 'Satu Mare (Sediu Central)', distance: '0 km', detail: 'Deplasare inclusă în municipiu și zona metropolitană' },
-    { name: 'Carei & Tășnad', distance: '35 km', detail: 'Deplasare rapidă în aceeași zi' },
-    { name: 'Baia Mare & Maramureș', distance: '60 km', detail: 'Acoperire completă pentru imobile, pensiuni și hoteluri' },
-    { name: 'Zalău & Județul Sălaj', distance: '90 km', detail: 'Scanări 3D rezidențiale și spații comerciale' },
-    { name: 'Oradea & Județul Bihor', distance: '110 km', detail: 'Disponibil pentru proiecte medii, mari și ansambluri' },
+    { index: '01', name: 'Satu Mare (Sediu Central)', distance: '0 km', detail: 'Deplasare inclusă în municipiu și zona metropolitană' },
+    { index: '02', name: 'Carei & Tășnad', distance: '35 km', detail: 'Deplasare rapidă în aceeași zi' },
+    { index: '03', name: 'Baia Mare & Maramureș', distance: '60 km', detail: 'Acoperire completă pentru imobile, pensiuni și hoteluri' },
+    { index: '04', name: 'Zalău & Județul Sălaj', distance: '90 km', detail: 'Scanări 3D rezidențiale și spații comerciale' },
+    { index: '05', name: 'Oradea & Județul Bihor', distance: '110 km', detail: 'Disponibil pentru proiecte medii, mari și ansambluri' },
   ];
 
   return (
@@ -37,7 +36,7 @@ export const LocationSection: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           
           {/* Left Column: Terrace View Image */}
-          <div className="lg:col-span-7 relative aspect-[16/10] rounded-xl overflow-hidden shadow-sm border border-stone-200/80 group">
+          <div className="lg:col-span-7 relative aspect-[16/10] rounded-xl overflow-hidden shadow-xs border border-stone-200/80 group">
             <img
               src="/images/retreat_terrace.jpg"
               alt="TransylView 3D Acoperire Satu Mare și Transilvania"
@@ -62,7 +61,7 @@ export const LocationSection: React.FC = () => {
             </div>
           </div>
 
-          {/* Right Column: Clean Architectural City Cards with Lucide MapPin */}
+          {/* Right Column: Clean Architectural City Cards */}
           <div className="lg:col-span-5 space-y-2.5 sm:space-y-3">
             {cities.map((item, idx) => (
               <motion.div
@@ -71,13 +70,14 @@ export const LocationSection: React.FC = () => {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true, amount: 0.15 }}
                 transition={{ duration: 0.45, delay: idx * 0.05, ease: [0.22, 1, 0.36, 1] }}
-                style={{ transform: 'translateZ(0)', backfaceVisibility: 'hidden' }}
-                className="gpu-smooth p-4 rounded-xl bg-white border border-stone-200/80 hover:border-stone-400 transition-colors flex items-center justify-between shadow-sm"
+                className="gpu-smooth p-4 rounded-xl bg-white border border-stone-200/80 hover:border-stone-400 transition-colors flex items-center justify-between shadow-xs"
               >
-                <div className="flex items-center gap-3">
-                  <MapPin className="w-4 h-4 text-stone-500 flex-shrink-0" strokeWidth={1.5} />
-                  <div>
-                    <h3 className="font-sans text-sm sm:text-base font-semibold text-stone-900 tracking-tight">
+                <div className="flex items-baseline gap-3.5 min-w-0">
+                  <span className="font-sans text-xs font-bold tracking-widest text-bronze-dark tabular-nums flex-shrink-0">
+                    {item.index}
+                  </span>
+                  <div className="min-w-0">
+                    <h3 className="font-sans text-sm sm:text-base font-semibold text-stone-900 tracking-tight truncate">
                       {item.name}
                     </h3>
                     <p className="font-sans text-xs text-stone-500 leading-normal">{item.detail}</p>
@@ -97,3 +97,4 @@ export const LocationSection: React.FC = () => {
     </section>
   );
 };
+

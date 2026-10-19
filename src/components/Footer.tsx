@@ -1,5 +1,5 @@
 import React from 'react';
-import { Mail, Phone, MapPin, Shield, FileText, Cookie, Scale, ShieldCheck, ArrowRight, ExternalLink } from 'lucide-react';
+import { Mail, Phone, MapPin, ArrowRight, ExternalLink } from 'lucide-react';
 import { LegalDocType } from './LegalModal';
 import { contactData } from '../data/propertyData';
 
@@ -219,12 +219,9 @@ export const Footer: React.FC<FooterProps> = ({ onBookCall, onSecretOpenImageMan
 
         {/* Romanian Fiscal & Legal Transparency Reassurance Strip */}
         <div className="my-8 p-4 sm:p-5 rounded-lg bg-stone-900/50 border border-stone-800/80 flex flex-col md:flex-row items-start md:items-center justify-between gap-3 text-xs text-stone-400 font-sans">
-          <div className="flex items-start gap-3">
-            <ShieldCheck className="w-4 h-4 text-stone-300 flex-shrink-0 mt-0.5" strokeWidth={1.5} />
-            <p className="leading-relaxed">
-              <strong className="text-stone-200 font-semibold">Transparență și Conformitate Legală în România:</strong> Prețurile afișate sunt în RON. Livrare în 24–72h în funcție de suprafață (cu prioritate la procesare și predare pentru Pachetul Exclusiv). Serviciile de scanare 3D, tururi virtuale și planuri 2D sunt furnizate cu contract și factură fiscală conform Codului Fiscal (Legea 227/2015). Datele personale sunt prelucrate în deplină conformitate cu GDPR (Regulamentul UE 2016/679).
-            </p>
-          </div>
+          <p className="leading-relaxed">
+            <strong className="text-stone-200 font-semibold">Transparență și Conformitate Legală în România:</strong> Prețurile afișate sunt în RON. Livrare în 24–72h în funcție de suprafață (cu prioritate la procesare și predare pentru Pachetul Exclusiv). Serviciile de scanare 3D, tururi virtuale și planuri 2D sunt furnizate cu contract și factură fiscală conform Codului Fiscal (Legea 227/2015). Datele personale sunt prelucrate în deplină conformitate cu GDPR (Regulamentul UE 2016/679).
+          </p>
           <div className="flex items-center gap-2 flex-shrink-0 text-[11px] text-stone-400 font-medium">
             <span className="px-2 py-0.5 rounded bg-stone-800 border border-stone-700/80">Livrare 24–72h</span>
             <span className="px-2 py-0.5 rounded bg-stone-800 border border-stone-700/80">Prioritate Exclusiv</span>
@@ -238,36 +235,32 @@ export const Footer: React.FC<FooterProps> = ({ onBookCall, onSecretOpenImageMan
             <span>© {new Date().getFullYear()} TransylView 3D. Toate drepturile rezervate. Conform Legislației din România & GDPR.</span>
           </div>
 
-          <div className="flex items-center gap-3 sm:gap-6 flex-wrap justify-center text-stone-400">
+          <div className="flex items-center gap-4 sm:gap-6 flex-wrap justify-center text-stone-400">
             <button
               onClick={() => onOpenLegal?.('terms')}
-              className="hover:text-stone-200 transition-colors flex items-center gap-1.5 cursor-pointer py-1"
+              className="hover:text-stone-200 transition-colors cursor-pointer py-1"
             >
-              <FileText className="w-3.5 h-3.5 text-stone-400" strokeWidth={1.5} />
               <span>Termeni și Condiții</span>
             </button>
 
             <button
               onClick={() => onOpenLegal?.('privacy')}
-              className="hover:text-stone-200 transition-colors flex items-center gap-1.5 cursor-pointer py-1"
+              className="hover:text-stone-200 transition-colors cursor-pointer py-1"
             >
-              <Shield className="w-3.5 h-3.5 text-stone-400" strokeWidth={1.5} />
               <span>Politica GDPR & Confidențialitate</span>
             </button>
 
             <button
               onClick={() => onOpenLegal?.('cookies')}
-              className="hover:text-stone-200 transition-colors flex items-center gap-1.5 cursor-pointer py-1"
+              className="hover:text-stone-200 transition-colors cursor-pointer py-1"
             >
-              <Cookie className="w-3.5 h-3.5 text-stone-400" strokeWidth={1.5} />
               <span>Politica de Cookies</span>
             </button>
 
             <button
               onClick={() => onOpenLegal?.('anpc')}
-              className="hover:text-stone-200 transition-colors flex items-center gap-1.5 cursor-pointer py-1"
+              className="hover:text-stone-200 transition-colors cursor-pointer py-1"
             >
-              <Scale className="w-3.5 h-3.5 text-stone-400" strokeWidth={1.5} />
               <span>Protecția Consumatorilor (SAL/SOL)</span>
             </button>
           </div>

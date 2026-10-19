@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Compass, Maximize2, Minimize2, ExternalLink, Layers, MousePointerClick, Ruler, ArrowRight, Loader2 } from 'lucide-react';
+import { Compass, Maximize2, Minimize2, ExternalLink, ArrowRight, Loader2 } from 'lucide-react';
 
 interface LiveTourSectionProps {
   onBookCall: () => void;
@@ -272,24 +272,30 @@ export const LiveTourSection: React.FC<LiveTourSectionProps> = ({ onBookCall }) 
           )}
         </div>
 
-        {/* Interactive Usage Hints: Balanced 3-column cards */}
+        {/* Interactive Usage Hints: Clean 3-column typographic steps */}
         <div className="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-3">
-          <div className="flex items-center gap-3 p-3 bg-stone-900/50 rounded-lg border border-stone-800/80">
-            <MousePointerClick className="w-4 h-4 text-bronze-light flex-shrink-0" strokeWidth={1.5} />
+          <div className="flex items-baseline gap-3 p-3.5 bg-stone-900/50 rounded-lg border border-stone-800/80">
+            <span className="font-sans text-xs font-bold tracking-widest text-bronze-light tabular-nums flex-shrink-0">
+              01
+            </span>
             <span className="font-sans text-xs text-stone-300 leading-snug">
               Clic și trage pentru a roti perspectiva la 360° în orice direcție
             </span>
           </div>
 
-          <div className="flex items-center gap-3 p-3 bg-stone-900/50 rounded-lg border border-stone-800/80">
-            <Layers className="w-4 h-4 text-bronze-light flex-shrink-0" strokeWidth={1.5} />
+          <div className="flex items-baseline gap-3 p-3.5 bg-stone-900/50 rounded-lg border border-stone-800/80">
+            <span className="font-sans text-xs font-bold tracking-widest text-bronze-light tabular-nums flex-shrink-0">
+              02
+            </span>
             <span className="font-sans text-xs text-stone-300 leading-snug">
               Comută între perspectiva Dollhouse 3D și navigarea pas cu pas
             </span>
           </div>
 
-          <div className="flex items-center gap-3 p-3 bg-stone-900/50 rounded-lg border border-stone-800/80">
-            <Ruler className="w-4 h-4 text-bronze-light flex-shrink-0" strokeWidth={1.5} />
+          <div className="flex items-baseline gap-3 p-3.5 bg-stone-900/50 rounded-lg border border-stone-800/80">
+            <span className="font-sans text-xs font-bold tracking-widest text-bronze-light tabular-nums flex-shrink-0">
+              03
+            </span>
             <span className="font-sans text-xs text-stone-300 leading-snug">
               Măsoară pereții și mobilierul cu rigla digitală integrată
             </span>

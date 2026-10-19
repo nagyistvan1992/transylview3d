@@ -7,9 +7,6 @@ import {
   Eye,
   ChevronLeft,
   ChevronRight,
-  Camera,
-  Maximize,
-  LayoutGrid,
 } from 'lucide-react';
 import { VirtualTourItem } from '../types';
 
@@ -116,11 +113,8 @@ const ProjectCard: React.FC<{
               Nr. {projectIndex}
             </span>
 
-            <span className="text-[11px] font-medium tracking-wider text-stone-200 bg-stone-950/80 px-2 py-0.5 rounded-sm border border-white/10 flex items-center gap-1.5 tabular-nums">
-              <Camera className="w-3.5 h-3.5 text-stone-400" strokeWidth={1.5} />
-              <span>
-                {currentImgIndex + 1} / {images.length}
-              </span>
+            <span className="text-[11px] font-medium tracking-wider text-stone-200 bg-stone-950/80 px-2 py-0.5 rounded-sm border border-white/10 tabular-nums">
+              {currentImgIndex + 1} / {images.length}
             </span>
           </div>
 
@@ -204,23 +198,20 @@ const ProjectCard: React.FC<{
           {/* Architectural Metadata */}
           <dl className="grid grid-cols-3 gap-3 pt-3 border-t border-stone-800">
             <div className="space-y-1 min-w-0">
-              <dt className="flex items-center gap-1.5 text-[11px] font-medium uppercase tracking-wider text-stone-500">
-                <Maximize className="w-3.5 h-3.5 text-stone-500 flex-shrink-0" strokeWidth={1.5} />
-                <span>Suprafață</span>
+              <dt className="text-[11px] font-medium uppercase tracking-wider text-stone-500">
+                Suprafață
               </dt>
               <dd className="text-sm text-stone-200 tabular-nums truncate">{tour.surface || '—'}</dd>
             </div>
             <div className="space-y-1 min-w-0">
-              <dt className="flex items-center gap-1.5 text-[11px] font-medium uppercase tracking-wider text-stone-500">
-                <LayoutGrid className="w-3.5 h-3.5 text-stone-500 flex-shrink-0" strokeWidth={1.5} />
-                <span>Camere</span>
+              <dt className="text-[11px] font-medium uppercase tracking-wider text-stone-500">
+                Camere
               </dt>
               <dd className="text-sm text-stone-200 truncate">{tour.rooms || '—'}</dd>
             </div>
             <div className="space-y-1 min-w-0">
-              <dt className="flex items-center gap-1.5 text-[11px] font-medium uppercase tracking-wider text-stone-500">
-                <MapPin className="w-3.5 h-3.5 text-stone-500 flex-shrink-0" strokeWidth={1.5} />
-                <span>Locație</span>
+              <dt className="text-[11px] font-medium uppercase tracking-wider text-stone-500">
+                Locație
               </dt>
               <dd className="text-sm text-stone-200 truncate">{tour.city || '—'}</dd>
             </div>
@@ -328,11 +319,8 @@ const FeaturedCaseStudy: React.FC<{
                 Studiu de caz de referință
               </span>
 
-              <span className="text-xs font-medium tracking-wider text-stone-200 bg-stone-950/90 px-2.5 py-1 rounded-md border border-white/15 backdrop-blur-sm flex items-center gap-1.5 tabular-nums">
-                <Camera className="w-3.5 h-3.5 text-stone-400" strokeWidth={1.5} />
-                <span>
-                  {currentImgIndex + 1} / {images.length}
-                </span>
+              <span className="text-xs font-medium tracking-wider text-stone-200 bg-stone-950/90 px-2.5 py-1 rounded-md border border-white/15 backdrop-blur-sm tabular-nums">
+                {currentImgIndex + 1} / {images.length}
               </span>
             </div>
 
@@ -438,23 +426,20 @@ const FeaturedCaseStudy: React.FC<{
           {/* Key Architectural Metrics */}
           <dl className="grid grid-cols-3 gap-3 py-4 border-t border-b border-stone-800">
             <div className="space-y-1">
-              <dt className="flex items-center gap-1.5 text-xs font-medium uppercase tracking-wider text-stone-400">
-                <Maximize className="w-3.5 h-3.5 text-stone-500" strokeWidth={1.5} />
-                <span>Suprafață</span>
+              <dt className="text-xs font-medium uppercase tracking-wider text-stone-400">
+                Suprafață
               </dt>
               <dd className="text-base sm:text-lg font-bold text-white tabular-nums">{tour.surface || '86 m²'}</dd>
             </div>
             <div className="space-y-1">
-              <dt className="flex items-center gap-1.5 text-xs font-medium uppercase tracking-wider text-stone-400">
-                <LayoutGrid className="w-3.5 h-3.5 text-stone-500" strokeWidth={1.5} />
-                <span>Camere</span>
+              <dt className="text-xs font-medium uppercase tracking-wider text-stone-400">
+                Camere
               </dt>
               <dd className="text-base sm:text-lg font-bold text-white truncate">{tour.rooms || '3 Camere'}</dd>
             </div>
             <div className="space-y-1">
-              <dt className="flex items-center gap-1.5 text-xs font-medium uppercase tracking-wider text-stone-400">
-                <MapPin className="w-3.5 h-3.5 text-stone-500" strokeWidth={1.5} />
-                <span>Locație</span>
+              <dt className="text-xs font-medium uppercase tracking-wider text-stone-400">
+                Locație
               </dt>
               <dd className="text-base sm:text-lg font-bold text-white truncate">{tour.city || 'Satu Mare'}</dd>
             </div>
