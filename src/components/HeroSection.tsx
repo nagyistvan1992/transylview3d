@@ -189,10 +189,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ heroImage, onBookCall 
     <div
       id="home"
       ref={containerRef}
-      className="relative h-screen h-[100svh] w-full overflow-hidden flex flex-col justify-between select-none bg-stone-950"
+      className="relative min-h-screen min-h-[100svh] sm:h-screen sm:h-[100svh] w-full overflow-hidden flex flex-col justify-between select-none bg-stone-950"
     >
       {/* Fullscreen Viewport Container */}
-      <div className="h-full w-full overflow-hidden flex flex-col justify-between select-none relative">
+      <div className="min-h-[100svh] sm:h-full w-full overflow-hidden flex flex-col justify-between select-none relative">
         
         {/* Layer 1: Fullscreen Background 3D Tour / Interior Image */}
         <motion.div

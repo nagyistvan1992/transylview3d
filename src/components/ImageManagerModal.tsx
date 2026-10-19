@@ -28,12 +28,12 @@ export const ImageManagerModal: React.FC<ImageManagerModalProps> = ({
     { key: 'aboutGear', label: 'Cameră Profesională Insta X5 8K', section: 'Despre Noi & Tehnologie' },
     { key: 'aboutDollhouse', label: 'Model Secțional Dollhouse 3D', section: 'Despre Noi & Tehnologie' },
     { key: 'aboutInterior', label: 'Interior Tur Virtual 360', section: 'Despre Noi & Tehnologie' },
-    { key: 'retreatCourtyard', label: 'Vilă Rezidențială & Curte', section: 'Portofoliu 3D' },
-    { key: 'retreatKitchen', label: 'Bucătărie & Living Gourmet', section: 'Portofoliu 3D' },
-    { key: 'retreatSpaBath', label: 'Baie Spa din Travertin', section: 'Portofoliu 3D' },
-    { key: 'retreatLounge', label: 'Lounge Scufundat cu Șemineu', section: 'Portofoliu 3D' },
-    { key: 'retreatTerrace', label: 'Terasă Panoramică Penthouse', section: 'Portofoliu 3D' },
-    { key: 'retreatNicheDetail', label: 'Detalii Tactile & Finisaje', section: 'Portofoliu 3D' },
+    { key: 'retreatCourtyard', label: 'Vile Rezidențiale & Curți cu Piscină', section: 'Portofoliu Interactiv 3D' },
+    { key: 'retreatKitchen', label: 'Apartamente & Bucătării de Lux', section: 'Portofoliu Interactiv 3D' },
+    { key: 'retreatSpaBath', label: 'Spații Wellness & Finisaje Fine', section: 'Portofoliu Interactiv 3D' },
+    { key: 'retreatLounge', label: 'Showroom Comercial & Birouri Executive', section: 'Portofoliu Interactiv 3D' },
+    { key: 'retreatTerrace', label: 'Penthouse & Terase Panoramice', section: 'Portofoliu Interactiv 3D' },
+    { key: 'retreatNicheDetail', label: 'Detalii Tactile & Finisaje', section: 'Portofoliu Interactiv 3D' },
   ];
 
   const handleTextChange = (key: keyof CustomImages, value: string) => {

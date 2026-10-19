@@ -38,7 +38,7 @@ export const LocationSection: React.FC = () => {
           {/* Left Column: Terrace View Image */}
           <div className="lg:col-span-7 relative aspect-[16/10] rounded-xl overflow-hidden shadow-xs border border-stone-200/80 group">
             <img
-              src="/images/retreat_terrace.jpg"
+              src="/images/retreat_terrace.jpg?v=3"
               alt="TransylView 3D Acoperire Satu Mare și Transilvania"
               loading="lazy"
               decoding="async"
@@ -46,16 +46,16 @@ export const LocationSection: React.FC = () => {
             />
             <div className="absolute inset-0 bg-gradient-to-t from-stone-950/80 via-stone-950/20 to-transparent" />
             
-            <div className="absolute bottom-4 sm:bottom-6 left-4 sm:left-6 right-4 sm:right-6 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-white">
+            <div className="absolute bottom-3.5 sm:bottom-6 left-3.5 sm:left-6 right-3.5 sm:right-6 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 sm:gap-3 text-white">
               <div>
-                <span className="text-xs font-semibold uppercase tracking-[0.2em] text-stone-300 block mb-1">
+                <span className="text-[11px] sm:text-xs font-semibold uppercase tracking-[0.18em] sm:tracking-[0.2em] text-stone-300 block mb-0.5 sm:mb-1">
                   Deplasare mobilă rapidă
                 </span>
-                <div className="font-sans font-semibold text-base sm:text-lg text-white">
+                <div className="font-sans font-semibold text-sm sm:text-lg text-white leading-snug">
                   Satu Mare · Baia Mare · Oradea · Carei · Zalău
                 </div>
               </div>
-              <div className="bg-stone-900/90 backdrop-blur-md px-3.5 py-1.5 rounded-md border border-white/15 text-xs font-medium tracking-wide self-start sm:self-auto">
+              <div className="bg-stone-900/90 backdrop-blur-md px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-md border border-white/15 text-[11px] sm:text-xs font-medium tracking-wide self-start sm:self-auto">
                 <span>Echipament Insta X5 8K</span>
               </div>
             </div>
@@ -70,20 +70,20 @@ export const LocationSection: React.FC = () => {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true, amount: 0.15 }}
                 transition={{ duration: 0.45, delay: idx * 0.05, ease: [0.22, 1, 0.36, 1] }}
-                className="gpu-smooth p-4 rounded-xl bg-white border border-stone-200/80 hover:border-stone-400 transition-colors flex items-center justify-between shadow-xs"
+                className="gpu-smooth p-3.5 sm:p-4 rounded-xl bg-white border border-stone-200/80 hover:border-stone-400 transition-colors flex items-center justify-between gap-3 shadow-xs"
               >
-                <div className="flex items-baseline gap-3.5 min-w-0">
+                <div className="flex items-baseline gap-3 min-w-0">
                   <span className="font-sans text-xs font-bold tracking-widest text-bronze-dark tabular-nums flex-shrink-0">
                     {item.index}
                   </span>
                   <div className="min-w-0">
-                    <h3 className="font-sans text-sm sm:text-base font-semibold text-stone-900 tracking-tight truncate">
+                    <h3 className="font-sans text-sm sm:text-base font-semibold text-stone-900 tracking-tight leading-snug">
                       {item.name}
                     </h3>
                     <p className="font-sans text-xs text-stone-500 leading-normal">{item.detail}</p>
                   </div>
                 </div>
-                <div className="text-right flex-shrink-0 pl-2">
+                <div className="text-right flex-shrink-0">
                   <span className="font-sans text-xs font-semibold text-stone-700 tracking-wider bg-stone-100 px-2.5 py-1 rounded-sm tabular-nums">
                     {item.distance}
                   </span>

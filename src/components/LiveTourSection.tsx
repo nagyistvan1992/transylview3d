@@ -20,15 +20,29 @@ const techSpecs: { label: string; value: string; note: string }[] = [
 
 export const LiveTourSection: React.FC<LiveTourSectionProps> = ({ onBookCall }) => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const iframeRef = useRef<HTMLIFrameElement>(null);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [shouldLoadIframe, setShouldLoadIframe] = useState(false);
   const [isIframeLoaded, setIsIframeLoaded] = useState(false);
   const [isMobileTouch, setIsMobileTouch] = useState(false);
   const [isTouchInteractive, setIsTouchInteractive] = useState(false);
 
-  // Exact Metareal Stage 3D Showcase Space
+  // Exact Metareal Stage 3D Showcase Space & Starting Coordinate
   const metarealUrl =
-    'https://tour.metareal.com/apps/player?asset=a6eb7cb7-206c-4dce-94d7-12e71246ea2a&position=-0.72x1.62y1.51z&rotation=0.00x255.81y0.00z';
+    'https://tour.metareal.com/apps/player?asset=24c2cdf0-bed5-4630-8df8-3113aad300c9&position=1.88x3.98y1.12z&rotation=32.75x-2464.12y0.00z';
+
+  const handleActivateMobileTour = () => {
+    setShouldLoadIframe(true);
+    setIsTouchInteractive(true);
+    try {
+      iframeRef.current?.contentWindow?.postMessage(
+        { cmd: 'startShowcase', id: 'tv3d-play', data: { skipInstructions: false } },
+        '*'
+      );
+    } catch {
+      // Ignore cross-origin postMessage errors if iframe is still initializing
+    }
+  };
 
   // Detect touch device so vertical page scrolling doesn't get hijacked by the 3D WebGL canvas
   useEffect(() => {
@@ -126,7 +140,7 @@ export const LiveTourSection: React.FC<LiveTourSectionProps> = ({ onBookCall }) 
           </span>
 
           <h2 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-semibold tracking-tight text-stone-100 leading-tight [text-wrap:balance]">
-            Explorează proprietatea <span className="text-bronze-light">direct în pagină</span>
+            Explorează proprietatea <span className="text-white">direct în pagină</span>
           </h2>
 
           <p className="font-sans text-sm sm:text-base text-stone-300 font-normal leading-relaxed max-w-2xl mx-auto [text-wrap:balance]">
@@ -135,28 +149,28 @@ export const LiveTourSection: React.FC<LiveTourSectionProps> = ({ onBookCall }) 
         </motion.div>
 
         {/* Dedicated Top Controls Bar */}
-        <div className="mb-3 flex items-center justify-between gap-3 bg-stone-900/70 px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl border border-stone-800 shadow-sm">
-          <div className="flex items-center gap-2.5 min-w-0">
+        <div className="mb-3 flex items-center justify-between gap-2 sm:gap-3 bg-stone-900/70 px-3.5 sm:px-6 py-2.5 sm:py-3 rounded-xl border border-stone-800 shadow-sm">
+          <div className="flex items-center gap-2 min-w-0">
             <span className="relative flex h-2.5 w-2.5 flex-shrink-0">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
               <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500" />
             </span>
-            <div className="flex items-center gap-2 truncate">
-              <span className="text-xs sm:text-sm font-semibold text-white tracking-wide">
+            <div className="flex items-center gap-2 min-w-0">
+              <span className="text-xs sm:text-sm font-semibold text-white tracking-wide truncate">
                 Tur Virtual 3D Activ
               </span>
-              <span className="text-[11px] sm:text-xs text-stone-400 truncate">
+              <span className="hidden sm:inline text-xs text-stone-400">
                 · Metareal Stage 8K
               </span>
             </div>
           </div>
 
-          <div className="flex items-center gap-2 flex-shrink-0">
+          <div className="flex items-center gap-1.5 sm:gap-2 flex-shrink-0">
             <a
               href={metarealUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-md bg-stone-800 hover:bg-stone-700 text-stone-300 hover:text-white border border-stone-700 text-xs sm:text-sm font-medium transition-colors cursor-pointer"
+              className="inline-flex items-center justify-center gap-1.5 px-2.5 py-1.5 sm:px-3.5 sm:py-2 rounded-md bg-stone-800 hover:bg-stone-700 text-stone-300 hover:text-white border border-stone-700 text-xs sm:text-sm font-medium transition-colors cursor-pointer"
               title="Deschide turul în filă nouă"
             >
               <ExternalLink className="w-3.5 h-3.5 text-stone-400" strokeWidth={1.5} />
@@ -165,10 +179,10 @@ export const LiveTourSection: React.FC<LiveTourSectionProps> = ({ onBookCall }) 
 
             <button
               onClick={toggleFullscreen}
-              className="inline-flex items-center justify-center gap-1.5 px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-md bg-white text-stone-900 text-xs sm:text-sm font-semibold hover:bg-stone-100 transition-colors cursor-pointer active:scale-[0.98]"
+              className="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 sm:px-4 sm:py-2 rounded-md bg-white text-stone-900 text-xs sm:text-sm font-semibold hover:bg-stone-100 transition-colors cursor-pointer active:scale-[0.98]"
               title={isFullscreen ? 'Ieși din ecran complet' : 'Ecran complet'}
             >
-              {isFullscreen ? <Minimize2 className="w-4 h-4" strokeWidth={1.5} /> : <Maximize2 className="w-4 h-4" strokeWidth={1.5} />}
+              {isFullscreen ? <Minimize2 className="w-3.5 h-3.5 sm:w-4 sm:h-4" strokeWidth={1.5} /> : <Maximize2 className="w-3.5 h-3.5 sm:w-4 sm:h-4" strokeWidth={1.5} />}
               <span>{isFullscreen ? 'Ieșire' : 'Ecran complet'}</span>
             </button>
           </div>
@@ -180,7 +194,7 @@ export const LiveTourSection: React.FC<LiveTourSectionProps> = ({ onBookCall }) 
           className={`relative rounded-xl overflow-hidden bg-black border border-stone-800 shadow-2xl transition-all duration-300 ${
             isFullscreen
               ? 'fixed inset-0 z-[99999] rounded-none w-screen h-screen m-0 p-0 bg-black'
-              : 'aspect-[4/3] sm:aspect-[16/10] lg:aspect-[16/9] w-full min-h-[420px] sm:min-h-[560px] max-h-[780px]'
+              : 'aspect-[4/3] sm:aspect-[16/10] lg:aspect-[16/9] w-full min-h-[360px] sm:min-h-[560px] max-h-[780px]'
           }`}
         >
           {/* In Fullscreen mode: Floating Exit button */}
@@ -199,22 +213,18 @@ export const LiveTourSection: React.FC<LiveTourSectionProps> = ({ onBookCall }) 
           {/* Mobile Touch Scroll-Guard Overlay: prevents accidental scroll trapping while gliding down the page */}
           {isMobileTouch && !isFullscreen && !isTouchInteractive && (
             <div
-              onClick={() => {
-                setShouldLoadIframe(true);
-                setIsTouchInteractive(true);
-              }}
+              onClick={handleActivateMobileTour}
               className="absolute inset-0 z-30 flex flex-col items-center justify-end pb-6 sm:pb-8 bg-gradient-to-t from-stone-950/80 via-stone-950/15 to-transparent touch-pan-y cursor-pointer"
             >
               <button
                 type="button"
                 onClick={(e) => {
                   e.stopPropagation();
-                  setShouldLoadIframe(true);
-                  setIsTouchInteractive(true);
+                  handleActivateMobileTour();
                 }}
                 className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-stone-950/90 text-white border border-white/25 shadow-xl backdrop-blur-md text-xs font-semibold tracking-wide active:scale-95 transition-transform"
               >
-                <Compass className="w-4 h-4 text-bronze-light" strokeWidth={1.75} />
+                <Compass className="w-4 h-4 text-stone-200" strokeWidth={1.75} />
                 <span>Atinge pentru a explora 3D în pagină</span>
               </button>
             </div>
@@ -261,6 +271,7 @@ export const LiveTourSection: React.FC<LiveTourSectionProps> = ({ onBookCall }) 
           {/* The Live Interactive Metareal Stage Player Iframe */}
           {shouldLoadIframe && (
             <iframe
+              ref={iframeRef}
               src={metarealUrl}
               className={`w-full h-full border-0 absolute inset-0 ${
                 isMobileTouch && !isFullscreen && !isTouchInteractive ? 'pointer-events-none' : 'pointer-events-auto'
@@ -275,7 +286,7 @@ export const LiveTourSection: React.FC<LiveTourSectionProps> = ({ onBookCall }) 
         {/* Interactive Usage Hints: Clean 3-column typographic steps */}
         <div className="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-3">
           <div className="flex items-baseline gap-3 p-3.5 bg-stone-900/50 rounded-lg border border-stone-800/80">
-            <span className="font-sans text-xs font-bold tracking-widest text-bronze-light tabular-nums flex-shrink-0">
+            <span className="font-sans text-xs font-semibold tracking-widest text-white tabular-nums flex-shrink-0">
               01
             </span>
             <span className="font-sans text-xs text-stone-300 leading-snug">
@@ -284,7 +295,7 @@ export const LiveTourSection: React.FC<LiveTourSectionProps> = ({ onBookCall }) 
           </div>
 
           <div className="flex items-baseline gap-3 p-3.5 bg-stone-900/50 rounded-lg border border-stone-800/80">
-            <span className="font-sans text-xs font-bold tracking-widest text-bronze-light tabular-nums flex-shrink-0">
+            <span className="font-sans text-xs font-semibold tracking-widest text-white tabular-nums flex-shrink-0">
               02
             </span>
             <span className="font-sans text-xs text-stone-300 leading-snug">
@@ -293,7 +304,7 @@ export const LiveTourSection: React.FC<LiveTourSectionProps> = ({ onBookCall }) 
           </div>
 
           <div className="flex items-baseline gap-3 p-3.5 bg-stone-900/50 rounded-lg border border-stone-800/80">
-            <span className="font-sans text-xs font-bold tracking-widest text-bronze-light tabular-nums flex-shrink-0">
+            <span className="font-sans text-xs font-semibold tracking-widest text-white tabular-nums flex-shrink-0">
               03
             </span>
             <span className="font-sans text-xs text-stone-300 leading-snug">
@@ -327,19 +338,22 @@ export const LiveTourSection: React.FC<LiveTourSectionProps> = ({ onBookCall }) 
             </dl>
           </div>
 
-          <div className="lg:col-span-5 bg-stone-900/60 border border-stone-800 rounded-xl p-6 sm:p-8 space-y-4">
-            <h3 className="font-sans text-lg sm:text-xl font-semibold text-stone-100 tracking-tight leading-snug">
+          <div className="lg:col-span-5 bg-stone-900/40 border border-stone-800/90 rounded-2xl p-6 sm:p-8 space-y-5">
+            <span className="text-[11px] uppercase tracking-[0.2em] text-stone-400 font-medium block">
+              Serviciu la cheie · Satu Mare & Transilvania
+            </span>
+            <h3 className="font-serif text-xl sm:text-2xl font-normal text-white tracking-tight leading-snug">
               Scanare 3D la acest standard pentru proprietatea dumneavoastră
             </h3>
-            <p className="font-sans text-sm sm:text-base text-stone-400 leading-relaxed font-normal">
+            <p className="font-sans text-sm text-stone-400 leading-relaxed font-normal">
               Ne deplasăm în Satu Mare și în toată Transilvania cu echipamentul Insta X5 8K. Predare în 24–72h în funcție de suprafață (prioritate la procesare pentru Pachetul Exclusiv).
             </p>
             <button
               onClick={onBookCall}
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-md bg-white text-stone-900 text-sm font-semibold hover:bg-stone-100 transition-colors active:scale-[0.98] cursor-pointer"
+              className="w-full h-12 px-5 rounded-lg bg-white hover:bg-stone-200 text-stone-950 text-xs font-semibold uppercase tracking-[0.12em] inline-flex items-center justify-center gap-2 transition-colors active:scale-[0.99] cursor-pointer"
             >
               <span>Solicită ofertă și scanare 3D</span>
-              <ArrowRight className="w-4 h-4" strokeWidth={1.5} />
+              <ArrowRight className="w-3.5 h-3.5" strokeWidth={1.75} />
             </button>
           </div>
         </div>

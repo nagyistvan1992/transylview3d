@@ -3,13 +3,13 @@ import { CustomImages, GalleryItem, PricingPackage, StatItem, VirtualTourItem } 
 export const initialImages: CustomImages = {
   hero3dTour: '/images/hero_3d_tour.jpg',
   aboutGear: '/images/insta_camera_gear.jpg?v=2',
-  aboutDollhouse: '/images/dollhouse_view.jpg?v=2',
+  aboutDollhouse: '/images/dollhouse_view.jpg?v=4',
   aboutInterior: '/images/about_interior.jpg',
-  retreatCourtyard: '/images/retreat_courtyard.jpg',
-  retreatKitchen: '/images/retreat_kitchen.jpg',
-  retreatSpaBath: '/images/retreat_spa_bath.jpg',
-  retreatLounge: '/images/retreat_lounge.jpg',
-  retreatTerrace: '/images/retreat_terrace.jpg',
+  retreatCourtyard: '/images/retreat_courtyard.jpg?v=3',
+  retreatKitchen: '/images/retreat_kitchen.jpg?v=3',
+  retreatSpaBath: '/images/retreat_spa_bath.jpg?v=3',
+  retreatLounge: '/images/retreat_lounge.jpg?v=3',
+  retreatTerrace: '/images/retreat_terrace.jpg?v=3',
   retreatNicheDetail: '/images/retreat_niche_detail.jpg',
 };
 
@@ -42,16 +42,16 @@ export const retreatSectionData = {
   sectionBadge: 'Portofoliu interactiv 3D',
   title: 'Experiențe Digitale Imersive',
   description:
-    'Fiecare tur virtual realizat de TransylView 3D combină rezoluția 8K cu navigarea intuitivă. Explorați mai jos câteva dintre modurile noastre de prezentare: de la vederi secționale Dollhouse 3D până la panorame exterioare și finisaje de lux.',
+    'Fiecare tur virtual realizat de TransylView 3D combină rezoluția 8K cu navigarea intuitivă. Explorați mai jos câteva dintre modurile noastre de prezentare: de la vederi secționale Dollhouse 3D pe mai multe niveluri până la panorame exterioare și spații comerciale.',
 };
 
 export const getRetreatGalleryItems = (images: CustomImages): GalleryItem[] => [
   {
     id: 'dollhouse',
-    title: 'Model Secțional Dollhouse 3D',
+    title: 'Model Secțional Dollhouse 3D Multi-Nivel',
     category: 'Arhitectură & Nivele',
     image: images.aboutDollhouse,
-    caption: 'Perspectivă tridimensională a întregii clădiri, pentru înțelegerea perfectă a etajelor și compartimentării.',
+    caption: 'Perspectivă tridimensională completă (Parter + Etaj) a întregii clădiri, pentru înțelegerea clară a nivelurilor, scărilor interioare și compartimentării.',
     specs: 'Modelare Spațială 3D • Vedere Pe Nivele • Măsurători Digitale',
   },
   {
@@ -86,14 +86,6 @@ export const getRetreatGalleryItems = (images: CustomImages): GalleryItem[] => [
     caption: 'Surprindem priveliștea de 360 de grade a teraselor pentru a pune în valoare amplasamentul proprietății.',
     specs: 'Panoramă Orizont 360° • Vederi Deschise • Link Direct de Partajare',
   },
-  {
-    id: 'spa',
-    title: 'Spații Wellness & Finisaje Fine',
-    category: 'Detalii & Piatră Naturală',
-    image: images.retreatSpaBath,
-    caption: 'Evidențierea celor mai reprezentative unghiuri din băi, zone de spa și suite matrimoniale.',
-    specs: 'Calibrare Studio HDR • Corecție Culoare • Iluminare Păstrată',
-  },
 ];
 
 // Initial real / showcase 3D Virtual Tours portfolio data (Featured Metareal Stage case study)
@@ -105,7 +97,7 @@ export const initialVirtualTours: VirtualTourItem[] = [
     city: 'Satu Mare (Zonă Centrală)',
     surface: '86 m²',
     rooms: '3 Camere + Terasă Exterioară',
-    embedUrl: 'https://tour.metareal.com/apps/player?asset=a6eb7cb7-206c-4dce-94d7-12e71246ea2a&position=-0.72x1.62y1.51z&rotation=0.00x255.81y0.00z',
+    embedUrl: 'https://tour.metareal.com/apps/player?asset=a6eb7cb7-206c-4dce-94d7-12e71246ea2a&position=3.04x1.60y1.24z&rotation=0.00x255.81y0.00z',
     coverImage: '/images/metareal_showcase_cover.jpg',
     images: [
       '/images/metareal_showcase_cover.jpg',

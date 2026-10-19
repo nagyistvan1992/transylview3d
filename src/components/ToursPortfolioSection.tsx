@@ -172,75 +172,80 @@ const ProjectCard: React.FC<{
         </div>
 
         {/* Tags, Title & Metadata */}
-        <div className="space-y-3">
-          <div className="flex flex-wrap items-center gap-2">
-            <span className="text-[11px] uppercase tracking-wider font-medium px-2 py-0.5 rounded-sm border border-stone-700 text-stone-300">
-              Proiect Finalizat
-            </span>
+        <div className="space-y-4">
+          <div className="flex items-center gap-2 text-[11px] uppercase tracking-[0.18em] text-stone-400 font-medium">
+            <span>Proiect Finalizat</span>
             {tour.category && (
-              <span className="text-[11px] uppercase tracking-wider font-medium px-2 py-0.5 rounded-sm border border-stone-800 text-stone-400">
-                {tour.category}
-              </span>
+              <>
+                <span className="text-stone-600">·</span>
+                <span className="text-stone-300">{tour.category}</span>
+              </>
             )}
           </div>
 
           <h3
             onClick={() => onOpenTourViewer(tour)}
-            className="font-sans text-lg sm:text-xl font-semibold text-stone-100 tracking-tight leading-snug cursor-pointer group-hover:text-bronze-light transition-colors [text-wrap:balance]"
+            className="font-serif text-xl font-normal text-white tracking-tight leading-snug cursor-pointer group-hover:text-stone-300 transition-colors [text-wrap:balance]"
           >
             {tour.title}
           </h3>
 
-          <p className="font-sans text-sm text-stone-400 leading-relaxed font-normal line-clamp-2">
+          <p className="font-sans text-sm text-stone-400 leading-relaxed font-normal">
             {tour.description}
           </p>
 
-          {/* Architectural Metadata */}
-          <dl className="grid grid-cols-3 gap-3 pt-3 border-t border-stone-800">
-            <div className="space-y-1 min-w-0">
-              <dt className="text-[11px] font-medium uppercase tracking-wider text-stone-500">
+          {/* Minimalist Hairline Specification Table */}
+          <dl className="divide-y divide-stone-800/90 border-t border-b border-stone-800/90">
+            <div className="py-2.5 flex items-baseline justify-between gap-3">
+              <dt className="text-[11px] uppercase tracking-[0.14em] text-stone-400">
                 Suprafață
               </dt>
-              <dd className="text-sm text-stone-200 tabular-nums truncate">{tour.surface || '—'}</dd>
+              <dd className="text-xs sm:text-sm font-medium text-white tabular-nums text-right">
+                {tour.surface || '—'}
+              </dd>
             </div>
-            <div className="space-y-1 min-w-0">
-              <dt className="text-[11px] font-medium uppercase tracking-wider text-stone-500">
-                Camere
+            <div className="py-2.5 flex flex-col xs:flex-row sm:flex-row sm:items-baseline justify-between gap-1 sm:gap-4">
+              <dt className="text-[11px] uppercase tracking-[0.14em] text-stone-400">
+                Compartimentare
               </dt>
-              <dd className="text-sm text-stone-200 truncate">{tour.rooms || '—'}</dd>
+              <dd className="text-xs sm:text-sm font-medium text-white sm:text-right">
+                {tour.rooms || '—'}
+              </dd>
             </div>
-            <div className="space-y-1 min-w-0">
-              <dt className="text-[11px] font-medium uppercase tracking-wider text-stone-500">
-                Locație
+            <div className="py-2.5 flex flex-col xs:flex-row sm:flex-row sm:items-baseline justify-between gap-1 sm:gap-4">
+              <dt className="text-[11px] uppercase tracking-[0.14em] text-stone-400">
+                Localizare
               </dt>
-              <dd className="text-sm text-stone-200 truncate">{tour.city || '—'}</dd>
+              <dd className="text-xs sm:text-sm font-medium text-white sm:text-right">
+                {tour.city || '—'}
+              </dd>
             </div>
           </dl>
         </div>
       </div>
 
       {/* Actions */}
-      <div className="pt-4 border-t border-stone-800 flex items-center justify-between gap-3">
+      <div className="pt-4 flex items-center justify-between gap-3">
         <button
           onClick={() => onOpenTourViewer(tour)}
-          className="inline-flex items-center gap-2 text-sm font-semibold text-stone-100 hover:text-white transition-colors cursor-pointer"
+          className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.14em] font-semibold text-white hover:text-stone-300 transition-colors cursor-pointer"
         >
-          <span>Vizionează turul 3D</span>
-          <ArrowRight className="w-4 h-4 text-stone-400" strokeWidth={1.5} />
+          <span>Explorează Turul 3D</span>
+          <ArrowRight className="w-3.5 h-3.5 text-stone-400" strokeWidth={1.5} />
         </button>
 
         <button
           onClick={() => onRequestQuote(tour.category)}
-          className="text-sm text-stone-400 hover:text-stone-200 transition-colors cursor-pointer"
+          className="text-xs uppercase tracking-[0.14em] font-medium text-stone-400 hover:text-white transition-colors cursor-pointer"
         >
-          Cotație similară
+          Solicită Ofertă
         </button>
       </div>
     </motion.article>
   );
 };
 
-// Featured High-Impact Architectural Case Study Layout
+// Featured Architectural Case Study Layout (Norm Architects / Foster + Partners Hairline Grid)
 const FeaturedCaseStudy: React.FC<{
   tour: VirtualTourItem;
   onOpenTourViewer: (tour: VirtualTourItem) => void;
@@ -278,18 +283,18 @@ const FeaturedCaseStudy: React.FC<{
     touchStartY.current = null;
   };
 
-  const deliverables = [
-    'Scanare 8K',
-    'Model Dollhouse 3D',
-    'Riglă Digitală Activă',
-    'Fațadă & Terasă Exterioară',
-  ];
+  const thumbColsClass =
+    images.length === 2
+      ? 'grid-cols-2'
+      : images.length === 3
+      ? 'grid-cols-3'
+      : 'grid-cols-4';
 
   return (
-    <div className="rounded-2xl bg-stone-900/60 border border-stone-800 p-5 sm:p-8 lg:p-10 overflow-hidden shadow-2xl">
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-        {/* Left Column (Desktop: 7 cols): Multi-Image Interactive Preview */}
-        <div className="lg:col-span-7 space-y-4">
+    <div className="rounded-2xl bg-stone-900/40 border border-stone-800/90 p-4 sm:p-8 lg:p-10 overflow-hidden">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-12 lg:items-stretch">
+        {/* Left Column (Desktop: 7 cols): Main Visual + Full-Width Thumbnail Strip */}
+        <div className="lg:col-span-7 flex flex-col justify-between gap-2.5 sm:gap-3.5">
           <div
             onClick={() => onOpenTourViewer(tour)}
             onTouchStart={handleTouchStart}
@@ -303,37 +308,37 @@ const FeaturedCaseStudy: React.FC<{
                 alt={`${tour.title} - Foto ${currentImgIndex + 1}`}
                 loading="lazy"
                 decoding="async"
-                initial={{ opacity: 0.8 }}
+                initial={{ opacity: 0.85 }}
                 animate={{ opacity: 1 }}
-                exit={{ opacity: 0.8 }}
+                exit={{ opacity: 0.85 }}
                 transition={{ duration: 0.25 }}
                 className="w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-[1.02]"
               />
             </AnimatePresence>
 
-            <div className="absolute inset-0 bg-gradient-to-t from-stone-950/80 via-transparent to-transparent opacity-80 pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-t from-stone-950/80 via-transparent to-stone-950/25 pointer-events-none" />
 
-            {/* Overline Badge */}
-            <div className="absolute top-4 left-4 right-4 flex items-center justify-between pointer-events-none">
-              <span className="text-xs uppercase tracking-wider font-semibold text-stone-200 bg-stone-950/90 px-3 py-1 rounded-md border border-white/15 backdrop-blur-sm">
-                Studiu de caz de referință
+            {/* Top Minimalist Metadata Overlay */}
+            <div className="absolute top-2.5 left-2.5 right-2.5 sm:top-4 sm:left-4 sm:right-4 flex items-center justify-between pointer-events-none">
+              <span className="text-[10px] sm:text-[11px] uppercase tracking-[0.14em] sm:tracking-[0.16em] font-medium text-stone-200 bg-stone-950/85 px-2.5 py-1 sm:px-3 sm:py-1 rounded border border-white/10 backdrop-blur-md">
+                Studiu de caz · 01
               </span>
 
-              <span className="text-xs font-medium tracking-wider text-stone-200 bg-stone-950/90 px-2.5 py-1 rounded-md border border-white/15 backdrop-blur-sm tabular-nums">
+              <span className="text-[10px] sm:text-[11px] font-medium tracking-wider text-stone-200 bg-stone-950/85 px-2 py-1 sm:px-2.5 sm:py-1 rounded border border-white/10 backdrop-blur-md tabular-nums">
                 {currentImgIndex + 1} / {images.length}
               </span>
             </div>
 
             {/* Slider Controls */}
             {images.length > 1 && (
-              <div className="absolute inset-y-0 inset-x-3 flex items-center justify-between pointer-events-none">
+              <div className="absolute inset-y-0 inset-x-2 sm:inset-x-3 flex items-center justify-between pointer-events-none">
                 <button
                   type="button"
                   onClick={(e) => {
                     e.stopPropagation();
                     setCurrentImgIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
                   }}
-                  className="w-9 h-9 rounded-full bg-stone-950/80 hover:bg-stone-900 text-stone-200 hover:text-white border border-white/15 flex items-center justify-center pointer-events-auto transition-colors duration-200 opacity-90 sm:opacity-0 sm:group-hover:opacity-100 active:scale-95 cursor-pointer"
+                  className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-stone-950/80 hover:bg-stone-900 text-stone-200 hover:text-white border border-white/15 flex items-center justify-center pointer-events-auto transition-colors duration-200 opacity-90 sm:opacity-0 sm:group-hover:opacity-100 active:scale-95 cursor-pointer"
                   aria-label="Imaginea anterioară"
                 >
                   <ChevronLeft className="w-4 h-4" strokeWidth={1.5} />
@@ -345,7 +350,7 @@ const FeaturedCaseStudy: React.FC<{
                     e.stopPropagation();
                     setCurrentImgIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
                   }}
-                  className="w-9 h-9 rounded-full bg-stone-950/80 hover:bg-stone-900 text-stone-200 hover:text-white border border-white/15 flex items-center justify-center pointer-events-auto transition-colors duration-200 opacity-90 sm:opacity-0 sm:group-hover:opacity-100 active:scale-95 cursor-pointer"
+                  className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-stone-950/80 hover:bg-stone-900 text-stone-200 hover:text-white border border-white/15 flex items-center justify-center pointer-events-auto transition-colors duration-200 opacity-90 sm:opacity-0 sm:group-hover:opacity-100 active:scale-95 cursor-pointer"
                   aria-label="Imaginea următoare"
                 >
                   <ChevronRight className="w-4 h-4" strokeWidth={1.5} />
@@ -353,47 +358,48 @@ const FeaturedCaseStudy: React.FC<{
               </div>
             )}
 
-            {/* Center Quick Launch Action */}
-            <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-              <span className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-stone-900/90 text-white border border-white/20 text-xs font-semibold backdrop-blur-md shadow-2xl">
-                <Eye className="w-4 h-4 text-stone-300" strokeWidth={1.5} />
-                Deschide Turul 3D
+            {/* Bottom Bar: Pagination Dots + Clean Launch Indicator */}
+            <div className="absolute bottom-2.5 left-2.5 right-2.5 sm:bottom-4 sm:left-4 sm:right-4 flex items-center justify-between gap-2">
+              {images.length > 1 ? (
+                <div className="flex items-center gap-1.5 bg-stone-950/85 px-2 py-1.5 sm:px-2.5 rounded border border-white/10 backdrop-blur-md">
+                  {images.map((_, i) => (
+                    <button
+                      key={i}
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setCurrentImgIndex(i);
+                      }}
+                      className={`h-1 rounded-full transition-all cursor-pointer ${
+                        i === currentImgIndex ? 'w-4 sm:w-5 bg-white' : 'w-1.5 bg-white/40 hover:bg-white/75'
+                      }`}
+                      aria-label={`Fotografia ${i + 1}`}
+                    />
+                  ))}
+                </div>
+              ) : (
+                <span />
+              )}
+
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 sm:px-3 sm:py-1.5 rounded bg-stone-950/85 text-stone-100 group-hover:bg-white group-hover:text-stone-950 border border-white/15 text-[10px] sm:text-[11px] font-medium uppercase tracking-[0.12em] sm:tracking-[0.14em] backdrop-blur-md transition-colors pointer-events-none">
+                <Eye className="w-3.5 h-3.5" strokeWidth={1.5} />
+                <span>Tur 3D Interactiv</span>
               </span>
             </div>
-
-            {/* Bottom Dots */}
-            {images.length > 1 && (
-              <div className="absolute bottom-4 left-4 flex items-center gap-1.5 bg-stone-950/80 px-2.5 py-1.5 rounded-md border border-white/10">
-                {images.map((_, i) => (
-                  <button
-                    key={i}
-                    type="button"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setCurrentImgIndex(i);
-                    }}
-                    className={`h-1.5 rounded-full transition-all cursor-pointer ${
-                      i === currentImgIndex ? 'w-5 bg-white' : 'w-2 bg-white/40 hover:bg-white/70'
-                    }`}
-                    aria-label={`Fotografia ${i + 1}`}
-                  />
-                ))}
-              </div>
-            )}
           </div>
 
-          {/* Thumbnail preview strip */}
+          {/* Thumbnail preview strip spanning 100% width of main image */}
           {images.length > 1 && (
-            <div className="grid grid-cols-4 gap-2.5">
+            <div className={`grid ${thumbColsClass} gap-2 sm:gap-3`}>
               {images.slice(0, 4).map((img, idx) => (
                 <button
                   key={idx}
                   type="button"
                   onClick={() => setCurrentImgIndex(idx)}
-                  className={`relative aspect-[16/10] rounded-lg overflow-hidden border transition-all cursor-pointer ${
+                  className={`relative aspect-[16/9] rounded-md sm:rounded-lg overflow-hidden border transition-all cursor-pointer ${
                     currentImgIndex === idx
-                      ? 'border-white ring-1 ring-white/50'
-                      : 'border-stone-800 opacity-60 hover:opacity-100'
+                      ? 'border-white opacity-100'
+                      : 'border-stone-800 opacity-50 hover:opacity-85'
                   }`}
                 >
                   <img
@@ -409,75 +415,83 @@ const FeaturedCaseStudy: React.FC<{
           )}
         </div>
 
-        {/* Right Column (Desktop: 5 cols): Editorial Specifications & CTAs */}
-        <div className="lg:col-span-5 space-y-6">
-          <div className="space-y-2">
-            <span className="text-xs uppercase tracking-[0.2em] font-semibold text-stone-400 block">
-              STUDIU DE CAZ ARHITECTURAL · SATU MARE
-            </span>
-            <h3 className="font-serif text-2xl sm:text-3xl font-semibold tracking-tight text-white leading-tight">
+        {/* Right Column (Desktop: 5 cols): Flush Top-to-Bottom Editorial Specification Sheet */}
+        <div className="lg:col-span-5 flex flex-col justify-between">
+          {/* Top Block: Flush with top of Main Image */}
+          <div className="space-y-2.5 sm:space-y-3">
+            <div className="flex items-center gap-2 text-[11px] uppercase tracking-[0.18em] sm:tracking-[0.2em] text-stone-400 font-medium flex-wrap">
+              <span>Studiu de caz</span>
+              {tour.category && (
+                <>
+                  <span className="text-stone-600">·</span>
+                  <span className="text-stone-300">{tour.category}</span>
+                </>
+              )}
+            </div>
+
+            <h3 className="font-serif text-xl sm:text-3xl font-normal tracking-tight text-white leading-[1.2] sm:leading-[1.18] [text-wrap:balance]">
               {tour.title}
             </h3>
-            <p className="font-sans text-sm sm:text-base text-stone-300 leading-relaxed font-normal pt-1">
+
+            <p className="font-sans text-xs sm:text-sm text-stone-400 leading-relaxed font-normal pt-0.5 sm:pt-1">
               {tour.description}
             </p>
           </div>
 
-          {/* Key Architectural Metrics */}
-          <dl className="grid grid-cols-3 gap-3 py-4 border-t border-b border-stone-800">
-            <div className="space-y-1">
-              <dt className="text-xs font-medium uppercase tracking-wider text-stone-400">
-                Suprafață
+          {/* Middle Block: Clean Hairline Architectural Specification Table */}
+          <dl className="divide-y divide-stone-800/90 border-t border-b border-stone-800/90 my-5 sm:my-6">
+            <div className="py-3 sm:py-3.5 flex items-baseline justify-between gap-4">
+              <dt className="text-[11px] sm:text-xs uppercase tracking-[0.14em] text-stone-400 flex-shrink-0">
+                Suprafață utilă
               </dt>
-              <dd className="text-base sm:text-lg font-bold text-white tabular-nums">{tour.surface || '86 m²'}</dd>
+              <dd className="text-sm sm:text-base font-medium text-white tabular-nums text-right">
+                {tour.surface || '86 m²'}
+              </dd>
             </div>
-            <div className="space-y-1">
-              <dt className="text-xs font-medium uppercase tracking-wider text-stone-400">
-                Camere
+
+            <div className="py-3 sm:py-3.5 flex flex-col sm:flex-row sm:items-baseline justify-between gap-1 sm:gap-4">
+              <dt className="text-[11px] sm:text-xs uppercase tracking-[0.14em] text-stone-400 flex-shrink-0">
+                Compartimentare
               </dt>
-              <dd className="text-base sm:text-lg font-bold text-white truncate">{tour.rooms || '3 Camere'}</dd>
+              <dd className="text-sm sm:text-base font-medium text-white sm:text-right leading-snug">
+                {tour.rooms || '3 Camere + Terasă Exterioară'}
+              </dd>
             </div>
-            <div className="space-y-1">
-              <dt className="text-xs font-medium uppercase tracking-wider text-stone-400">
-                Locație
+
+            <div className="py-3 sm:py-3.5 flex flex-col sm:flex-row sm:items-baseline justify-between gap-1 sm:gap-4">
+              <dt className="text-[11px] sm:text-xs uppercase tracking-[0.14em] text-stone-400 flex-shrink-0">
+                Localizare
               </dt>
-              <dd className="text-base sm:text-lg font-bold text-white truncate">{tour.city || 'Satu Mare'}</dd>
+              <dd className="text-sm sm:text-base font-medium text-white sm:text-right leading-snug">
+                {tour.city || 'Satu Mare (Zonă Centrală)'}
+              </dd>
+            </div>
+
+            <div className="py-3 sm:py-3.5 flex flex-col sm:flex-row sm:items-baseline justify-between gap-1 sm:gap-4">
+              <dt className="text-[11px] sm:text-xs uppercase tracking-[0.14em] text-stone-400 flex-shrink-0">
+                Livrabile 3D
+              </dt>
+              <dd className="text-xs sm:text-sm font-medium text-stone-200 sm:text-right leading-snug">
+                Scanare 8K · Dollhouse 3D · Plan 2D · Riglă
+              </dd>
             </div>
           </dl>
 
-          {/* Deliverables Chips */}
-          <div className="space-y-2">
-            <span className="text-xs font-medium uppercase tracking-wider text-stone-400 block">
-              Livrabile tehnice integrate:
-            </span>
-            <div className="flex flex-wrap gap-2">
-              {deliverables.map((item, idx) => (
-                <span
-                  key={idx}
-                  className="px-2.5 py-1 rounded-md bg-stone-950 border border-stone-800 text-xs font-medium text-stone-300"
-                >
-                  {item}
-                </span>
-              ))}
-            </div>
-          </div>
-
-          {/* Action CTAs */}
-          <div className="pt-2 flex flex-col sm:flex-row gap-3">
+          {/* Bottom Block: Flush with bottom of Thumbnail Strip */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3">
             <button
-              onClick={() => onRequestQuote('Apartament Premium')}
-              className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-lg bg-white text-stone-900 text-sm font-semibold hover:bg-stone-100 transition-colors cursor-pointer active:scale-[0.98] min-h-[48px]"
+              onClick={() => onOpenTourViewer(tour)}
+              className="h-11 sm:h-12 px-4 sm:px-5 rounded-lg bg-white hover:bg-stone-200 text-stone-950 text-xs font-semibold uppercase tracking-[0.12em] inline-flex items-center justify-center gap-2 transition-colors cursor-pointer active:scale-[0.99]"
             >
-              <span>Solicită Ofertă pentru o Proprietate Similară</span>
-              <ArrowRight className="w-4 h-4" strokeWidth={1.5} />
+              <span>Explorează Modelul 3D</span>
+              <ArrowRight className="w-3.5 h-3.5" strokeWidth={1.75} />
             </button>
 
             <button
-              onClick={() => onOpenTourViewer(tour)}
-              className="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-lg border border-stone-700 hover:border-stone-500 text-stone-200 hover:text-white text-sm font-semibold transition-colors cursor-pointer active:scale-[0.98] min-h-[48px]"
+              onClick={() => onRequestQuote('Apartament Premium')}
+              className="h-11 sm:h-12 px-4 sm:px-5 rounded-lg bg-transparent hover:bg-stone-800/80 text-stone-200 hover:text-white border border-stone-700 hover:border-stone-500 text-xs font-medium uppercase tracking-[0.12em] inline-flex items-center justify-center gap-2 transition-colors cursor-pointer active:scale-[0.99]"
             >
-              <Eye className="w-4 h-4 text-stone-400" strokeWidth={1.5} />
-              <span>Explorează Modelul 3D</span>
+              <span>Solicită Ofertă</span>
             </button>
           </div>
         </div>

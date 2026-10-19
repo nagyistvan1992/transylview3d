@@ -222,7 +222,7 @@ export const Footer: React.FC<FooterProps> = ({ onBookCall, onSecretOpenImageMan
           <p className="leading-relaxed">
             <strong className="text-stone-200 font-semibold">Transparență și Conformitate Legală în România:</strong> Prețurile afișate sunt în RON. Livrare în 24–72h în funcție de suprafață (cu prioritate la procesare și predare pentru Pachetul Exclusiv). Serviciile de scanare 3D, tururi virtuale și planuri 2D sunt furnizate cu contract și factură fiscală conform Codului Fiscal (Legea 227/2015). Datele personale sunt prelucrate în deplină conformitate cu GDPR (Regulamentul UE 2016/679).
           </p>
-          <div className="flex items-center gap-2 flex-shrink-0 text-[11px] text-stone-400 font-medium">
+          <div className="flex items-center flex-wrap gap-2 flex-shrink-0 text-[11px] text-stone-400 font-medium">
             <span className="px-2 py-0.5 rounded bg-stone-800 border border-stone-700/80">Livrare 24–72h</span>
             <span className="px-2 py-0.5 rounded bg-stone-800 border border-stone-700/80">Prioritate Exclusiv</span>
             <span className="px-2 py-0.5 rounded bg-stone-800 border border-stone-700/80">ANPC 449/2022</span>

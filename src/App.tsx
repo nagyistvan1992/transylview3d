@@ -21,7 +21,7 @@ const TourManagerModal = lazy(() => import('./components/TourManagerModal').then
 const ImageManagerModal = lazy(() => import('./components/ImageManagerModal').then((m) => ({ default: m.ImageManagerModal })));
 const LegalModal = lazy(() => import('./components/LegalModal').then((m) => ({ default: m.LegalModal })));
 
-const LOCAL_STORAGE_IMAGES_KEY = 'transylview_custom_images_v5';
+const LOCAL_STORAGE_IMAGES_KEY = 'transylview_custom_images_v7';
 const LOCAL_STORAGE_TOURS_KEY = 'transylview_virtual_tours_v5';
 
 export function App() {
@@ -46,7 +46,10 @@ export function App() {
         const parsed = JSON.parse(saved);
         if (Array.isArray(parsed)) {
           return parsed.map((t) => {
-            if (t.id === 'apartament-premium-satu-mare') {
+            if (
+              t.id === 'apartament-premium-satu-mare' ||
+              (typeof t.embedUrl === 'string' && t.embedUrl.includes('a6eb7cb7-206c-4dce-94d7-12e71246ea2a'))
+            ) {
               return {
                 ...t,
                 embedUrl: initialVirtualTours[0].embedUrl,
@@ -198,7 +201,10 @@ export function App() {
         />
 
         {/* Section 5: Interactive 3D Room Switcher Gallery */}
-        <RetreatGallery images={images} />
+        <RetreatGallery
+          images={images}
+          onRequestQuote={(category) => handleOpenBookCall(category)}
+        />
 
         {/* Section 6: Real Estate ROI, Statistics & Benefits */}
         <RoiBenefitsSection />

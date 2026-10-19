@@ -64,18 +64,18 @@ export const VirtualTourViewerModal: React.FC<VirtualTourViewerModalProps> = ({
         exit={{ opacity: 0, scale: 0.98, y: 15 }}
         transition={{ duration: 0.22 }}
         className={`relative w-full max-w-7xl mx-auto bg-stone-900 text-stone-100 rounded-xl border border-stone-800 shadow-xl flex flex-col overflow-hidden my-auto ${
-          isFullscreen ? 'fixed inset-2 z-[70] max-w-none h-[calc(100vh-1rem)]' : 'min-h-[80vh] max-h-[92vh]'
+          isFullscreen ? 'fixed inset-2 z-[70] max-w-none h-[calc(100dvh-1rem)]' : 'min-h-[85dvh] sm:min-h-[82vh] max-h-[94dvh]'
         }`}
         onClick={(e) => e.stopPropagation()}
       >
         {/* Top Header Bar */}
-        <div className="px-4 sm:px-6 py-3.5 sm:py-4 bg-stone-950 border-b border-stone-800 flex flex-wrap items-center justify-between gap-3">
-          <div className="space-y-0.5 max-w-xl pr-4">
-            <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-stone-400">
+        <div className="px-3.5 sm:px-6 py-3 sm:py-4 bg-stone-950 border-b border-stone-800 flex items-start sm:items-center justify-between gap-2.5 sm:gap-3">
+          <div className="space-y-0.5 max-w-xl min-w-0">
+            <div className="flex items-center flex-wrap gap-1.5 sm:gap-2 text-[10px] sm:text-xs font-semibold uppercase tracking-[0.16em] sm:tracking-[0.2em] text-stone-400">
               <span>{tour.category}</span>
               <span>·</span>
               <span className="flex items-center gap-1 text-stone-400">
-                <MapPin className="w-3.5 h-3.5 text-stone-500" strokeWidth={1.5} />
+                <MapPin className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-stone-500 flex-shrink-0" strokeWidth={1.5} />
                 {tour.city}
               </span>
               {tour.surface && (
@@ -85,13 +85,13 @@ export const VirtualTourViewerModal: React.FC<VirtualTourViewerModalProps> = ({
                 </>
               )}
             </div>
-            <h3 className="font-serif text-base sm:text-xl text-white font-semibold truncate">
+            <h3 className="font-serif text-sm sm:text-xl text-white font-semibold leading-snug">
               {tour.title}
             </h3>
           </div>
 
           {/* Action Buttons */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1.5 sm:gap-2 flex-shrink-0">
             <a
               href={tour.embedUrl}
               target="_blank"
@@ -114,17 +114,17 @@ export const VirtualTourViewerModal: React.FC<VirtualTourViewerModalProps> = ({
 
             <button
               onClick={onClose}
-              className="w-9 h-9 sm:w-10 sm:h-10 rounded-md bg-stone-800 text-stone-300 hover:text-white hover:bg-stone-700 border border-white/15 transition-colors flex items-center justify-center cursor-pointer active:scale-95 ml-1"
+              className="w-8 h-8 sm:w-10 sm:h-10 rounded-md bg-stone-800 text-stone-300 hover:text-white hover:bg-stone-700 border border-white/15 transition-colors flex items-center justify-center cursor-pointer active:scale-95 ml-0.5 sm:ml-1"
               aria-label="Închide"
               title="Închide"
             >
-              <X className="w-5 h-5" strokeWidth={1.5} />
+              <X className="w-4 h-4 sm:w-5 sm:h-5" strokeWidth={1.5} />
             </button>
           </div>
         </div>
 
         {/* Center: 3D Interactive Iframe Player */}
-        <div className="relative flex-1 w-full bg-black min-h-[380px] sm:min-h-[460px]">
+        <div className="relative flex-1 w-full bg-black min-h-[340px] sm:min-h-[460px]">
           <iframe
             src={cleanEmbedUrl}
             title={tour.title || 'Metareal Stage 3D Virtual Tour Showcase'}
@@ -137,7 +137,7 @@ export const VirtualTourViewerModal: React.FC<VirtualTourViewerModalProps> = ({
         {/* Bottom Details & Call to Action Bar */}
         <div className="px-4 sm:px-6 py-3 sm:py-4 bg-stone-950/95 border-t border-stone-800 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs">
           <div className="space-y-1 max-w-2xl">
-            <p className="font-sans text-xs sm:text-sm text-stone-300 line-clamp-1 sm:line-clamp-2">
+            <p className="font-sans text-xs sm:text-sm text-stone-200 leading-relaxed">
               {tour.description}
             </p>
             {tour.features && tour.features.length > 0 && (
