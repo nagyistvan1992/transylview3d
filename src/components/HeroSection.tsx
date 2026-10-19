@@ -40,7 +40,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ heroImage, onBookCall 
   // Pure GPU-composited transforms (transform + opacity only, no expensive CSS blur filters)
   // 1. Background Image Transformations
   const bgScale = useTransform(smoothProgress, [0, 0.75, 1], [1.08, 1.02, 1.0]);
-  const bgDarken = useTransform(smoothProgress, [0, 0.65, 1], [0.22, 0.45, 0.62]);
+  const bgDarken = useTransform(smoothProgress, [0, 0.65, 1], [0.3, 0.52, 0.7]);
 
   // 2. Stage 1: Stats Badges
   const statsOpacity = useTransform(smoothProgress, [0.02, 0.16], [0, 1]);
@@ -85,7 +85,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ heroImage, onBookCall 
 
   // 5. GRAND FINALE: Giant Typography "TRANSYLVIEW" in the Sky
   const brandY = useTransform(smoothProgress, [0.78, 0.96], [24, 0]);
-  const brandOpacity = useTransform(smoothProgress, [0.78, 0.96], [0, 0.38]);
+  const brandOpacity = useTransform(smoothProgress, [0.78, 0.96], [0, 0.58]);
   const brandScale = useTransform(smoothProgress, [0.78, 0.96], [0.95, 1]);
 
   // 6. Scroll Prompts Opacity
@@ -211,8 +211,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ heroImage, onBookCall 
             style={{ opacity: bgDarken }}
             className="absolute inset-0 bg-black"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-stone-950 via-stone-950/40 to-stone-950/70" />
-          <div className="absolute inset-0 bg-gradient-to-r from-stone-950/85 via-stone-950/30 to-stone-950/60" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/50 to-black/75" />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/35 to-black/65" />
         </motion.div>
 
         {/* Layer 2: Subtle Sky Watermark Typography "TRANSYLVIEW" */}
@@ -223,7 +223,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ heroImage, onBookCall 
               opacity: brandOpacity,
               scale: brandScale,
             }}
-            className="gpu-smooth font-display font-extrabold text-[8vw] sm:text-[6.5vw] lg:text-[5.5vw] tracking-[0.1em] sm:tracking-[0.18em] text-stone-100 uppercase leading-none text-center whitespace-nowrap drop-shadow-[0_15px_30px_rgba(0,0,0,0.9)] max-w-full origin-center"
+            className="gpu-smooth font-display font-extrabold text-[8vw] sm:text-[6.5vw] lg:text-[5.5vw] tracking-[0.1em] sm:tracking-[0.18em] text-white uppercase leading-none text-center whitespace-nowrap [text-shadow:0_8px_32px_rgba(0,0,0,0.95)] max-w-full origin-center"
           >
             {propertyHeroData.brandName}
           </motion.h1>
@@ -237,22 +237,22 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ heroImage, onBookCall 
             className="group flex items-baseline gap-1.5 sm:gap-2 transition-transform hover:scale-102 cursor-pointer"
             title="Mergi la începutul paginii"
           >
-            <span className="font-display text-base sm:text-2xl font-bold tracking-[0.16em] sm:tracking-[0.22em] text-white uppercase drop-shadow-md inline-flex items-baseline">
+            <span className="font-display text-base sm:text-2xl font-bold tracking-[0.16em] sm:tracking-[0.22em] text-white uppercase [text-shadow:0_2px_12px_rgba(0,0,0,0.9)] inline-flex items-baseline">
               TRANSYLVIEW
-              <span className="-ml-0.5 sm:-ml-1 font-sans font-extrabold text-[1.22em] sm:text-[1.28em] tracking-tight text-bronze-light group-hover:text-white transition-colors">
+              <span className="-ml-0.5 sm:-ml-1 font-sans font-extrabold text-[1.22em] sm:text-[1.28em] tracking-tight text-[#F5D08A] group-hover:text-white transition-colors">
                 3D
               </span>
             </span>
-            <span className="w-1.5 h-1.5 rounded-full bg-bronze self-center group-hover:scale-125 transition-transform" />
+            <span className="w-1.5 h-1.5 rounded-full bg-[#F5D08A] self-center group-hover:scale-125 transition-transform" />
           </a>
 
-          <nav className="hidden md:flex items-center space-x-6 lg:space-x-8 text-xs font-bold tracking-[0.22em] text-stone-200 uppercase drop-shadow">
-            <a href="#home" onClick={handleScrollToTop} className="text-white hover:text-bronze transition-colors">ACASĂ</a>
-            <a href="#about" onClick={handleUnlock} className="hover:text-white transition-colors">DESPRE NOI</a>
-            <a href="#demo-tour" onClick={handleUnlock} className="hover:text-bronze transition-colors text-bronze-light font-bold">DEMO 3D</a>
-            <a href="#virtual-tours" onClick={handleUnlock} className="hover:text-white transition-colors">PORTOFOLIU 3D</a>
-            <a href="#pricing" onClick={handleUnlock} className="hover:text-white transition-colors">PREȚURI</a>
-            <a href="#location" onClick={handleUnlock} className="hover:text-white transition-colors">ZONĂ & CONTACT</a>
+          <nav className="hidden md:flex items-center space-x-6 lg:space-x-8 text-xs font-bold tracking-[0.22em] text-white uppercase [text-shadow:0_2px_10px_rgba(0,0,0,0.9)]">
+            <a href="#home" onClick={handleScrollToTop} className="text-white hover:text-[#F5D08A] transition-colors">ACASĂ</a>
+            <a href="#about" onClick={handleUnlock} className="hover:text-[#F5D08A] transition-colors">DESPRE NOI</a>
+            <a href="#demo-tour" onClick={handleUnlock} className="hover:text-white transition-colors text-[#F5D08A] font-extrabold">DEMO 3D</a>
+            <a href="#virtual-tours" onClick={handleUnlock} className="hover:text-[#F5D08A] transition-colors">PORTOFOLIU 3D</a>
+            <a href="#pricing" onClick={handleUnlock} className="hover:text-[#F5D08A] transition-colors">PREȚURI</a>
+            <a href="#location" onClick={handleUnlock} className="hover:text-[#F5D08A] transition-colors">ZONĂ & CONTACT</a>
           </nav>
 
           <div className="flex items-center gap-2">
@@ -261,7 +261,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ heroImage, onBookCall 
                 handleUnlock();
                 onBookCall();
               }}
-              className="text-[10px] sm:text-xs font-bold tracking-[0.16em] sm:tracking-[0.24em] text-white uppercase bg-stone-900/75 hover:bg-bronze hover:text-stone-950 px-3.5 py-2 sm:px-4 sm:py-2 rounded-full border border-white/20 backdrop-blur-md transition-all shadow-md active:scale-95 cursor-pointer"
+              className="text-[10px] sm:text-xs font-bold tracking-[0.16em] sm:tracking-[0.24em] text-white uppercase bg-stone-950/85 hover:bg-[#F5D08A] hover:text-stone-950 px-3.5 py-2 sm:px-4 sm:py-2 rounded-full border border-white/25 backdrop-blur-md transition-all shadow-lg active:scale-95 cursor-pointer"
             >
               SOLICITĂ TUR
             </button>
@@ -269,7 +269,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ heroImage, onBookCall 
             {/* Mobile Menu Toggle Button */}
             <button
               onClick={() => setHeroMenuOpen(!heroMenuOpen)}
-              className="md:hidden min-w-[36px] min-h-[36px] p-2 rounded-full bg-stone-900/80 hover:bg-stone-800 text-stone-200 hover:text-white border border-white/20 backdrop-blur-md transition-all flex items-center justify-center active:scale-95 cursor-pointer"
+              className="md:hidden min-w-[36px] min-h-[36px] p-2 rounded-full bg-stone-950/85 hover:bg-stone-800 text-white border border-white/25 backdrop-blur-md transition-all flex items-center justify-center active:scale-95 cursor-pointer"
               aria-label={heroMenuOpen ? "Închide meniul" : "Deschide meniul"}
             >
               {heroMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
@@ -284,7 +284,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ heroImage, onBookCall 
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.18 }}
-                className="md:hidden absolute top-full left-4 right-4 mt-2 p-5 bg-stone-950/95 backdrop-blur-xl rounded-2xl border border-stone-800/90 shadow-2xl space-y-3 z-50 pointer-events-auto"
+                style={{ backgroundColor: 'rgba(17, 16, 15, 0.98)' }}
+                className="md:hidden absolute top-full left-4 right-4 mt-2 p-5 bg-stone-950/95 backdrop-blur-xl rounded-2xl border border-stone-800 shadow-2xl space-y-3 z-50 pointer-events-auto"
               >
                 <div className="flex flex-col space-y-2.5 text-xs font-bold tracking-[0.2em] uppercase font-mono">
                   <a
@@ -293,7 +294,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ heroImage, onBookCall 
                       handleScrollToTop(e);
                       setHeroMenuOpen(false);
                     }}
-                    className="text-stone-300 hover:text-white py-2 border-b border-stone-800/60"
+                    className="text-white hover:text-[#F5D08A] py-2 border-b border-stone-800/60"
                   >
                     ACASĂ
                   </a>
@@ -303,7 +304,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ heroImage, onBookCall 
                       handleUnlock();
                       setHeroMenuOpen(false);
                     }}
-                    className="text-stone-300 hover:text-white py-2 border-b border-stone-800/60"
+                    className="text-white hover:text-[#F5D08A] py-2 border-b border-stone-800/60"
                   >
                     DESPRE NOI & TEHNOLOGIE
                   </a>
@@ -313,7 +314,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ heroImage, onBookCall 
                       handleUnlock();
                       setHeroMenuOpen(false);
                     }}
-                    className="text-bronze-light hover:text-white py-2 border-b border-stone-800/60"
+                    className="text-[#F5D08A] hover:text-white py-2 border-b border-stone-800/60"
                   >
                     DEMO 3D INTERACTIV
                   </a>
@@ -323,7 +324,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ heroImage, onBookCall 
                       handleUnlock();
                       setHeroMenuOpen(false);
                     }}
-                    className="text-stone-300 hover:text-white py-2 border-b border-stone-800/60"
+                    className="text-white hover:text-[#F5D08A] py-2 border-b border-stone-800/60"
                   >
                     PORTOFOLIU 3D
                   </a>
@@ -333,7 +334,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ heroImage, onBookCall 
                       handleUnlock();
                       setHeroMenuOpen(false);
                     }}
-                    className="text-stone-300 hover:text-white py-2 border-b border-stone-800/60"
+                    className="text-white hover:text-[#F5D08A] py-2 border-b border-stone-800/60"
                   >
                     PACHETE & PREȚURI
                   </a>
@@ -343,7 +344,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ heroImage, onBookCall 
                       handleUnlock();
                       setHeroMenuOpen(false);
                     }}
-                    className="text-stone-300 hover:text-white py-2"
+                    className="text-white hover:text-[#F5D08A] py-2"
                   >
                     ZONĂ & CONTACT
                   </a>
@@ -356,7 +357,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ heroImage, onBookCall 
                       setHeroMenuOpen(false);
                       onBookCall();
                     }}
-                    className="w-full py-3 rounded-full bg-bronze hover:bg-bronze-dark text-stone-950 font-bold text-xs uppercase tracking-widest shadow-md transition-all cursor-pointer"
+                    className="w-full py-3 rounded-full bg-[#F5D08A] hover:bg-white text-stone-950 font-bold text-xs uppercase tracking-widest shadow-md transition-all cursor-pointer"
                   >
                     PROGRAMEAZĂ SCANARE 3D
                   </button>
@@ -374,10 +375,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ heroImage, onBookCall 
               y: statsY,
               scale: statsScale,
             }}
-            className="gpu-smooth w-full max-w-[360px] sm:max-w-[240px] pointer-events-auto bg-stone-950/85 backdrop-blur-md p-3 sm:p-4 rounded-2xl border border-white/15 shadow-2xl"
+            className="gpu-smooth w-full max-w-[360px] sm:max-w-[250px] pointer-events-auto bg-stone-950/90 backdrop-blur-md p-3.5 sm:p-4 rounded-2xl border border-white/20 shadow-2xl"
           >
             {/* Mobile View: Symmetrical 3-Column Stats Grid */}
-            <div className="grid grid-cols-3 divide-x divide-white/15 text-center items-center sm:hidden">
+            <div className="grid grid-cols-3 divide-x divide-white/20 text-center items-center sm:hidden">
               <motion.div
                 style={{
                   scale: stat1Scale,
@@ -388,7 +389,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ heroImage, onBookCall 
                 <div className="font-display font-bold text-xs text-white leading-tight">
                   8K ULTRA-HD
                 </div>
-                <div className="text-[7.5px] font-bold tracking-[0.12em] text-stone-300 uppercase">
+                <div className="text-[8px] font-bold tracking-[0.12em] text-[#F5D08A] uppercase">
                   CLARITATE INSTA X5
                 </div>
               </motion.div>
@@ -403,7 +404,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ heroImage, onBookCall 
                 <div className="font-display font-bold text-xs text-white leading-tight">
                   100 KM
                 </div>
-                <div className="text-[7.5px] font-bold tracking-[0.12em] text-stone-300 uppercase">
+                <div className="text-[8px] font-bold tracking-[0.12em] text-[#F5D08A] uppercase">
                   TRANSILVANIA
                 </div>
               </motion.div>
@@ -418,7 +419,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ heroImage, onBookCall 
                 <div className="font-display font-bold text-xs text-white leading-tight">
                   24 - 72 ORE
                 </div>
-                <div className="text-[7.5px] font-bold tracking-[0.12em] text-stone-300 uppercase">
+                <div className="text-[8px] font-bold tracking-[0.12em] text-[#F5D08A] uppercase">
                   PREDARE RAPIDĂ
                 </div>
               </motion.div>
@@ -437,7 +438,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ heroImage, onBookCall 
                 <div className="font-display font-bold text-base sm:text-xl text-white tracking-tight leading-tight">
                   8K ULTRA-HD
                 </div>
-                <div className="text-[8px] sm:text-[9px] font-bold tracking-[0.16em] sm:tracking-[0.18em] text-stone-300 uppercase mt-0.5">
+                <div className="text-[9px] font-bold tracking-[0.16em] text-[#F5D08A] uppercase mt-0.5">
                   CLARITATE INSTA X5
                 </div>
               </motion.div>
@@ -448,7 +449,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ heroImage, onBookCall 
                   scaleX: divider1Scale,
                   opacity: divider1Opacity,
                 }}
-                className="w-10 h-[1px] bg-white/30 origin-left gpu-smooth"
+                className="w-10 h-[1px] bg-white/35 origin-left gpu-smooth"
               />
 
               {/* Stat 2: 100 km */}
@@ -462,7 +463,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ heroImage, onBookCall 
                 <div className="font-display font-bold text-base sm:text-xl text-white tracking-tight leading-tight">
                   100 KM
                 </div>
-                <div className="text-[8px] sm:text-[9px] font-bold tracking-[0.16em] sm:tracking-[0.18em] text-stone-300 uppercase mt-0.5">
+                <div className="text-[9px] font-bold tracking-[0.16em] text-[#F5D08A] uppercase mt-0.5">
                   RAZĂ DEPLASARE TRANSILVANIA
                 </div>
               </motion.div>
@@ -473,7 +474,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ heroImage, onBookCall 
                   scaleX: divider2Scale,
                   opacity: divider2Opacity,
                 }}
-                className="w-10 h-[1px] bg-white/30 origin-left gpu-smooth"
+                className="w-10 h-[1px] bg-white/35 origin-left gpu-smooth"
               />
 
               {/* Stat 3: 24-72h */}
@@ -487,7 +488,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ heroImage, onBookCall 
                 <div className="font-display font-bold text-base sm:text-xl text-white tracking-tight leading-tight">
                   24 - 72 ORE
                 </div>
-                <div className="text-[8px] sm:text-[9px] font-bold tracking-[0.16em] sm:tracking-[0.18em] text-stone-300 uppercase mt-0.5">
+                <div className="text-[9px] font-bold tracking-[0.16em] text-[#F5D08A] uppercase mt-0.5">
                   PREDARE ÎN FUNCȚIE DE SUPRAFAȚĂ
                 </div>
               </motion.div>
@@ -501,13 +502,13 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ heroImage, onBookCall 
           <div className="space-y-2.5 sm:space-y-4 max-w-xl lg:max-w-2xl w-full text-center sm:text-left">
             {/* Title */}
             <div className="overflow-hidden">
-              <h2 className="gpu-smooth font-display font-extrabold text-lg sm:text-3xl md:text-4xl lg:text-[2.5rem] text-white uppercase leading-[1.15] sm:leading-[1.08] tracking-[0.03em] sm:tracking-[0.05em] drop-shadow-[0_15px_30px_rgba(0,0,0,0.9)]">
+              <h2 className="gpu-smooth font-display font-extrabold text-lg sm:text-3xl md:text-4xl lg:text-[2.5rem] text-white uppercase leading-[1.15] sm:leading-[1.08] tracking-[0.03em] sm:tracking-[0.05em] [text-shadow:0_4px_24px_rgba(0,0,0,0.95),0_2px_6px_rgba(0,0,0,0.95)]">
                 <motion.span
                   style={{
                     y: title1Y,
                     opacity: title1Opacity,
                   }}
-                  className="block gpu-smooth"
+                  className="block gpu-smooth text-white"
                 >
                   DESCHIDE UȘA PROPRIETĂȚII TALE.
                 </motion.span>
@@ -517,14 +518,14 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ heroImage, onBookCall 
                     opacity: title2Opacity,
                     scale: title2Scale,
                   }}
-                  className="block text-bronze-light gpu-smooth origin-center sm:origin-left"
+                  className="block text-[#F5D08A] gpu-smooth origin-center sm:origin-left"
                 >
                   ORICÂND. DE ORIUNDE.
                 </motion.span>
               </h2>
             </div>
 
-            {/* Mobile Tagline: Symmetrically centered on mobile so all desktop information is present */}
+            {/* Mobile Tagline: High-contrast dark glass card on mobile */}
             <motion.div
               style={{
                 opacity: subtitleOpacity,
@@ -532,7 +533,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ heroImage, onBookCall 
               }}
               className="gpu-smooth block md:hidden text-center mx-auto max-w-sm pt-0.5"
             >
-              <p className="text-[10px] font-medium tracking-[0.14em] text-stone-200 uppercase leading-relaxed drop-shadow-[0_10px_20px_rgba(0,0,0,0.9)]">
+              <p className="text-[10.5px] font-medium tracking-[0.08em] text-white leading-relaxed bg-stone-950/80 backdrop-blur-md px-3.5 py-2.5 rounded-xl border border-white/15 shadow-lg">
                 {propertyHeroData.tagline}
               </p>
             </motion.div>
@@ -551,10 +552,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ heroImage, onBookCall 
                   handleUnlock();
                   onBookCall();
                 }}
-                className="inline-flex items-center gap-1.5 sm:gap-3 px-4 sm:px-7 py-2.5 sm:py-3 rounded-full bg-white text-stone-950 font-bold text-[10px] sm:text-xs tracking-[0.14em] sm:tracking-[0.22em] uppercase shadow-[0_15px_35px_rgba(0,0,0,0.6)] hover:bg-stone-100 hover:scale-103 active:scale-95 transition-all duration-200 group cursor-pointer"
+                className="inline-flex items-center gap-1.5 sm:gap-3 px-4 sm:px-7 py-2.5 sm:py-3 rounded-full bg-white text-stone-950 font-bold text-[10px] sm:text-xs tracking-[0.14em] sm:tracking-[0.22em] uppercase shadow-[0_15px_35px_rgba(0,0,0,0.75)] hover:bg-[#F5D08A] hover:scale-103 active:scale-95 transition-all duration-200 group cursor-pointer"
               >
                 <span>PROGRAMEAZĂ SCANARE 3D</span>
-                <span className="flex items-center text-stone-500 group-hover:text-stone-950 group-hover:translate-x-1.5 transition-transform">
+                <span className="flex items-center text-stone-600 group-hover:text-stone-950 group-hover:translate-x-1.5 transition-transform">
                   <ChevronRight className="w-3 h-3 sm:w-4 sm:h-4 -mr-1 stroke-[2.5]" />
                   <ChevronRight className="w-3 h-3 sm:w-4 sm:h-4 stroke-[2.5]" />
                 </span>
@@ -563,14 +564,14 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ heroImage, onBookCall 
               <a
                 href="#demo-tour"
                 onClick={handleUnlock}
-                className="inline-flex items-center gap-1.5 sm:gap-2 px-4 sm:px-5 py-2.5 sm:py-3 rounded-full bg-stone-900/80 hover:bg-stone-800 text-white font-bold text-[10px] sm:text-xs tracking-wider uppercase border border-white/20 backdrop-blur-sm active:scale-95 transition-all cursor-pointer"
+                className="inline-flex items-center gap-1.5 sm:gap-2 px-4 sm:px-5 py-2.5 sm:py-3 rounded-full bg-stone-950/90 hover:bg-stone-800 text-white font-bold text-[10px] sm:text-xs tracking-wider uppercase border border-white/25 backdrop-blur-md active:scale-95 transition-all cursor-pointer shadow-lg"
               >
                 <span>VEZI DEMO 3D</span>
               </a>
             </motion.div>
           </div>
 
-          {/* Desktop Tagline: Right aligned on wide screens */}
+          {/* Desktop Tagline: High-contrast dark glass card on wide screens */}
           <motion.div
             style={{
               opacity: subtitleOpacity,
@@ -578,7 +579,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ heroImage, onBookCall 
             }}
             className="gpu-smooth max-w-xs sm:max-w-md md:text-right hidden md:block"
           >
-            <p className="text-xs sm:text-[13px] font-medium tracking-wider text-stone-200 uppercase leading-relaxed drop-shadow-[0_10px_20px_rgba(0,0,0,0.9)]">
+            <p className="text-xs sm:text-[13px] font-medium tracking-wide text-white leading-relaxed bg-stone-950/80 backdrop-blur-md px-4 py-3.5 rounded-xl border border-white/15 shadow-xl">
               {propertyHeroData.tagline}
             </p>
           </motion.div>
@@ -591,16 +592,16 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ heroImage, onBookCall 
             opacity: desktopScrollIndicatorOpacity,
           }}
           onClick={handleUnlock}
-          className="gpu-smooth hidden sm:flex absolute bottom-2 sm:bottom-3 inset-x-0 mx-auto w-fit z-40 items-center gap-2 sm:gap-3 bg-stone-950/80 backdrop-blur-md px-3.5 sm:px-4 py-1 sm:py-1.5 rounded-full border border-white/10 text-stone-400 cursor-pointer"
+          className="gpu-smooth hidden sm:flex absolute bottom-2 sm:bottom-3 inset-x-0 mx-auto w-fit z-40 items-center gap-2 sm:gap-3 bg-stone-950/90 backdrop-blur-md px-3.5 sm:px-4 py-1 sm:py-1.5 rounded-full border border-white/20 text-white cursor-pointer shadow-lg"
         >
-          <ArrowDown className="w-3 h-3 text-bronze animate-bounce" />
-          <span className="text-[8px] sm:text-[9px] font-bold tracking-[0.2em] sm:tracking-[0.25em] uppercase text-stone-300">
+          <ArrowDown className="w-3 h-3 text-[#F5D08A] animate-bounce" />
+          <span className="text-[8px] sm:text-[9px] font-bold tracking-[0.2em] sm:tracking-[0.25em] uppercase text-white">
             DERULEAZĂ PENTRU A DESCOPERI
           </span>
           <div className="w-12 sm:w-16 h-1 bg-stone-800 rounded-full overflow-hidden">
             <motion.div
               style={{ width: scrollIndicatorWidth }}
-              className="h-full bg-bronze rounded-full"
+              className="h-full bg-[#F5D08A] rounded-full"
             />
           </div>
         </motion.div>
