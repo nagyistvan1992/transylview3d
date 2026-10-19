@@ -3,43 +3,49 @@
 @tailwind utilities;
 
 @layer base {
-  *, *::before, *::after {
-    scrollbar-width: none !important; /* Firefox */
-    -ms-overflow-style: none !important; /* IE/Edge */
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-rendering: optimizeLegibility;
-  }
-
-  *::-webkit-scrollbar {
-    display: none !important;
-    width: 0px !important;
-    height: 0px !important;
-    background: transparent !important;
-  }
-
   html {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    text-rendering: optimizeLegibility;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  html::-webkit-scrollbar,
+  body::-webkit-scrollbar,
+  .scrollbar-none::-webkit-scrollbar,
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    height: 0;
+    background: transparent;
+  }
+
+  .scrollbar-none,
+  .no-scrollbar {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
   }
 
   body {
     @apply bg-canvas text-stone-900 overflow-x-hidden;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    text-rendering: optimizeLegibility;
+    overscroll-behavior-y: none;
   }
 }
 
-/* Hardware-accelerated GPU layer stability to prevent composite flicker and font weight snaps on scroll */
+/* Lightweight GPU layer hint without permanent VRAM-heavy will-change allocation */
 .gpu-smooth {
   transform: translateZ(0);
   -webkit-transform: translateZ(0);
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
-  perspective: 1000px;
-  will-change: transform, opacity;
+}
+
+/* Below-the-fold rendering optimization */
+.cv-section {
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 750px;
 }
 
 /* Prevent text jitter during motion transitions */
@@ -65,5 +71,5 @@
 /* Eliminate tap highlight flickering on mobile touch */
 button, a, select, input {
   -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 }
-

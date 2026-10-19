@@ -21,14 +21,57 @@ const techSpecs: { label: string; value: string; note: string }[] = [
 export const LiveTourSection: React.FC<LiveTourSectionProps> = ({ onBookCall }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [shouldLoadIframe, setShouldLoadIframe] = useState(false);
   const [isIframeLoaded, setIsIframeLoaded] = useState(false);
+  const [isMobileTouch, setIsMobileTouch] = useState(false);
+  const [isTouchInteractive, setIsTouchInteractive] = useState(false);
 
   // Exact Metareal Stage 3D Showcase Space
   const metarealUrl =
     'https://tour.metareal.com/apps/player?asset=a6eb7cb7-206c-4dce-94d7-12e71246ea2a&position=-0.72x1.62y1.51z&rotation=0.00x255.81y0.00z';
 
+  // Detect touch device so vertical page scrolling doesn't get hijacked by the 3D WebGL canvas
+  useEffect(() => {
+    const checkTouch = () => {
+      const mobile = window.innerWidth < 768 || window.matchMedia('(pointer: coarse)').matches;
+      setIsMobileTouch(mobile);
+      if (!mobile) {
+        setIsTouchInteractive(true);
+      }
+    };
+    checkTouch();
+    window.addEventListener('resize', checkTouch, { passive: true });
+    return () => window.removeEventListener('resize', checkTouch);
+  }, []);
+
+  // Lazy-mount the heavy 3D WebGL player when approaching the section
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el || shouldLoadIframe) return;
+
+    if (!('IntersectionObserver' in window)) {
+      setShouldLoadIframe(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0]?.isIntersecting) {
+          setShouldLoadIframe(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: '550px 0px' }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [shouldLoadIframe]);
+
   // Native Fullscreen API Handler
   const toggleFullscreen = async () => {
+    setShouldLoadIframe(true);
+    setIsTouchInteractive(true);
     try {
       if (!document.fullscreenElement) {
         if (containerRef.current) {
@@ -137,7 +180,7 @@ export const LiveTourSection: React.FC<LiveTourSectionProps> = ({ onBookCall }) 
           className={`relative rounded-xl overflow-hidden bg-black border border-stone-800 shadow-2xl transition-all duration-300 ${
             isFullscreen
               ? 'fixed inset-0 z-[99999] rounded-none w-screen h-screen m-0 p-0 bg-black'
-              : 'aspect-[4/3] sm:aspect-[16/10] lg:aspect-[16/9] w-full min-h-[460px] sm:min-h-[560px] max-h-[780px]'
+              : 'aspect-[4/3] sm:aspect-[16/10] lg:aspect-[16/9] w-full min-h-[420px] sm:min-h-[560px] max-h-[780px]'
           }`}
         >
           {/* In Fullscreen mode: Floating Exit button */}
@@ -153,12 +196,51 @@ export const LiveTourSection: React.FC<LiveTourSectionProps> = ({ onBookCall }) 
             </div>
           )}
 
+          {/* Mobile Touch Scroll-Guard Overlay: prevents accidental scroll trapping while gliding down the page */}
+          {isMobileTouch && !isFullscreen && !isTouchInteractive && (
+            <div
+              onClick={() => {
+                setShouldLoadIframe(true);
+                setIsTouchInteractive(true);
+              }}
+              className="absolute inset-0 z-30 flex flex-col items-center justify-end pb-6 sm:pb-8 bg-gradient-to-t from-stone-950/80 via-stone-950/15 to-transparent touch-pan-y cursor-pointer"
+            >
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setShouldLoadIframe(true);
+                  setIsTouchInteractive(true);
+                }}
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-stone-950/90 text-white border border-white/25 shadow-xl backdrop-blur-md text-xs font-semibold tracking-wide active:scale-95 transition-transform"
+              >
+                <Compass className="w-4 h-4 text-bronze-light" strokeWidth={1.75} />
+                <span>Atinge pentru a explora 3D în pagină</span>
+              </button>
+            </div>
+          )}
+
+          {/* Mobile Active 3D Lock Button: lets user easily resume smooth vertical page scrolling */}
+          {isMobileTouch && !isFullscreen && isTouchInteractive && (
+            <div className="absolute top-3 left-3 z-30">
+              <button
+                type="button"
+                onClick={() => setIsTouchInteractive(false)}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-stone-950/85 text-stone-200 border border-white/20 shadow-md backdrop-blur-md text-[11px] font-medium active:scale-95"
+              >
+                <span>Blochează 3D pt. derulare pagină</span>
+              </button>
+            </div>
+          )}
+
           {/* Authentic Loading Screen Overlay with Real Metareal Screenshot */}
           {!isIframeLoaded && (
             <div className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-stone-950 transition-opacity duration-500">
               <img
                 src="/images/metareal_showcase_cover.jpg"
                 alt="Tur Virtual 3D Metareal Stage - Previzualizare"
+                loading="lazy"
+                decoding="async"
                 className="absolute inset-0 w-full h-full object-cover opacity-50"
               />
               <div className="absolute inset-0 bg-stone-950/70 backdrop-blur-sm" />
@@ -177,14 +259,17 @@ export const LiveTourSection: React.FC<LiveTourSectionProps> = ({ onBookCall }) 
           )}
 
           {/* The Live Interactive Metareal Stage Player Iframe */}
-          <iframe
-            src={metarealUrl}
-            className="w-full h-full border-0 absolute inset-0"
-            allow="fullscreen; accelerometer; gyroscope; vr; xr; xr-spatial-tracking"
-            loading="eager"
-            title="TransylView 3D — Tur Virtual Interactiv Metareal Stage"
-            onLoad={() => setIsIframeLoaded(true)}
-          />
+          {shouldLoadIframe && (
+            <iframe
+              src={metarealUrl}
+              className={`w-full h-full border-0 absolute inset-0 ${
+                isMobileTouch && !isFullscreen && !isTouchInteractive ? 'pointer-events-none' : 'pointer-events-auto'
+              }`}
+              allow="fullscreen; accelerometer; gyroscope; vr; xr; xr-spatial-tracking"
+              title="TransylView 3D — Tur Virtual Interactiv Metareal Stage"
+              onLoad={() => setIsIframeLoaded(true)}
+            />
+          )}
         </div>
 
         {/* Interactive Usage Hints: Balanced 3-column cards */}

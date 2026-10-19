@@ -36,14 +36,16 @@ const ProjectCard: React.FC<{
   }, [tour.images, tour.coverImage]);
 
   const [currentImgIndex, setCurrentImgIndex] = useState(0);
+  const touchStartX = useRef<number | null>(null);
+  const touchStartY = useRef<number | null>(null);
 
-  const handlePrev = (e: React.MouseEvent) => {
-    e.stopPropagation();
+  const handlePrev = (e?: React.MouseEvent) => {
+    e?.stopPropagation();
     setCurrentImgIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
   };
 
-  const handleNext = (e: React.MouseEvent) => {
-    e.stopPropagation();
+  const handleNext = (e?: React.MouseEvent) => {
+    e?.stopPropagation();
     setCurrentImgIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
   };
 
@@ -52,20 +54,42 @@ const ProjectCard: React.FC<{
     setCurrentImgIndex(index);
   };
 
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+    touchStartY.current = e.touches[0].clientY;
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX.current === null || touchStartY.current === null || images.length <= 1) return;
+    const diffX = touchStartX.current - e.changedTouches[0].clientX;
+    const diffY = touchStartY.current - e.changedTouches[0].clientY;
+
+    if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 35) {
+      if (diffX > 0) {
+        handleNext();
+      } else {
+        handlePrev();
+      }
+    }
+    touchStartX.current = null;
+    touchStartY.current = null;
+  };
+
   return (
     <motion.article
       initial={{ opacity: 0, y: 12 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.15 }}
       transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-      style={{ transform: 'translateZ(0)', backfaceVisibility: 'hidden' }}
       className="gpu-smooth group flex flex-col justify-between space-y-4"
     >
       {/* Image Frame with Multi-Image Slider */}
       <div className="space-y-4">
         <div
           onClick={() => onOpenTourViewer(tour)}
-          className="relative aspect-[16/10] w-full overflow-hidden rounded-xl bg-stone-950 border border-stone-800 cursor-pointer select-none"
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEnd}
+          className="relative aspect-[16/10] w-full overflow-hidden rounded-xl bg-stone-950 border border-stone-800 cursor-pointer select-none touch-pan-y"
         >
           {/* Active Image */}
           <AnimatePresence mode="wait">
@@ -73,6 +97,8 @@ const ProjectCard: React.FC<{
               key={images[currentImgIndex]}
               src={images[currentImgIndex]}
               alt={`${tour.title} - Foto ${currentImgIndex + 1}`}
+              loading="lazy"
+              decoding="async"
               initial={{ opacity: 0.8 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0.8 }}
@@ -237,6 +263,29 @@ const FeaturedCaseStudy: React.FC<{
   }, [tour.images, tour.coverImage]);
 
   const [currentImgIndex, setCurrentImgIndex] = useState(0);
+  const touchStartX = useRef<number | null>(null);
+  const touchStartY = useRef<number | null>(null);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+    touchStartY.current = e.touches[0].clientY;
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX.current === null || touchStartY.current === null || images.length <= 1) return;
+    const diffX = touchStartX.current - e.changedTouches[0].clientX;
+    const diffY = touchStartY.current - e.changedTouches[0].clientY;
+
+    if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 35) {
+      if (diffX > 0) {
+        setCurrentImgIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
+      } else {
+        setCurrentImgIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
+      }
+    }
+    touchStartX.current = null;
+    touchStartY.current = null;
+  };
 
   const deliverables = [
     'Scanare 8K',
@@ -252,13 +301,17 @@ const FeaturedCaseStudy: React.FC<{
         <div className="lg:col-span-7 space-y-4">
           <div
             onClick={() => onOpenTourViewer(tour)}
-            className="relative aspect-[16/10] w-full overflow-hidden rounded-xl bg-stone-950 border border-stone-800 cursor-pointer select-none group"
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
+            className="relative aspect-[16/10] w-full overflow-hidden rounded-xl bg-stone-950 border border-stone-800 cursor-pointer select-none group touch-pan-y"
           >
             <AnimatePresence mode="wait">
               <motion.img
                 key={images[currentImgIndex]}
                 src={images[currentImgIndex]}
                 alt={`${tour.title} - Foto ${currentImgIndex + 1}`}
+                loading="lazy"
+                decoding="async"
                 initial={{ opacity: 0.8 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0.8 }}
@@ -355,7 +408,13 @@ const FeaturedCaseStudy: React.FC<{
                       : 'border-stone-800 opacity-60 hover:opacity-100'
                   }`}
                 >
-                  <img src={img} alt={`Miniatură ${idx + 1}`} className="w-full h-full object-cover" />
+                  <img
+                    src={img}
+                    alt={`Miniatură ${idx + 1}`}
+                    loading="lazy"
+                    decoding="async"
+                    className="w-full h-full object-cover"
+                  />
                 </button>
               ))}
             </div>

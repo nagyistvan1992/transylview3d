@@ -10,19 +10,22 @@ export const Navbar: React.FC<NavbarProps> = ({ onBookCall }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
+    let ticking = false;
+
+    const updateScrolled = () => {
+      const nextScrolled = window.scrollY >= window.innerHeight - 80;
+      setScrolled((prev) => (prev !== nextScrolled ? nextScrolled : prev));
+      ticking = false;
+    };
+
     const handleScroll = () => {
-      const heroEl = document.getElementById('home');
-      if (heroEl) {
-        const heroBottom = heroEl.getBoundingClientRect().bottom;
-        // Navbar only appears when the user has scrolled past the pinned Hero section
-        // (so it NEVER overlaps or covers the Hero's title, watermark, or Hero menu)
-        setScrolled(heroBottom <= 80);
-      } else {
-        setScrolled(window.scrollY > window.innerHeight * 1.5);
+      if (!ticking) {
+        window.requestAnimationFrame(updateScrolled);
+        ticking = true;
       }
     };
 
-    handleScroll();
+    updateScrolled();
     window.addEventListener('scroll', handleScroll, { passive: true });
     window.addEventListener('resize', handleScroll, { passive: true });
     return () => {
@@ -64,6 +67,9 @@ export const Navbar: React.FC<NavbarProps> = ({ onBookCall }) => {
           <img
             src="/images/transylview_icon.png"
             alt="TransylView 3D Icon"
+            width={28}
+            height={28}
+            decoding="async"
             className="w-6 h-6 sm:w-7 sm:h-7 rounded-lg shadow-xs border border-stone-800/10 object-contain flex-shrink-0"
           />
           <div className="flex items-baseline gap-1.5 sm:gap-2">
